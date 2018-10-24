@@ -1,6 +1,6 @@
 # Documentation Repository for MICO (working title)
 
-Documentation: [readthedocs](mico-docs.readthedocs.io)
+Documentation: [readthedocs](http://mico-docs.readthedocs.io)
 
 ![build badge](https://readthedocs.org/projects/mico-docs/badge/?version=latest)
 
