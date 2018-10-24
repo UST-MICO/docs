@@ -14,9 +14,3 @@ Welcome to MICO's documentation!
 
 Direct link to subsection :ref:`test:subsection`
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

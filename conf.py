@@ -15,9 +15,11 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-
+import os
 from recommonmark.parser import CommonMarkParser
+from recommonmark.transform import AutoStructify
 
+on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
 # -- Project information -----------------------------------------------------
 
@@ -86,7 +88,10 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+if on_rtd:
+    html_theme = 'default'
+else:
+    html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -197,5 +202,15 @@ intersphinx_mapping = {'https://docs.python.org/': None}
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# -- Options for recommonmark ------------------------------------------------
 autosectionlabel_prefix_document = True
 
+# app setup hook
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+        'auto_toc_tree': True,
+        'enable_eval_rst': True,
+        'enable_math': True,
+        'enable_inline_math': True,
+    }, True)
+    app.add_transform(AutoStructify)
