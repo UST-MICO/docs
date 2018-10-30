@@ -6,9 +6,7 @@ Glossary
 .. glossary::
 
    service
-   services
      a service is
 
    application
-   applications
      a deploy ready composition of serices and/or applications.
