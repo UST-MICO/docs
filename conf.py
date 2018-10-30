@@ -21,6 +21,22 @@ from recommonmark.transform import AutoStructify
 
 on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
+# -- Recommonmark Monkey patch -----------------------------------------------
+
+# https://github.com/rtfd/recommonmark/issues/93#issuecomment-433371240
+from functools import wraps
+from recommonmark.states import DummyStateMachine
+
+old_run_role = DummyStateMachine.run_role
+@wraps(old_run_role)
+def run_role(self, name, *args, **kwargs):
+    if name == 'doc':
+        name = 'any'
+    return old_run_role(self, name, *args, **kwargs)
+
+DummyStateMachine.run_role = run_role
+
+
 # -- Project information -----------------------------------------------------
 
 project = 'MICO'
