@@ -2,3 +2,4 @@ _build
 _static
 .mypy_cache
 .sonarlint
+.vscode
