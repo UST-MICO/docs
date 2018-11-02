@@ -21,6 +21,22 @@ from recommonmark.transform import AutoStructify
 
 on_rtd = os.environ.get('READTHEDOCS') == 'True'
 
+# -- Recommonmark Monkey patch -----------------------------------------------
+
+# https://github.com/rtfd/recommonmark/issues/93#issuecomment-433371240
+from functools import wraps
+from recommonmark.states import DummyStateMachine
+
+old_run_role = DummyStateMachine.run_role
+@wraps(old_run_role)
+def run_role(self, name, *args, **kwargs):
+    if name == 'doc':
+        name = 'any'
+    return old_run_role(self, name, *args, **kwargs)
+
+DummyStateMachine.run_role = run_role
+
+
 # -- Project information -----------------------------------------------------
 
 project = 'MICO'
@@ -77,7 +93,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'README.md']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
@@ -209,7 +225,6 @@ autosectionlabel_prefix_document = True
 def setup(app):
     app.add_config_value('recommonmark_config', {
         'auto_toc_tree': True,
-        'auto_toc_tree_section': 'Contents',
         'enable_auto_doc_ref': True,
         'enable_eval_rst': True,
         'enable_math': True,

@@ -12,6 +12,7 @@ Which format and structure should these records follow?
 * [Sustainable Architectural Decisions](https://www.infoq.com/articles/sustainable-architectural-design-decisions) - The Y-Statements
 * Other templates listed at <https://github.com/joelparkerhenderson/architecture_decision_record>
 * Formless - No conventions for file format and structure
+
 ## Decision Outcome
 
 Chosen option: "MADR 2.1.0", because
