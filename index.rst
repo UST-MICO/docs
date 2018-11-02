@@ -12,9 +12,9 @@ Welcome to MICO's documentation!
 
    test
    adr/index
+   service_description
    glossary
 
 Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
 
 Direct link to subsection :ref:`test:subsection`
-
