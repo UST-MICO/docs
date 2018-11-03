@@ -11,8 +11,9 @@ Welcome to MICO's documentation!
    :caption: Contents:
 
    test
-   adr/index
+   dev/mockups/index
    service_description
+   adr/index
    glossary
 
 Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.

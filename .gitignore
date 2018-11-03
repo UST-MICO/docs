@@ -3,3 +3,5 @@ _static
 .mypy_cache
 .sonarlint
 .vscode
+venv
+default.nix
