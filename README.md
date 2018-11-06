@@ -16,28 +16,37 @@ Documentation: [readthedocs](http://mico-docs.readthedocs.io)
 ## Build the documentation locally:
 
 **Install Graphviz**
-Usign apt (Ubuntu / Debian):
+
+Using apt (Ubuntu / Debian):
+
 ```bash
-sudo apt-get install graphviz 
+sudo apt-get install graphviz
 ```
 
 Using brew (Mac OS X):
+
 ```bash
 sudo brew install graphviz
 ```
 
 **Upgrade pip:**
+
 ```bash
 sudo -H pip2 install --upgrade pip
 sudo -H pip3 install --upgrade pip
 ```
 
 **Install requirements:**
+
 ```bash
 pip install -r requirements.txt
 ```
 
+Make sure you have the `dot` command from `graphviz` and a basic `LaTeX` environment in your path!
+
+
 **Build html:**
+
 ```bash
 make html
 ```
