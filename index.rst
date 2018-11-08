@@ -20,4 +20,6 @@ Welcome to MICO's documentation!
 
 Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
 
+`MICO Developer Documentation <https://mico-dev.readthedocs.io>`_
+
 Direct link to subsection :ref:`test:subsection`
