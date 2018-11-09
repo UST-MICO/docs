@@ -12,7 +12,6 @@ Welcome to MICO's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   test
    dev/mockups/index
    service_description
    adr/index
@@ -22,4 +21,9 @@ Mico is a project for designing, deploying and managing :term:`applications <app
 
 `MICO Developer Documentation <https://mico-dev.readthedocs.io>`_
 
-Direct link to subsection :ref:`test:subsection`
+.. ifconfig:: not on_rtd
+
+   TODO Entries:
+   -------------
+
+   .. todolist::

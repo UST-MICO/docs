@@ -60,10 +60,11 @@ release = '0.0.1'
 # ones.
 extensions = [
     'sphinx.ext.intersphinx',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.autosectionlabel',
     'sphinx.ext.todo',
     'sphinx.ext.imgmath',
-    'sphinx.ext.graphviz'
+    'sphinx.ext.graphviz',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -220,6 +221,8 @@ intersphinx_mapping = {
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = not on_rtd
+todo_emit_warnings = not on_rtd
+print(todo_include_todos)
 
 # -- Options for recommonmark ------------------------------------------------
 autosectionlabel_prefix_document = True
@@ -233,4 +236,5 @@ def setup(app):
         'enable_math': True,
         'enable_inline_math': True,
     }, True)
+    app.add_config_value('on_rtd', on_rtd, 'env')
     app.add_transform(AutoStructify)
