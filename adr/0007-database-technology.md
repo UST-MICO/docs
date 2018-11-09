@@ -4,7 +4,7 @@ Technical Story: [Evaluate database technologies #46](https://github.com/UST-MIC
 
 ## Context and Problem Statement
 
-We want to use a state of the art database that can store services/applications according to our data Model and is easy to integrate with [Spring Boot](0001-java-framework.md). 
+We want to use a state of the art database that can store services/applications according to our data Model and is easy to integrate with [Spring Boot](0001-java-framework.md).
 
 
 ## Decision Drivers
@@ -83,6 +83,10 @@ We want to use a state of the art database that can store services/applications 
         isA -- service [label=1]
 
     }
+
+.. important::
+
+    The :samp:`Service Description` entity in the model describes a :term:`service interface`.
 ```
 
 ### Data Model Graph
@@ -132,6 +136,10 @@ We want to use a state of the art database that can store services/applications 
         application -> service [label=includes]
 
     }
+
+.. important::
+
+    The :samp:`Service Description` entity in the model describes a :term:`service interface`.
 ```
 
 

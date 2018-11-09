@@ -3,7 +3,7 @@
 Service Description
 ===================
 
-The following attributes are mainly taken from `Pivio`_.
+Attributes describing a :term:`service`. The attributes are mainly taken from `Pivio`_.
 
 .. _Pivio: http://pivio.io/docs/#_general
 
@@ -48,10 +48,11 @@ type
 
 owner
     Which team is responsible for this artefact.
-		
+
 service
     provides
         What and where does this artefact provide services?
+        This part describes a :term:`service interface`.
 
         description
             See above.
@@ -60,31 +61,31 @@ service
             Unique identification of the particular interface.
 
         port
-            Self-explaining.
+            TCP/UDP Port
 
         protocol
-            Self-explaining.
+            SOAP, gRPC, GRaphQL, SQL, CYPHER, etc.
 
         transport_protocol
-            Self-explaining.
-        
+            http, mqtt, etc.
+
         public_dns
-            Self-explaining.
+            .. todo:: Define function of this field: service vs. application
 
     depends_on
-        To which other service_name (from provides) services does this service talk? 
+        To which other service_name (from provides) services does this service talk?
 
         service_name
             Unique identification of the particular interface.
 
         port
-            Self-explaining.
+            TCP/UDP Port
 
         protocol
-            Self-explaining.
+            SOAP, gRPC, GRaphQL, SQL, CYPHER, etc.
 
         transport_protocol
-            Self-explaining.
-        
+            http, mqtt, etc.
+
         public_dns
-            Self-explaining.
+            .. todo:: Define function of this field: service vs. application
