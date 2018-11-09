@@ -222,7 +222,6 @@ intersphinx_mapping = {
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = not on_rtd
 todo_emit_warnings = not on_rtd
-print(todo_include_todos)
 
 # -- Options for recommonmark ------------------------------------------------
 autosectionlabel_prefix_document = True
