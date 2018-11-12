@@ -2,7 +2,11 @@
 
 Minikube can be used to run a single node Kubernetes cluster on your local machine.
 
-## Installation on Windows 10
+## Installation
+
+Read the official instructions how to [Install Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/).
+
+### On Windows 10
 
 **Pre-reqs:**
 * Hyper-V enabled
@@ -21,51 +25,48 @@ Get-NetAdapter
 New-VMSwitch -Name "ExternalSwitch" -NetAdapterName "Ethernet 2" -AllowManagement $True
 ```
 
-**Some important commands:**
-Run minikube:
+## Important commands
+
+**Run minikube:**
 ```bash
 minikube start --vm-driver hyperv --hyperv-virtual-switch "ExternalSwitch"
 ```
 
-Stop minikube:
+**Stop minikube:**
 ```bash
 minikube stop
 ```
 
-Get IP address:
+**Get IP address:**
 ```bash
 minikube ip
 ```
 
-Open dashboard:
+**Open dashboard:**
 ```bash
 minikube dashboard
 ```
 
-Update minikube:
+**Update minikube:**
 ```bash
 minikube update-check
 ```
 
-Cleaning up cluster:
+**Cleaning up cluster:**
 ```
 minikube delete
 ```
 
-## SSH
-
-Minikube has its on ssh command:
+**SSH (Minikube command):**
 ```bash
 minikube ssh
 ```
 
-Alternative on WSL:
+**SSH (alternative command on WSL):**
 ```bash
 chmod 0600 "$(wslpath -u "$(minikube ssh-key)")"
 ssh -a -i "$(wslpath -u "$(minikube ssh-key)")" -l docker "$(minikube ip)"
 ```
-
-
 
 ## Knative installation on Minikube
 
@@ -75,6 +76,7 @@ Minikube has to be started with priviledged rights (root / administrator).
 Important note: At least **8 GiB of free memory** are required. Also 4 vCPUs are required, otherwise later on some pods will fail (status "OutOfcpu").
 
 Before starting Minikube, ensure that a virtual network switch called "ExternalSwitch" exists.
+If you are using Mac OS or Linux you have to change the `vm-driver`. For Linux specify `--vm-driver=kvm2`. Omitting the `--vm-driver` option will use the default driver.
 
 **Start Minikube with Hyper-V:**
 ```bash
@@ -84,6 +86,11 @@ minikube start --memory=8192 --cpus=4 \
   --hyperv-virtual-switch "ExternalSwitch" \
   --bootstrapper=kubeadm \
   --extra-config=apiserver.enable-admission-plugins="LimitRanger,NamespaceExists,NamespaceLifecycle,ResourceQuota,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook"
+```
+
+Confirm that your kubectl context is pointing to the new cluster:
+```bash
+kubectl config current-context
 ```
 
 **Install Istio:**
@@ -123,25 +130,35 @@ echo $(minikube ip):$(kubectl get svc knative-ingressgateway --namespace istio-s
 
 ## Troubleshooting
 
-* `minikube stop` does not work, command hangs and finally crashes
-  As a workaround use `minikube ssh "sudo poweroff"` instead.
-  [minikube issue 2914](https://github.com/kubernetes/minikube/issues/2914)
+* `minikube stop` does not work, command hangs and finally crashes. As a workaround use SSH instead [minikube issue 2914](https://github.com/kubernetes/minikube/issues/2914)
 
-* Kubernetes cluster shutsdown after a few minutes MiniKube VM still running. Under Windows 10 Hyper-V could be the problem [minikube issue 2326](https://github.com/kubernetes/minikube/issues/2326)
+  **Poweroff via SSH:**
+  ```bash
+  minikube ssh "sudo poweroff"
+  ```
+
+* Kubernetes cluster shutsdown after a few minutes MiniKube VM still running. Under Windows 10 the Hyper-V functionality "Dynamic Memory" could be the problem [minikube issue 2326](https://github.com/kubernetes/minikube/issues/2326)
   
-  Disable Dynamic RAM allocation in Hyper-V:
+  **Disable Dynamic RAM allocation in Hyper-V:**
   ```
   Set-VMMemory minikube -DynamicMemoryEnabled $false
   ```
 
-* If there is any problem with Hyper-V on Windows, you can try to restart the Hyper-V Virtual Machine Management service:
+* If there is any problem with Hyper-V on Windows, you can try to restart the Hyper-V Virtual Machine Management service
+
+  **Restarting Hyper-V Virtual Machine Management service:**
   ```bash
   net.exe stop vmms
   net.exe start vmms
   ```
 
-* If you have problems to start Minikube, you can delete the cache (everything is lost!):
+* If you have problems to start Minikube, you can delete the cache (everything is lost!)
+
+  **On Linux:**
+  ```bash
+  rm -rf ~/.minikube
+  ```
+  **On Windows:**
   ```bash
   rm -rf %USERPROFILE%/.minikube
-  rm -rf ~/.minikube
   ```
