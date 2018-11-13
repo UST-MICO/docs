@@ -48,6 +48,8 @@ Run the application locally:
 ./mvnw package && java -jar target/helloworld-0.0.1-SNAPSHOT.jar
 ```
 
+Go to http://localhost:8080/ to see your Hello World! message.
+
 Create Dockerfile:
 ```Dockerfile
 FROM maven:3.5-jdk-8-alpine as build
@@ -99,23 +101,69 @@ kubectl apply --filename service.yaml
 kubectl get pods --watch
 ```
 
-Get the IP address of the service:
+## Access the service
+
+View the IP address of the service:
 ```bash
 kubectl get svc knative-ingressgateway --namespace istio-system
 ```
 
-Optionally export the IP address:
+Export the Ingress hostname and IP address as environment variables:
 ```bash
-export IP_ADDRESS=$(kubectl get svc knative-ingressgateway --namespace istio-system --output 'jsonpath={.status.loadBalancer.ingress[0].ip}')
-```
-
-Get the URL of the service:
-```bash
-kubectl get ksvc helloworld-java \
-    --output=custom-columns=NAME:.metadata.name,DOMAIN:.status.domain
+export SERVICE_HOST=`kubectl get route helloworld-java --output jsonpath="{.status.domain}"`
+export SERVICE_IP=`kubectl get svc knative-ingressgateway --namespace istio-system \
+--output jsonpath="{.status.loadBalancer.ingress[*].ip}"`
 ```
 
 Make a request to the app:
 ```bash
-curl -H "Host: helloworld-java.default.example.com" http://${IP_ADDRESS}
+curl --header "Host:$SERVICE_HOST" http://${SERVICE_IP}
 ```
+
+## Explore the configuration
+
+**View the created Route resource:**
+```bash
+kubectl get route --output yaml
+```
+
+**View the created Configuration resource:**
+```bash
+kubectl get configurations --output yaml
+```
+
+**View the Revision that was created by our Configuration:**
+```bash
+kubectl get revisions --output yaml
+```
+
+## Clean up
+
+To clean up a service:
+```bash
+kubectl delete --filename service.yaml
+```
+
+## Monitoring
+
+### Accessing logs
+
+See [Accessing logs](https://github.com/knative/docs/blob/master/serving/accessing-logs.md) for more information.
+
+To open the Kibana UI (the visualization tool for Elasticsearch), start a local proxy with the following command:
+```bash
+kubectl proxy
+```
+This command starts a local proxy of Kibana on port 8001. For security reasons, the Kibana UI is exposed only within the cluster.
+Navigate to the Kibana UI. It might take a couple of minutes for the proxy to work.
+
+### Metrics
+
+See [Accessing metrics](https://github.com/knative/docs/blob/master/serving/accessing-metrics.md) for more information.
+
+To open Grafana, enter the following command:
+```bash
+kubectl port-forward --namespace knative-monitoring $(kubectl get pods --namespace knative-monitoring --selector=app=grafana --output=jsonpath="{.items..metadata.name}") 3000
+```
+This starts a local proxy of Grafana on port 3000. For security reasons, the Grafana UI is exposed only within the cluster.
+Navigate to the Grafana UI at http://localhost:3000.
