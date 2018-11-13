@@ -101,6 +101,108 @@ kubectl apply --filename service.yaml
 kubectl get pods --watch
 ```
 
+## Deploying a source-to-URL example app
+
+A sample that shows how to use Knative to go from source code in a git repository to a running application with a URL.
+
+The app is also available at [Knative serving sample applications](https://github.com/knative/docs/blob/master/serving/samples/README.md)
+
+### Install the kaniko build template
+
+This sample leverages the kaniko build template to perform a source-to-container build on your Kubernetes cluster.
+
+```bash
+kubectl apply --filename https://raw.githubusercontent.com/knative/build-templates/master/kaniko/kaniko.yaml
+```
+
+### Register secrets for Docker Hub
+
+In order to push the container that is built from source to Docker Hub, register a secret in Kubernetes for authentication with Docker Hub.
+
+Save this file as `docker-secret.yaml` with your Docker Hub credentials:
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: basic-user-pass
+  annotations:
+    build.knative.dev/docker-0: https://index.docker.io/v1/
+type: kubernetes.io/basic-auth
+data:
+  # Use 'echo -n "username" | base64 -w 0' to generate this string
+  username: BASE64_ENCODED_USERNAME
+  # Use 'echo -n "password" | base64 -w 0' to generate this string
+  password: BASE64_ENCODED_PASSWORD
+```
+
+Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `service-account.yaml`:
+```
+ apiVersion: v1
+ kind: ServiceAccount
+ metadata:
+   name: build-bot
+ secrets:
+ - name: basic-user-pass
+ ```
+
+ Apply the manifest files to your cluster:
+ ```bash
+$ kubectl apply --filename docker-secret.yaml
+secret "basic-user-pass" created
+$ kubectl apply --filename service-account.yaml
+serviceaccount "build-bot" created
+ ```
+
+### Deploying the sample
+
+You need to create a service manifest which defines the service to deploy, including where the source code is and which build-template to use. Create a file named service.yaml and copy the following definition. Make sure to replace `{DOCKER_USERNAME}` with your own Docker Hub username:
+```
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: app-from-source
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      build:
+        apiVersion: build.knative.dev/v1alpha1
+        kind: Build
+        spec:
+          serviceAccountName: build-bot
+          source:
+            git:
+              url: https://github.com/mchmarny/simple-app.git
+              revision: master
+          template:
+            name: kaniko
+            arguments:
+            - name: IMAGE
+              value: docker.io/{DOCKER_USERNAME}/app-from-source:latest
+      revisionTemplate:
+        spec:
+          container:
+            image: docker.io/{DOCKER_USERNAME}/app-from-source:latest 
+            imagePullPolicy: Always
+            env:
+            - name: SIMPLE_MSG
+              value: "Hello sample app!"
+```
+
+### Deploying the sample to Kubernetes
+
+Deploy the app into the Kubernetes cluster:
+```bash
+# Apply the manifest
+kubectl apply --filename service.yaml
+
+# Watch the pods for build and serving
+kubectl get pods --watch
+
+# Check the state of the service and get the service object
+kubectl get ksvc app-from-source --output yaml
+```
+
 ## Access the service
 
 View the IP address of the service:
