@@ -14,8 +14,8 @@ Welcome to MICO's documentation!
 
    dev/mockups/index
    service_description
-   adr/index
    kubernetes/index
+   adr/index
    glossary
 
 Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
