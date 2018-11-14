@@ -8,6 +8,9 @@ Glossary
     service
         A service is described by a Pivio description. A service can consist of other services.
 
+    external service
+        An external service is a :term:`service` not managed by the mico system but by a third party.
+
     service interface
         A service interface is an API (REST over http, gRPC, etc.) the service provides for other services to use over the network.
         One service can have multiple service interfaces.

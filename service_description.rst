@@ -7,6 +7,9 @@ Attributes describing a :term:`service`. The attributes are mainly taken from `P
 
 .. _Pivio: http://pivio.io/docs/#_general
 
+.. todo:: Specify information for :term:`external services <external service>`.
+
+
 Mandatory Fields
 ----------------
 

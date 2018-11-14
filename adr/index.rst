@@ -28,5 +28,4 @@ Open Decisions
 This section contains open decisions that may not have an ADR yet but are relevant for the project in the (near) future. Each decision should be a list item with a short description.
 
  *  Application Graph Editor: Winery Topologymodeler OR custom d3 editor
- *  Supported Browsers
 
