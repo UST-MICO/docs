@@ -15,5 +15,5 @@ We want to use a well established Java framework in order to bootstrap and boost
 
 ## Decision Outcome
 
-We chosen option 1, Spring Boot, since existing knowledge and experience with this framework is available.
+We chose option 1, Spring Boot, since existing knowledge and experience with this framework is available.
 To reduce training costs (time) we chose this option.
