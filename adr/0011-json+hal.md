@@ -2,23 +2,22 @@
 
 ## Context and Problem Statement
 
-The backend needs to serialize the rest resources before sending them viea http to the client.
+The backend needs to serialize the rest resources before sending them via http to the client.
 
 ## Decision Drivers
 
-* the format should be REST/[HATEOAS](https://spring.io/understanding/HATEOAS) compatible (e.g. allow hyperlinks)
-* the fromat should be easy to parse/serialize for the backend and the client
+- the format should be REST/[HATEOAS](https://spring.io/understanding/HATEOAS) compatible (e.g. allow hyperlinks)
+- the fromat should be easy to parse/serialize for the backend and the client
 
 ## Considered Options
 
-* xml
-* pure json
-* [json+hal](http://stateless.co/hal_specification.html)
+- xml
+- pure json
+- [json+hal](http://stateless.co/hal_specification.html)
 
 ## Decision Outcome
 
 We will use json+hal (or the spring implementation for json with hyperlinks) without the [`_embedded`](https://tools.ietf.org/html/draft-kelly-json-hal-08#section-4.1.2) attribute (because of its complexity to implement correctly).
-
 
 ```eval_rst
 .. seealso::
