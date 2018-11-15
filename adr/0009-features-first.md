@@ -16,3 +16,11 @@ Requirements:
 ## Decision Outcome
 
 For the initial project we won't implement the requirements from above to increase our efficiency in implementing features.
+
+
+```eval_rst
+.. seealso::
+
+   * :doc:`0002-quality-attribute-performance`
+   * :doc:`0003-quality-attribute-security`
+```
