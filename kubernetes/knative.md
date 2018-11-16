@@ -101,6 +101,8 @@ kubectl apply --filename service.yaml
 kubectl get pods --watch
 ```
 
+How to access the service is described in section [Access a service](#access-a-service).
+
 ## Deploying a source-to-URL example app
 
 A sample that shows how to use Knative to go from source code in a git repository to a running application with a URL.
@@ -203,16 +205,24 @@ kubectl get pods --watch
 kubectl get ksvc app-from-source --output yaml
 ```
 
-## Access the service
+## Access a service
 
 View the IP address of the service:
 ```bash
 kubectl get svc knative-ingressgateway --namespace istio-system
 ```
 
+In the following commands replace <service-name> with your specified service name (e.g. `helloworld-java` or `app-from-source`).
+
+To find the URL for your service, use
+```bash
+kubectl get ksvc <service-name> \
+    --output=custom-columns=NAME:.metadata.name,DOMAIN:.status.domain
+```
+
 Export the Ingress hostname and IP address as environment variables:
 ```bash
-export SERVICE_HOST=`kubectl get route helloworld-java --output jsonpath="{.status.domain}"`
+export SERVICE_HOST=`kubectl get route <service-name> --output jsonpath="{.status.domain}"`
 export SERVICE_IP=`kubectl get svc knative-ingressgateway --namespace istio-system \
 --output jsonpath="{.status.loadBalancer.ingress[*].ip}"`
 ```
