@@ -2,12 +2,12 @@
 
 ## Context and Problem Statement
 
-The backend needs to serialize the rest resources before sending them via http to the client.
+The backend needs to serialize the REST resources before sending them via http to the client.
 
 ## Decision Drivers
 
 - the format should be REST/[HATEOAS](https://spring.io/understanding/HATEOAS) compatible (e.g. allow hyperlinks)
-- the fromat should be easy to parse/serialize for the backend and the client
+- the format should be easy to parse/serialize for the backend and the client
 
 ## Considered Options
 
