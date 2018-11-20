@@ -52,3 +52,19 @@ make html
 ```
 
 open `_build/html/index.html` in your browser
+
+
+## Enabled Extensions:
+
+ *  [sphinx.ext.intersphinx](http://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html)
+
+    List all link targets in the documentation:
+    ```bash
+    python -m sphinx.ext.intersphinx ./_build/html/objects.inv
+    ```
+ *  sphinx.ext.autosectionlabel
+ *  sphinx.ext.todo
+ *  sphinx.ext.imgmath
+ *  sphinx.ext.graphviz
+ *  [sphinxcontrib.httpdomain](https://sphinxcontrib-httpdomain.readthedocs.io/en/stable/)
+ *  [sphinxcontrib.openapi](https://sphinxcontrib-openapi.readthedocs.io)
