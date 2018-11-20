@@ -3,6 +3,7 @@ Kubernetes
 
 .. toctree::
 
+    our-setup
     minikube
     aks
     istio
