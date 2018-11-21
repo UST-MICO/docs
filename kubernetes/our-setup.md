@@ -37,6 +37,10 @@ az login
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
 ```
 
+### Resource group
+
+Our self created resource group is named `ust-mico-resourcegroup`. Whenever a resource group is created, "the AKS resource provider automatically creates the second one during deployment, such as MC_myResourceGroup_myAKSCluster_eastus" ([FAQ AKS](https://docs.microsoft.com/de-de/azure/aks/faq)). This second resource group contains all of the infrastructure resources associated with the cluster (e.g. Kubernetes node VMs, virtual networking, and storage). The automatically created second resource group is named `MC_ust-mico-resourcegroup_ust-mico-cluster_westeurope`.
+
 ### Open Kubernetes dashboard
 
 ```bash
