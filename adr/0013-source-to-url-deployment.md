@@ -4,19 +4,18 @@ Technical Story: [Evaluate Knative build](https://github.com/UST-MICO/mico/issue
 
 ## Context and Problem Statement
 
-We want to have a source-to-URL deployment on Kubernetes based on Dockerfiles.
+We want to have a source-to-URL deployment on Kubernetes to import services based on a GitHub repository with an included Dockerfile.
 
 ## Decision Drivers
 
-* Must run on Kubernetes cluster
-* Must not require root access
-* URL to GitHub repository with Dockerfile must be sufficient
+* MUST run on Kubernetes cluster
+* MUST run completely in userspace (no root access required)
+* URL to GitHub repository (with included Dockerfile) SHOULD be sufficient
 
 ## Considered Options
 
-* Docker in Docker
-* img
-* Kaniko
+* Google Cloud Build
+* Azure Container Registry Tasks
 * Knative Build
 
 ## Decision Outcome
@@ -35,30 +34,7 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 
 ## Pros and Cons of the Options
 
-### Docker in Docker
-
-* Good, because it is a well known approach
-* Bad, because it requires privileged mode in order to function, which is a significant security concern
-* Bad, because it generally incurs a performance penalty and can be quite slow
-
-### img
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because it doesn't require root access
-* Good, because [argument b]
-* Bad, because it requires ["RawProc access](https://github.com/kubernetes/community/pull/1934/files) to create nested containers
-
-### Kaniko
-
-[example | description | pointer to more information | …] <!-- optional -->
-
-* Good, because it is a popular open source project by Google
-* Good, because it is well documented and easy to use
-* Good, because it was designed to work on Kubernetes
-* Good, because it does not need root access or any special access rights (like "RawProc")
-
-### Knative build
+### Google Cloud Build
 
 [example | description | pointer to more information | …] <!-- optional -->
 
@@ -66,3 +42,22 @@ Chosen option: "[option 1]", because [justification. e.g., only option, which me
 * Good, because [argument b]
 * Bad, because [argument c]
 * … <!-- numbers of pros and cons can vary -->
+
+### Azure Container Registry Tasks
+
+[example | description | pointer to more information | …] <!-- optional -->
+
+* Good, because [argument a]
+* Good, because [argument b]
+* Bad, because [argument c]
+* … <!-- numbers of pros and cons can vary -->
+
+### Knative Build
+
+[GitHub: Knative Build](https://github.com/knative/build)
+
+* Good, because it has the backing of industry giants (Google, Red Hat, IBM, SAP)
+* Good, because it is designed for Kubernetes
+* Good, because it provides a standard, portable, reusable, and performance optimized method for defining and running on-cluster container image builds
+* Bad, because it is still work-in-progress
+* Bad, because Knative requires Istio that adds many complications to the cluster and consumes much resources
