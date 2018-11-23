@@ -46,3 +46,8 @@ Our self created resource group is named `ust-mico-resourcegroup`. Whenever a re
 ```bash
 az aks browse --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 ```
+
+
+### Public Access
+
+* Public static IP address: 40.118.21.236
