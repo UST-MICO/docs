@@ -48,6 +48,8 @@ links
 
 type
     The type of this artefact. Values could be service, library or mobile_app.
+    
+    .. hint:: We probably don't need this because we only support services
 
 owner
     Which team is responsible for this artefact.
