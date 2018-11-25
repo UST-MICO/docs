@@ -5,7 +5,7 @@ Kubernetes
 
     our-setup
     minikube
-    aks
+    azure
     istio
     knative
 

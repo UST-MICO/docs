@@ -2,6 +2,19 @@
 
 MICO runs on the Azure Kubernetes Service (AKS).
 
+**Names:**
+```bash
+export LOCATION=westeurope
+export RESOURCE_GROUP=ust-mico-resourcegroup
+export CLUSTER_NAME=ust-mico-cluster
+export ACR_NAME=ustmicoregistry
+```
+
+**Switch context of `kubectl`:**
+```bash
+kubectl config use-context ust-mico-cluster-admin
+```
+
 ## Cluster details
 
 **Current cluster:**
@@ -19,13 +32,6 @@ az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 ## Cluster management
 
 ### Login
-
-**Create environment variables:**
-```bash
-export LOCATION=westeurope
-export RESOURCE_GROUP=ust-mico-resourcegroup
-export CLUSTER_NAME=ust-mico-cluster
-```
 
 **Login:**
 ```bash
@@ -47,7 +53,18 @@ Our self created resource group is named `ust-mico-resourcegroup`. Whenever a re
 az aks browse --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 ```
 
-
 ### Public Access
 
 * Public static IP address: 40.118.21.236
+
+## Azure Container Registry (ACR)
+
+**Login:**
+```bash
+az acr login --name $ACR_NAME
+```
+
+**List container images:**
+```bash
+az acr repository list --name $ACR_NAME --output table
+```

@@ -1,7 +1,7 @@
 # Building OCI Images
 
-Part of the Technical Story: [Evaluate Knative build](https://github.com/UST-MICO/mico/issues/49)
-Related to the [ADR-0013-Source-to-URL deployment](./0013-source-to-url-deployment.md).
+Part of the Technical Story: [Evaluate Knative build](https://github.com/UST-MICO/mico/issues/49)</br>
+Related to the [ADR-0013 Source-to-Image Workflow](./0013-source-to-image-workflow.md).
 
 ## Context and Problem Statement
 

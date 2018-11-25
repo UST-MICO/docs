@@ -1,6 +1,6 @@
 # Knative
 
-## User Stories
+## Related User Stories
 
 ### User Story: [Import services from GitHub](https://github.com/UST-MICO/mico/issues/26)
 
@@ -13,17 +13,62 @@ We want to import services by entering a GitHub URL based on meta-data:
 
 ### User Story: [Evaluate Knative build](https://github.com/UST-MICO/mico/issues/49)
 
-Knative could be used to exploit a source-to-URL workflow with Kubernetes when services are specified with a Dockerfile.
+See [ADR-0013 Source-to-Image Workflow](../adr/0013-source-to-image-workflow.md).
 
-## Installation on Minikube
+## Installation
+
+### On Minikube
 
 See chapter [Minikube](./minikube.md) for instructions.
 
-## Installation on Azure
+### On Azure
 
-See chapter [Azure Kubernetes Service](./aks.md) for instructions.
+See chapter [Azure Kubernetes Service](./azure.md) for instructions.
 
-## Deploying a sample app
+## Source-to-Image workflow (only Knative Build)
+
+For a Source-to-Image workflow only Knative Build is required (Knative Serving is not required to create and run builds).
+
+How to create a Kubernetes cluster is described in [Azure Kubernetes Service](./azure.md). Consider to use a less expensive VM than *Standard_DS3_v2* for this example (e.g. *Standard_B2s*).
+Note that we only want to install Knative Build (not the full Knative system).
+
+After installing Istio and Knative Build, we are ready to create and run a `Build`.
+
+How a simple `Build` can be created and be executed is written down in [Creating a simple Knative Build](https://github.com/knative/docs/blob/master/build/creating-builds.md).
+
+More `Build` examples: [Knative `Build` resources](https://github.com/knative/docs/blob/master/build/builds.md).
+
+There is already a set of curated and supported `Build Templates` available in the Knative [`build-templates`](https://github.com/knative/build-templates) repository. For a `Dockerfile` build and the subsequent push of the resulting image the usage of *Kaniko* as the `Builder` is recommended. It is also used in the [Source-to-URL workflow](#source-to-url-workflow-knative-build-serving).
+
+
+**Memory usage of an one-node-cluster (total max: 1,7 GB)**
+* kube-system (total: 315 MB)
+  + heapster: 22 MB
+  + kube-dns-v20 (1): 21 MB
+  + kube-dns-v20 (2): 21 MB
+  + kube-proxy: 26 MB
+  + kube-svc-redirect: 35 MB
+  + kubernetes-dashboard: 13 MB
+  + metrics-server: 13 MB
+  + omsagent-mvrrx: 102 MB
+  + omsagent-rs: 52 MB
+  + tunnelfront: 10 MB
+* istio-system (total: 456 MB)
+  + istio-telemetry: 182 MB
+  + istio-policy: 138 MB
+  + istio-egressgateway: 29 MB
+  + istio-ingressgateway: 26 MB
+  + istio-pilot: 45 MB 
+  + istio-citadel: 11 MB
+  + istio-galley: 10 MB
+  + istio-sidecar-injector: 9 MB
+  + istio-statsd-prom-bridge: 6 MB
+* knative-build (total: 22 MB)
+  + build-controller: 11 MB
+  + build-webhook: 11 MB
+* other processes running in cluster: 1 GB
+
+## Deploying an application (only Knative Serving)
 
 There are multiple sample applications, developed on Knative, available: [Knative serving sample applications](https://github.com/knative/docs/blob/master/serving/samples/README.md)
 
@@ -31,7 +76,7 @@ Here we use the [Hello World - Spring Boot Java sample](https://github.com/knati
 
 **The app is already available as a Docker image. If you just want to deploy it to the Kubernetes Cluster, you can skip the next section.**
 
-### Building the app
+### Building the app locally
 
 Create a new empty web project:
 ```bash
@@ -103,11 +148,12 @@ kubectl get pods --watch
 
 How to access the service is described in section [Access a service](#access-a-service).
 
-## Deploying a source-to-URL example app
+## Source-to-URL workflow (Knative Build + Serving)
 
-A sample that shows how to use Knative to go from source code in a git repository to a running application with a URL.
+This section describes how to use Knative to go from source code in a git repository to a running application with a URL.
+Knative Build and Knative Serving are required.
 
-The app is also available at [Knative serving sample applications](https://github.com/knative/docs/blob/master/serving/samples/README.md)
+As a sample application we use a Go application like desribes in [Orchestrating a source-to-URL deployment on Kubernetes](https://github.com/knative/docs/blob/master/serving/samples/source-to-url-go/README.md).
 
 ### Install the kaniko build template
 
