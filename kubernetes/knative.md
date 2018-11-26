@@ -30,9 +30,9 @@ See chapter [Azure Kubernetes Service](./azure.md) for instructions.
 For a Source-to-Image workflow only Knative Build is required (Knative Serving is not required to create and run builds).
 
 How to create a Kubernetes cluster is described in [Azure Kubernetes Service](./azure.md). Consider to use a less expensive VM than *Standard_DS3_v2* for this example (e.g. *Standard_B2s*).
-Note that we only want to install Knative Build (not the full Knative system).
+Note that we only want to install Knative Build (not the full Knative system). Istio is not required to run Knative Build.
 
-After installing Istio and Knative Build, we are ready to create and run a `Build`.
+After installing Knative Build, we are ready to create and run a `Build`.
 
 How a simple `Build` can be created and be executed is written down in [Creating a simple Knative Build](https://github.com/knative/docs/blob/master/build/creating-builds.md).
 
@@ -40,33 +40,29 @@ More `Build` examples: [Knative `Build` resources](https://github.com/knative/do
 
 There is already a set of curated and supported `Build Templates` available in the Knative [`build-templates`](https://github.com/knative/build-templates) repository. For a `Dockerfile` build and the subsequent push of the resulting image the usage of *Kaniko* as the `Builder` is recommended. It is also used in the [Source-to-URL workflow](#source-to-url-workflow-knative-build-serving).
 
+### Example application
 
-**Memory usage of an one-node-cluster (total max: 1,7 GB)**
-* kube-system (total: 315 MB)
-  + heapster: 22 MB
-  + kube-dns-v20 (1): 21 MB
-  + kube-dns-v20 (2): 21 MB
-  + kube-proxy: 26 MB
-  + kube-svc-redirect: 35 MB
-  + kubernetes-dashboard: 13 MB
-  + metrics-server: 13 MB
-  + omsagent-mvrrx: 102 MB
-  + omsagent-rs: 52 MB
-  + tunnelfront: 10 MB
-* istio-system (total: 456 MB)
-  + istio-telemetry: 182 MB
-  + istio-policy: 138 MB
-  + istio-egressgateway: 29 MB
-  + istio-ingressgateway: 26 MB
-  + istio-pilot: 45 MB 
-  + istio-citadel: 11 MB
-  + istio-galley: 10 MB
-  + istio-sidecar-injector: 9 MB
-  + istio-statsd-prom-bridge: 6 MB
-* knative-build (total: 22 MB)
-  + build-controller: 11 MB
-  + build-webhook: 11 MB
-* other processes running in cluster: 1 GB
+Apply at first a `Secret` and a `Service Account` so that the resulting image can be pushed to a docker registry (here: Docker Hub).
+
+**`build.yaml`:**
+```bash
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: kaniko-build
+spec:
+  serviceAccountName: build-bot
+  source:
+    git:
+      url: https://github.com/mchmarny/simple-app.git
+      revision: master
+  steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor
+    args:
+    - --dockerfile=/workspace/Dockerfile
+    - --destination=docker.io/ustmico/simple-app
+```
 
 ## Deploying an application (only Knative Serving)
 
@@ -325,3 +321,46 @@ kubectl port-forward --namespace knative-monitoring $(kubectl get pods --namespa
 ```
 This starts a local proxy of Grafana on port 3000. For security reasons, the Grafana UI is exposed only within the cluster.
 Navigate to the Grafana UI at http://localhost:3000.
+
+### Memory usage
+
+**Memory usage of an one-node-cluster (total max: 1,7 GB)**
+* kube-system (total: 315 MB)
+  + heapster: 22 MB
+  + kube-dns-v20 (1): 21 MB
+  + kube-dns-v20 (2): 21 MB
+  + kube-proxy: 26 MB
+  + kube-svc-redirect: 35 MB
+  + kubernetes-dashboard: 13 MB
+  + metrics-server: 13 MB
+  + omsagent-mvrrx: 102 MB
+  + omsagent-rs: 52 MB
+  + tunnelfront: 10 MB
+* istio-system (total: 456 MB)
+  + istio-telemetry: 182 MB
+  + istio-policy: 138 MB
+  + istio-egressgateway: 29 MB
+  + istio-ingressgateway: 26 MB
+  + istio-pilot: 45 MB 
+  + istio-citadel: 11 MB
+  + istio-galley: 10 MB
+  + istio-sidecar-injector: 9 MB
+  + istio-statsd-prom-bridge: 6 MB
+* knative-build (total: 22 MB)
+  + build-controller: 11 MB
+  + build-webhook: 11 MB
+* other processes running in cluster: 1 GB
+
+## Troubleshooting
+
+**Get logs of a build:**
+ 
+Check the Init Container (e.g. `pod-name` = `kaniko-build-f9x52`):
+```bash
+kubectl describe pod <pod-name>
+```
+
+Accessing logs from Init Containers (e.g. `init-container` = `build-step-build-and-push`):
+```bash
+kubectl logs <pod-name> -c <init-container>
+``` 

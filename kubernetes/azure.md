@@ -21,7 +21,7 @@ az login
 
 ## Azure Kubernetes Service
 
-### Knative installation
+### Knative test installation
 
 Following instructions are based on the GitHub wiki [Knative Install on Azure Kubernetes Service (AKS)](https://github.com/knative/docs/blob/master/install/Knative-with-AKS.md).
 
