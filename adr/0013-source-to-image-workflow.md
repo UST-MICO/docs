@@ -31,7 +31,7 @@ Chosen option: *Knative Build*, because it meets all of our criterion decision d
 
 ### Negative consequences
 
-* By using *Knative Build* we need the full Istio-System running on the Kubernetes cluster
+* *Nothing known*
 
 ## Pros and Cons of the Options
 
@@ -83,5 +83,5 @@ Chosen option: *Knative Build*, because it meets all of our criterion decision d
 * Good, because it is designed for Kubernetes
 * Good, because it provides a standard, portable, reusable, and performance optimized method for defining and running on-cluster container image builds
 * Good, because it allows us to use different `Builder` technologies (see [Building OCI Images](./0015-building-oci-images.md))
+* Good, because *Knative Build* consumes little resources (2 pods a ~11 MB). 
 * Bad, because it is still work-in-progress
-* Bad, because Knative requires Istio that adds many complications to the cluster and consumes much resources
