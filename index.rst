@@ -16,6 +16,7 @@ Welcome to MICO's documentation!
    service_description
    database
    restapi.md
+   setup/index
    kubernetes/index
    adr/index
    glossary

@@ -1,9 +1,8 @@
 Kubernetes
-=============
+==========
 
 .. toctree::
 
-    our-setup
     minikube
     azure
     istio
