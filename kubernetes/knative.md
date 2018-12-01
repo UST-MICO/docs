@@ -89,7 +89,7 @@ Run the application locally:
 ./mvnw package && java -jar target/helloworld-0.0.1-SNAPSHOT.jar
 ```
 
-Go to http://localhost:8080/ to see your Hello World! message.
+Go to [localhost:8080](http://localhost:8080/) to see your Hello World! message.
 
 Create Dockerfile:
 ```Dockerfile
@@ -164,7 +164,7 @@ kubectl apply --filename https://raw.githubusercontent.com/knative/build-templat
 In order to push the container that is built from source to Docker Hub, register a secret in Kubernetes for authentication with Docker Hub.
 
 Save this file as `docker-secret.yaml` with your Docker Hub credentials:
-```
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -180,7 +180,7 @@ data:
 ```
 
 Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `service-account.yaml`:
-```
+```yaml
  apiVersion: v1
  kind: ServiceAccount
  metadata:
@@ -200,7 +200,7 @@ serviceaccount "build-bot" created
 ### Deploying the sample
 
 You need to create a service manifest which defines the service to deploy, including where the source code is and which build-template to use. Create a file named service.yaml and copy the following definition. Make sure to replace `{DOCKER_USERNAME}` with your own Docker Hub username:
-```
+```yaml
 apiVersion: serving.knative.dev/v1alpha1
 kind: Service
 metadata:
@@ -226,7 +226,7 @@ spec:
       revisionTemplate:
         spec:
           container:
-            image: docker.io/{DOCKER_USERNAME}/app-from-source:latest 
+            image: docker.io/{DOCKER_USERNAME}/app-from-source:latest
             imagePullPolicy: Always
             env:
             - name: SIMPLE_MSG
@@ -254,7 +254,7 @@ View the IP address of the service:
 kubectl get svc knative-ingressgateway --namespace istio-system
 ```
 
-In the following commands replace <service-name> with your specified service name (e.g. `helloworld-java` or `app-from-source`).
+In the following commands replace `<service-name>` with your specified service name (e.g. `helloworld-java` or `app-from-source`).
 
 To find the URL for your service, use
 ```bash
@@ -320,11 +320,11 @@ To open Grafana, enter the following command:
 kubectl port-forward --namespace knative-monitoring $(kubectl get pods --namespace knative-monitoring --selector=app=grafana --output=jsonpath="{.items..metadata.name}") 3000
 ```
 This starts a local proxy of Grafana on port 3000. For security reasons, the Grafana UI is exposed only within the cluster.
-Navigate to the Grafana UI at http://localhost:3000.
+Navigate to the Grafana UI at [localhost:3000](http://localhost:3000).
 
 ### Memory usage
 
-**Memory usage of an one-node-cluster (total max: 1,7 GB)**
+**Memory usage of an one-node-cluster (total max: 1,7 GB):**
 * kube-system (total: 315 MB)
   + heapster: 22 MB
   + kube-dns-v20 (1): 21 MB
@@ -341,7 +341,7 @@ Navigate to the Grafana UI at http://localhost:3000.
   + istio-policy: 138 MB
   + istio-egressgateway: 29 MB
   + istio-ingressgateway: 26 MB
-  + istio-pilot: 45 MB 
+  + istio-pilot: 45 MB
   + istio-citadel: 11 MB
   + istio-galley: 10 MB
   + istio-sidecar-injector: 9 MB
@@ -354,7 +354,7 @@ Navigate to the Grafana UI at http://localhost:3000.
 ## Troubleshooting
 
 **Get logs of a build:**
- 
+
 Check the Init Container (e.g. `pod-name` = `kaniko-build-f9x52`):
 ```bash
 kubectl describe pod <pod-name>
@@ -363,4 +363,4 @@ kubectl describe pod <pod-name>
 Accessing logs from Init Containers (e.g. `init-container` = `build-step-build-and-push`):
 ```bash
 kubectl logs <pod-name> -c <init-container>
-``` 
+```

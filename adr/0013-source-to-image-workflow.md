@@ -53,7 +53,7 @@ Chosen option: *Knative Build*, because it meets all of our criterion decision d
 * Good, because it allows us to use different `Builder` technologies (see [Building OCI Images](./0015-building-oci-images.md))
 * Bad, because we depend on the continuity of a third-party service (Google Cloud Build)
 * Bad, because it runs only on Google Cloud, that forces vendor lock-in
-* Bad, because it leads to additional costs (first 120 builds-minutes per day are free, see [Pricing]https://cloud.google.com/cloud-build/pricing)
+* Bad, because it leads to additional costs (first 120 builds-minutes per day are free, see [Pricing](https://cloud.google.com/cloud-build/pricing)
 
 ### Azure Container Registry Tasks (ACR Tasks)
 
@@ -62,10 +62,10 @@ Chosen option: *Knative Build*, because it meets all of our criterion decision d
 * Good, because it is a managed service therefore it doesn't consume our own resources
 * Good, because we already run on the Azure Cloud
 * Bad, because it uses the Docker daemon internally, no other `Builders` can be used (see [Building OCI Images](./0015-building-oci-images.md))
-* Bad, because there is no public API available, only usable with the Azure CLI 
+* Bad, because there is no public API available, only usable with the Azure CLI
 * Bad, because we depend on the continuity of a third-party service (ACR Tasks)
 * Bad, because it runs only on Azure, that forces vendor lock-in
-* Bad, because it leads to additional costs (100 minutes are included for free per month, see [Pricing calculator]https://azure.microsoft.com/en-us/pricing/calculator/#)
+* Bad, because it leads to additional costs (100 minutes are included for free per month, see [Pricing calculator](https://azure.microsoft.com/en-us/pricing/calculator/#)
 
 ### OpenShift Source-to-Image (S2I)
 
@@ -83,5 +83,5 @@ Chosen option: *Knative Build*, because it meets all of our criterion decision d
 * Good, because it is designed for Kubernetes
 * Good, because it provides a standard, portable, reusable, and performance optimized method for defining and running on-cluster container image builds
 * Good, because it allows us to use different `Builder` technologies (see [Building OCI Images](./0015-building-oci-images.md))
-* Good, because *Knative Build* consumes little resources (2 pods a ~11 MB). 
+* Good, because *Knative Build* consumes little resources (2 pods a ~11 MB).
 * Bad, because it is still work-in-progress

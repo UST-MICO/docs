@@ -53,7 +53,7 @@ minikube update-check
 ```
 
 **Cleaning up cluster:**
-```
+```bash
 minikube delete
 ```
 
@@ -124,7 +124,7 @@ kubectl get pods --namespace knative-serving --watch
 **Helpful commands:**
 
 Get IP address and NodePort for the `knative-ingressgateway`:
-```
+```bash
 echo $(minikube ip):$(kubectl get svc knative-ingressgateway --namespace istio-system --output 'jsonpath={.spec.ports[?(@.port==80)].nodePort}')
 ```
 
@@ -140,7 +140,7 @@ echo $(minikube ip):$(kubectl get svc knative-ingressgateway --namespace istio-s
 * Kubernetes cluster shutsdown after a few minutes MiniKube VM still running. Under Windows 10 the Hyper-V functionality "Dynamic Memory" could be the problem [minikube issue 2326](https://github.com/kubernetes/minikube/issues/2326)
   
   **Disable Dynamic RAM allocation in Hyper-V:**
-  ```
+  ```bash
   Set-VMMemory minikube -DynamicMemoryEnabled $false
   ```
 

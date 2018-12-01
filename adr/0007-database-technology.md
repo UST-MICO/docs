@@ -21,7 +21,7 @@ We want to use a state of the art database that can store services/applications 
     graph G {
 
         {
-	        subgraph cluster_0 {
+            subgraph cluster_0 {
                 label="not deployable"
                 style=dotted
 
@@ -45,7 +45,7 @@ We want to use a state of the art database that can store services/applications 
             }
 
 
-	        subgraph cluster_1 {
+            subgraph cluster_1 {
                 label="deployable"
                 style=dotted
 
@@ -146,12 +146,12 @@ We want to use a state of the art database that can store services/applications 
 ## Considered Options
 
 * Relational database:
-    * __MySQL__
-    * MariaDB
-    * PostgreSQL
-    * SQlite
+  + __MySQL__
+  + MariaDB
+  + PostgreSQL
+  + SQlite
 * Graph database:
-    * Neo4J
+  + Neo4J
 
 ## Decision Outcome
 

@@ -46,7 +46,7 @@ az provider register -n Microsoft.ContainerService
 
 Find out what Kubernetes versions are currently available:
 ```bash
-az aks get-versions --location $LOCATION --output table 
+az aks get-versions --location $LOCATION --output table
 ```
 
 Create the AKS cluster:
@@ -87,7 +87,7 @@ kubectl label namespace default istio-injection=enabled
 ```
 
 Monitor the Istio components:
-```
+```bash
 kubectl get pods --namespace istio-system --watch
 ```
 
@@ -124,6 +124,7 @@ How to deploy applications with Knative is described in chapter [Knative](./knat
 ```bash
 az aks scale --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --node-count 1
 ```
+
 ### SSH into AKS cluster
 
 [Connect with SSH to Azure Kubernetes Service (AKS) cluster nodes for maintenance or troubleshooting](https://docs.microsoft.com/de-de/azure/aks/ssh)

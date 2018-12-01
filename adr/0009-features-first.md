@@ -6,11 +6,11 @@ How should we prioritise certain non-/extra- functional requirements?
 
 ## Considered Options
 
-Requirements:
+**Requirements:**
 
- *  Translatable text in user Interface
- *  Minimal security (username+password login for user interface/tokens for api)
- *  Responsive Web design
+* Translatable text in user Interface
+* Minimal security (username+password login for user interface/tokens for api)
+* Responsive Web design
 
 
 ## Decision Outcome
