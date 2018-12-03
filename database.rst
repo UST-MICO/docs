@@ -104,7 +104,7 @@ Service Interface
    * - Attribute
      - Description
      - Example
-   * - serviceName*
+   * - serviceInterfaceName*
      - Unique short name suffix for :samp:`shortName` of service.
      - :samp:`rest`
    * - description*
