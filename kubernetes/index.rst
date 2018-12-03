@@ -9,7 +9,7 @@ Kubernetes
     knative
 
 MICO runs and operates on Kubernetes.
-This chapter describes the MICO Kubernetes setup and third-party components like Istio and Knative.
+This chapter describes different hosting environment and relevant third-party components like Istio and Knative.
 
 Instructions in this section are meant to be executed with Bash in a Debian/Ubuntu like development environment. If you are using Windows 10, consider to use `Windows Subsystem for Linux (WSL)`_. Alternatives could be Cygwin_ or `Git Bash`_.
 

@@ -2,6 +2,8 @@
 
 MICO runs on the Azure Kubernetes Service (AKS).
 
+## Environment
+
 **Names:**
 ```bash
 export LOCATION=westeurope
@@ -12,26 +14,8 @@ export ACR_NAME=ustmicoregistry
 
 **Switch context of `kubectl`:**
 ```bash
-kubectl config use-context ust-mico-cluster-admin
+kubectl config use-context $CLUSTER_NAME-admin
 ```
-
-## Cluster details
-
-**Current cluster:**
-* VM: Standard_B2s (2 vCPUs, 4 GB RAM)
-* Nodes: 3
-* OS Disk Size: 30 GB
-* Location: westeurope
-* Kubernetes version: 1.11.3
-
-**Get the details for a managed Kubernetes cluster:**
-```bash
-az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
-```
-
-## Cluster management
-
-### Login
 
 **Login:**
 ```bash
@@ -42,6 +26,26 @@ az login
 ```bash
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
 ```
+
+If a different object with the same name already exists in your cluster configuration, use `--overwrite-existing` to override it.
+
+
+## Cluster details
+
+**Current cluster:**
+* VM: Standard_B2s (2 vCPUs, 4 GB RAM)
+* Nodes: 3
+* OS Disk Size: 30 GB
+* Location: westeurope
+* Kubernetes version: 1.11.4
+
+**Get the details for a managed Kubernetes cluster:**
+```bash
+az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
+```
+
+
+## Cluster creation
 
 ### Resource group
 
@@ -60,37 +64,8 @@ az aks create --resource-group $RESOURCE_GROUP \
 ```
 For more information see [Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough).
 
-### Create Azure Container Registry (ACR)
 
-**Create ACR:**
-```bash
-az acr create --resource-group $RESOURCE_GROUP \
---name $ACR_NAME \
---sku Basic
-```
-For more information see [Tutorial: Deploy and use Azure Container Registry](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr).
-
-**Provide AKS access to ACR to be able to read containers:**
-
-[](https://docs.microsoft.com/de-de/azure/container-registry/container-registry-auth-aks#grant-aks-access-to-acr)
-
-```bash
-#!/bin/bash
-
-AKS_RESOURCE_GROUP=ust-mico-resourcegroup
-AKS_CLUSTER_NAME=ust-mico-cluster
-ACR_RESOURCE_GROUP=ust-mico-resourcegroup
-ACR_NAME=ustmicoregistry
-
-# Get the id of the service principal configured for AKS
-CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
-
-# Get the ACR registry resource id
-ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --query "id" --output tsv)
-
-# Create role assignment
-az role assignment create --assignee $CLIENT_ID --role Reader --scope $ACR_ID
-```
+## Cluster management
 
 ### Open Kubernetes dashboard
 
@@ -111,12 +86,48 @@ kubectl create clusterrolebinding kubernetes-dashboard --clusterrole=cluster-adm
 
 * Public static IP address: 40.118.21.236
 
-## Azure Container Registry (ACR)
+
+## Container Registry
+
+MICO uses the Azure Container Registry (ACR) to store container images.
 
 **Login:**
 ```bash
 az acr login --name $ACR_NAME
 ```
+
+### Create Azure Container Registry (ACS)
+
+**Create ACR:**
+```bash
+az acr create --resource-group $RESOURCE_GROUP \
+--name $ACR_NAME \
+--sku Basic
+```
+For more information see [Tutorial: Deploy and use Azure Container Registry](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr).
+
+### Grant Kuberentes Cluster access to ACR
+
+**[Grant AKS read access to ACR](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks#grant-aks-access-to-acr)**:
+```bash
+#!/bin/bash
+
+AKS_RESOURCE_GROUP=ust-mico-resourcegroup
+AKS_CLUSTER_NAME=ust-mico-cluster
+ACR_RESOURCE_GROUP=ust-mico-resourcegroup
+ACR_NAME=ustmicoregistry
+
+# Get the id of the service principal configured for AKS
+CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
+
+# Get the ACR registry resource id
+ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --query "id" --output tsv)
+
+# Create role assignment
+az role assignment create --assignee $CLIENT_ID --role Reader --scope $ACR_ID
+```
+
+### Manage ACR
 
 **List container images:**
 ```bash
