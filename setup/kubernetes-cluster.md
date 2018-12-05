@@ -37,13 +37,31 @@ If a different object with the same name already exists in your cluster configur
 * Nodes: 3
 * OS Disk Size: 30 GB
 * Location: westeurope
-* Kubernetes version: 1.11.4
+* Kubernetes version: 1.11.5
 
 **Get the details for a managed Kubernetes cluster:**
 ```bash
 az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 ```
 
+## Upgrade Kubernetes
+
+[Upgrade an Azure Kubernetes Service (AKS) cluster](https://docs.microsoft.com/en-us/azure/aks/upgrade-cluster)
+
+**Check if there are updates available:**
+```bash
+az aks get-upgrades --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --output table
+```
+
+**Upgrade Kubernetes to specific version:**
+```bash
+az aks upgrade --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --kubernetes-version 1.11.5
+```
+
+**Confirm that the upgrade was successful:**
+```bash
+az aks show --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --output table
+```
 
 ## Cluster creation
 
