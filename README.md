@@ -1,4 +1,4 @@
-# Documentation Repository for MICO (working title)
+# Documentation Repository
 
 Documentation: [readthedocs](http://mico-docs.readthedocs.io)
 
