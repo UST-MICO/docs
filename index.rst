@@ -8,6 +8,15 @@
 Welcome to MICO's documentation!
 ================================
 
+Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
+
+.. seealso::
+
+   `MICO Developer Documentation <https://mico-dev.readthedocs.io>`_
+
+   :doc:`adr/0016-documentation-structure`
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -21,9 +30,6 @@ Welcome to MICO's documentation!
    adr/index
    glossary
 
-Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
-
-`MICO Developer Documentation <https://mico-dev.readthedocs.io>`_
 
 .. ifconfig:: not on_rtd
 
