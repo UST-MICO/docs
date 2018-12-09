@@ -45,7 +45,7 @@ There is already a set of curated and supported `Build Templates` available in t
 Apply at first a `Secret` and a `Service Account` so that the resulting image can be pushed to a docker registry (here: Docker Hub).
 
 **`build.yaml`:**
-```bash
+```yaml
 apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
@@ -54,15 +54,42 @@ spec:
   serviceAccountName: build-bot
   source:
     git:
-      url: https://github.com/mchmarny/simple-app.git
+      url: https://github.com/dgageot/hello.git
       revision: master
   steps:
   - name: build-and-push
     image: gcr.io/kaniko-project/executor
     args:
     - --dockerfile=/workspace/Dockerfile
-    - --destination=docker.io/ustmico/simple-app
+    - --destination=docker.io/ustmico/hello
 ```
+
+**Increase log level:**
+
+Add `--verbosity=debug` to `args`.
+
+### Different container registries
+
+**Different destinations:**
+
+* Docker Hub: `docker.io/ustmico/<image-name>`
+* ACR: `ustmicoregistry.azurecr.io/<image-name>`
+* GCR: `gcr.io/iaas/<image-name>`
+
+**Authentication:**
+
+Depending on your target container registry, there are different ways to authenticate.
+
+* Docker Hub: [Basic authentication (Docker)](https://github.com/knative/docs/blob/master/build/auth.md#basic-authentication-docker)
+* ACR: [Azure Container Registry authentication with service principals](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal)
+* GCR: [GoogleCloudPlatform/knative-build-tutorials/docker-build/](https://github.com/GoogleCloudPlatform/knative-build-tutorials/tree/master/docker-build)
+
+The Authentication to ACR doesn't work yet!
+```log
+failed to push to destination: unexpected end of JSON input
+```
+
+ACR is officially not supported by Kaniko: [Issue#425](https://github.com/GoogleContainerTools/kaniko/issues/425)
 
 ## Deploying an application (only Knative Serving)
 
@@ -326,29 +353,29 @@ Navigate to the Grafana UI at [localhost:3000](http://localhost:3000).
 
 **Memory usage of an one-node-cluster (total max: 1,7 GB):**
 * kube-system (total: 315 MB)
-  + heapster: 22 MB
-  + kube-dns-v20 (1): 21 MB
-  + kube-dns-v20 (2): 21 MB
-  + kube-proxy: 26 MB
-  + kube-svc-redirect: 35 MB
-  + kubernetes-dashboard: 13 MB
-  + metrics-server: 13 MB
-  + omsagent-mvrrx: 102 MB
-  + omsagent-rs: 52 MB
-  + tunnelfront: 10 MB
+  * heapster: 22 MB
+  * kube-dns-v20 (1): 21 MB
+  * kube-dns-v20 (2): 21 MB
+  * kube-proxy: 26 MB
+  * kube-svc-redirect: 35 MB
+  * kubernetes-dashboard: 13 MB
+  * metrics-server: 13 MB
+  * omsagent-mvrrx: 102 MB
+  * omsagent-rs: 52 MB
+  * tunnelfront: 10 MB
 * istio-system (total: 456 MB)
-  + istio-telemetry: 182 MB
-  + istio-policy: 138 MB
-  + istio-egressgateway: 29 MB
-  + istio-ingressgateway: 26 MB
-  + istio-pilot: 45 MB
-  + istio-citadel: 11 MB
-  + istio-galley: 10 MB
-  + istio-sidecar-injector: 9 MB
-  + istio-statsd-prom-bridge: 6 MB
+  * istio-telemetry: 182 MB
+  * istio-policy: 138 MB
+  * istio-egressgateway: 29 MB
+  * istio-ingressgateway: 26 MB
+  * istio-pilot: 45 MB
+  * istio-citadel: 11 MB
+  * istio-galley: 10 MB
+  * istio-sidecar-injector: 9 MB
+  * istio-statsd-prom-bridge: 6 MB
 * knative-build (total: 22 MB)
-  + build-controller: 11 MB
-  + build-webhook: 11 MB
+  * build-controller: 11 MB
+  * build-webhook: 11 MB
 * other processes running in cluster: 1 GB
 
 ## Troubleshooting
