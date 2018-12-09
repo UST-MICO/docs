@@ -80,7 +80,7 @@ kubectl get nodes
 **Installing Istio:**
 ```bash
 # Install Istio
-kubectl apply --filename https://raw.githubusercontent.com/knative/serving/v0.2.1/third_party/istio-1.0.2/istio.yaml
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/istio.yaml
 
 # Label the default namespace with istio-injection=enabled.
 kubectl label namespace default istio-injection=enabled
@@ -98,7 +98,7 @@ kubectl get pods --namespace istio-system --watch
 Installing Knative Serving and Build components:
 ```bash
 # Install Knative and its dependencies:
-kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.1/release.yaml
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/release.yaml
 
 # Monitor the Knative components:
 kubectl get pods --namespace knative-serving --watch
@@ -108,7 +108,7 @@ kubectl get pods --namespace knative-build --watch
 Installing Knative Build only:
 ```bash
 # Install Knative Build and its dependencies:
-kubectl apply --filename https://raw.githubusercontent.com/knative/serving/v0.2.1/third_party/config/build/release.yaml
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/build.yaml
 
 # Monitor the Knative components:
 kubectl get pods --namespace knative-build --watch
@@ -186,6 +186,11 @@ az acr repository list --name $ACR_NAME --output table
 **Get credentials:**
 ```bash
 az acr credential show --name $ACR_NAME
+```
+
+**Get the fully qualified name of the ACR login server:**
+```bash
+az acr list --resource-group $RESOURCE_GROUOP --query "[].{acrLoginServer:loginServer}" --output table
 ```
 
 [Authenticate with Azure Container Registry from Azure Kubernetes Service](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks)

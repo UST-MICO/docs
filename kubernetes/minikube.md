@@ -96,7 +96,7 @@ kubectl config current-context
 **Install Istio:**
 ```bash
 # Install Istio
-curl -L https://raw.githubusercontent.com/knative/serving/v0.2.0/third_party/istio-1.0.2/istio.yaml \
+curl -L https://github.com/knative/serving/releases/download/v0.2.2/istio.yaml \
   | sed 's/LoadBalancer/NodePort/' \
   | kubectl apply --filename -
 
@@ -109,9 +109,9 @@ Monitor the Istio components:
 kubectl get pods --namespace istio-system --watch
 ```
 
-**Install Knative Serving:**
+**Install Knative Serving (lite version without monitoring components):**
 ```bash
-curl -L https://github.com/knative/serving/releases/download/v0.2.0/release-lite.yaml \
+curl -L https://github.com/knative/serving/releases/download/v0.2.2/release-lite.yaml \
   | sed 's/LoadBalancer/NodePort/' \
   | kubectl apply --filename -
 ```
