@@ -97,25 +97,26 @@ az aks create --resource-group $RESOURCE_GROUP \
 --node-count 3
 ```
 
-**Setup credentials again**
+**Setup credentials again:**
 
-- on Jenkins VM: 
-    - remove old config file in ~/.kube/ (only if new cluster has the same name as the old cluster)
-    - get new credentials: 
-        ```bash 
-            az aks get-credentials --resource-group myAKSCluster --name myAKSCluster 
-        ```
-    - copy the new generate config file from ~/.kube/ to /var/lib/jenkins 
-    - set ownership of config file to jenkins user + jenkins group 
-        ```bash
-        sudo chown jenkins:jenkins /var/lib/jenkins/config
-        ```
-- on Kubernetes VM: 
-    - if new cluster has same name as the old cluster: remove config file in ~/.kube/
-    - get new credentials: 
-        ```bash 
-            az aks get-credentials --resource-group myAKSCluster --name myAKSCluster 
-        ```
+* on Jenkins VM:
+  * remove old config file in ~/.kube/ (only if new cluster has the same name as the old cluster)
+  * get new credentials:
+    ```bash
+    az aks get-credentials --resource-group myAKSCluster --name myAKSCluster
+    ```
+  * copy the new generate config file from ~/.kube/ to /var/lib/jenkins
+  * set ownership of config file to jenkins user + jenkins group
+    ```bash
+    sudo chown jenkins:jenkins /var/lib/jenkins/config
+    ```
+* on Kubernetes VM:
+  * if new cluster has same name as the old cluster: remove config file in ~/.kube/
+  * get new credentials:
+    ```bash
+    az aks get-credentials --resource-group myAKSCluster --name myAKSCluster
+    ```
+
 
 ## Cluster management
 
@@ -198,8 +199,8 @@ az acr repository list --name $ACR_NAME --output table
 
 (<https://docs.microsoft.com/en-us/azure/aks/kubernetes-helm>)
 
-- Install Helm on your local machine (<https://github.com/helm/helm#install>)
-- Create a service account and an according role-binding for Tiller (necessary in a  RBAC-enabled cluster):
+* Install Helm on your local machine (<https://github.com/helm/helm#install>)
+* Create a service account and an according role-binding for Tiller (necessary in a  RBAC-enabled cluster):
     ```yaml
     apiVersion: v1
     kind: ServiceAccount
@@ -221,11 +222,11 @@ az acr repository list --name $ACR_NAME --output table
         namespace: kube-system
     ```
 
-- Apply it to Kubernetes with:
+* Apply it to Kubernetes with:
     ```bash
     kubectl apply -f helm-rbac.yaml
     ````
-- Alternatively via command-line:
+* Alternatively via command-line:
     ```bash
     kubectl create serviceaccount --namespace kube-system tiller \
     kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller \
