@@ -3,6 +3,7 @@ Setup
 
 .. toctree::
 
+    ide
     kubernetes-cluster
     cicd
 
