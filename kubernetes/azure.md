@@ -204,3 +204,25 @@ az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --query "servi
 ```bash
 az acr show --name $ACR_NAME --resource-group $RESOURCE_GROUP --query "id" --output tsv
 ```
+
+## Static IP addresses
+
+List all static IP addresses:
+```bash
+az network public-ip list
+```
+
+Show IP address of `MICO-PublicIP`:
+```bash
+az network public-ip show --resource-group $RESOURCE_GROUP_NODE --name MICO-PublicIP --query ipAddress --output tsv
+```
+
+Create new static IP address with name `MICO-PublicIP`:
+```bash
+az network public-ip create --resource-group $RESOURCE_GROUP_NODE --name MICO-PublicIP --allocation-method static
+```
+
+Delete static IP address with name `kubernetes-aa7005...`:
+```bash
+az network public-ip delete -g $RESOURCE_GROUP -n kubernetes-aa70055e8fc8911e88c2ad233499c1fd
+```
