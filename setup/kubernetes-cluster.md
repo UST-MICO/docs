@@ -169,7 +169,7 @@ spec:
   loadBalancerIP: 40.68.22.7
   type: LoadBalancer
   ports:
-  - port: 4200
+  - port: 80
     targetPort: 80
   selector:
     run: mico-admin
@@ -180,7 +180,7 @@ To check the external endpoints of a service:
 kubectl get svc mico-admin-service
 ```
 
-The dashboard of the service `mico-admin` is accessible via [http://40.68.22.7:4200/dashboard](http://40.68.22.7:4200/dashboard).
+The dashboard of the service `mico-admin` is accessible via [http://40.68.22.7/dashboard](http://40.68.22.7/dashboard).
 
 *Side note:* It was not possible to expose the deployment `mico-admin` via the command `kubectl expose deployment mico-admin --external-ip=40.68.22.7 ...` because it created a complete new IP address instead of just using the passed external IP address.
 
