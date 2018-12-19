@@ -6,6 +6,7 @@ Setup
     ide
     kubernetes-cluster
     cicd
+    ../dev/config/index
 
 This chapter covers all information about the current MICO setup.
 

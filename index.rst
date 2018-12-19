@@ -22,7 +22,6 @@ Mico is a project for designing, deploying and managing :term:`applications <app
    :caption: Contents:
 
    dev/mockups/index
-   dev/config/index
    service_description
    domain_model
    database
