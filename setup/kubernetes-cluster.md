@@ -206,14 +206,16 @@ For more information see [Tutorial: Deploy and use Azure Container Registry](htt
 
 ### Grant Kuberentes Cluster access to ACR
 
+When you create an AKS cluster, Azure also creates a service principal. We will use this auto-generated service principal for authentication with the ACR registry.
+
 **[Grant AKS read access to ACR](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks#grant-aks-access-to-acr)**:
 ```bash
 #!/bin/bash
 
-AKS_RESOURCE_GROUP=ust-mico-resourcegroup
-AKS_CLUSTER_NAME=ust-mico-cluster
-ACR_RESOURCE_GROUP=ust-mico-resourcegroup
-ACR_NAME=ustmicoregistry
+AKS_RESOURCE_GROUP=$RESOURCE_GROUP
+AKS_CLUSTER_NAME=$CLUSTER_NAME
+ACR_RESOURCE_GROUP=$RESOURCE_GROUP
+ACR_NAME=$ACR_NAME
 
 # Get the id of the service principal configured for AKS
 CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
@@ -231,6 +233,152 @@ az role assignment create --assignee $CLIENT_ID --role Reader --scope $ACR_ID
 ```bash
 az acr repository list --name $ACR_NAME --output table
 ```
+
+
+## Knative Build
+
+[Knative Build](https://github.com/knative/build) is used to achieve a *Source-to-Image workflow*. [Knative Serving](https://github.com/knative/serving) is currently not used.
+
+### Installation
+
+**[Installing Knative Build only](https://github.com/knative/docs/blob/master/install/Knative-with-AKS.md#installing-knative-build-only):**
+```bash
+# Install Knative Build and its dependencies:
+kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/build.yaml
+
+# Monitor the Knative components:
+kubectl get pods --namespace knative-build
+```
+
+### Authentication to Azure Container Registry
+
+There are already at least two `Service Principals` for following requirements:
+* Read access from the AKS cluster to `pull` images
+* Write access from the Jenkins Pipeline to `push` images
+
+Now it's required to create another `Service Principal` with write access to the registry.
+
+[Create a `Service Principal`](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal#create-a-service-principal):
+```bash
+#!/bin/bash
+SERVICE_PRINCIPAL_NAME=ust-mico-acr-knative-build
+
+ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
+
+SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role contributor --query password --output tsv)
+SP_APP_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv)
+
+echo "Service principal ID: $SP_APP_ID"
+echo "Service principal password: $SP_PASSWD"
+```
+
+Create a new namespace `build-bot`:
+```bash
+kubectl create namespace build-bot
+```
+
+Create a `Secret` with the name `build-bot-acr-secret`:
+```bash
+kubectl create secret docker-registry build-bot-acr-secret --docker-server $ACR_NAME.azurecr.io --docker-username $SP_APP_ID --docker-password $SP_PASSWD --namespace=build-bot
+```
+
+Create a `ServiceAccount` with the name `build-bot-acr`:
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot-acr
+  namespace: build-bot
+secrets:
+- name: build-bot-acr-secret
+```
+
+### Authentication to Docker Hub
+
+Create a new namespace `build-bot` (if not yet created):
+```bash
+kubectl create namespace build-bot
+```
+
+Create a `Secret` with the name `build-bot-dockerhub-secret`:
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/basic-auth
+metadata:
+  name: build-bot-dockerhub-secret
+  namespace: build-bot
+  annotations:
+    build.knative.dev/docker-0: https://index.docker.io/v1/
+data:
+  # Use 'echo -n "username" | base64 -w 0' to generate this string
+  username: BASE64_ENCODED_USERNAME
+  # Use 'echo -n "password" | base64 -w 0' to generate this string
+  password: BASE64_ENCODED_PASSWORD
+```
+
+Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `service-account.yaml`:
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot-dockerhub
+  namespace: build-bot
+secrets:
+- name: build-bot-dockerhub-secret
+```
+
+Apply the manifest files to your cluster:
+```bash
+kubectl apply -f docker-secret.yaml && kubectl apply -f service-account.yaml
+```
+
+### Build
+
+**Examples:**
+
+Build and push to ACR:
+```yaml
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: build-hello
+  namespace: build-bot
+spec:
+  serviceAccountName: build-bot-acr
+  source:
+    git:
+      url: https://github.com/dgageot/hello.git
+      revision: master
+  steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor:debug # debug includes a shell
+    args:
+    - --dockerfile=/workspace/Dockerfile
+    - --destination=ustmicoregistry.azurecr.io/samples/hello:v1
+```
+
+Build and push to DockerHub:
+```yaml
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: build-hello
+  namespace: build-bot
+spec:
+  serviceAccountName: build-bot-dockerhub
+  source:
+    git:
+      url: https://github.com/dgageot/hello.git
+      revision: master
+  steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor
+    args:
+    - --dockerfile=/workspace/Dockerfile
+    - --destination=docker.io/ustmico/hello
+```
+
 
 ## Setup Helm & Tiller
 
