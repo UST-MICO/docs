@@ -66,3 +66,11 @@ Jenkins Setup
 
             WEB_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
             kubectl set image deployment/mico-admin mico-admin=$WEB_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
+
+Adjust heap size of JRE
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Open the file `/etc/default/jenkins`
+* Search for `JAVA_ARGS= '-Xmx256m'` (default)
+* Remove the `#` to uncomment the line
+* Adjust the size to the desired value by changing the numeric value, e.g. to 1024
