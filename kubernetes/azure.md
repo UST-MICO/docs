@@ -183,6 +183,11 @@ az acr login --name $ACR_NAME
 az acr repository list --name $ACR_NAME --output table
 ```
 
+**List image tags (latest 10 tags of repository `mico-core`):**
+```bash
+az acr repository show-tags --name $ACR_NAME --repository mico-core --top 10 --orderby time_desc --output table
+```
+
 **Get credentials:**
 ```bash
 az acr credential show --name $ACR_NAME

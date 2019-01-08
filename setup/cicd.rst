@@ -40,7 +40,7 @@ Jenkins Setup
 * Create a Github Webhook: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-github-webhook>`_
 * Push the Docker image(s) to Azure Container Registry (ACR) manually (only first time)
 * Add the following build scripts:
-    * Build multi-module MICO project with maven: :bash:`mvn clean compile package -DskipTests`
+    * Build multi-module MICO project with maven: :bash:`mvn clean compile package -Dmaven.test.skip=true`
     * Build and push MICO-Core Docker image: 
         .. code-block:: bash
 
