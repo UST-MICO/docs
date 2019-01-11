@@ -241,10 +241,10 @@ az acr repository list --name $ACR_NAME --output table
 
 ### Installation
 
-**[Installing Knative Build only](https://github.com/knative/docs/blob/master/install/Knative-with-AKS.md#installing-knative-build-only):**
+**[Installing Knative](https://github.com/knative/docs/blob/master/install/Knative-with-AKS.md#installing-knative):**
 ```bash
 # Install Knative Build and its dependencies:
-kubectl apply --filename https://github.com/knative/serving/releases/download/v0.2.2/build.yaml
+kubectl apply --filename https://github.com/knative/build/releases/download/v0.3.0/release.yaml
 
 # Monitor the Knative components:
 kubectl get pods --namespace knative-build
