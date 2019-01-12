@@ -39,33 +39,57 @@ Jenkins Setup
 * Create a new Jenkins project: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-jenkins-project>`_
 * Create a Github Webhook: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-github-webhook>`_
 * Push the Docker image(s) to Azure Container Registry (ACR) manually (only first time)
+* To be able to run the integration tests, DockerHub credentials with Base64 encoding are required. Provide them as environment variables. For more information see :doc:`mico-core/integration-tests`. Set them by adjusting `~/.bashrc`:
+    .. code-block:: bash
+
+        export DOCKERHUB_USERNAME_BASE64=*****
+        export DOCKERHUB_PASSWORD_BASE64=*****
 * Add the following build scripts:
-    * Build multi-module MICO project with maven: :bash:`mvn clean compile package -Dmaven.test.skip=true`
+    * Build multi-module MICO project with maven: :bash:`mvn clean compile package -B -DskipTests`
+    * Execute unit tests with maven: :bash:`mvn test`
+    * Execute integration tests with maven: :bash:`mvn failsafe:integration-test`
+    * [Optional] Stop the build if an integration test fails: :bash:`mvn verify`
     * Build and push MICO-Core Docker image: 
         .. code-block:: bash
 
-            WEB_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
-            docker build -t $WEB_IMAGE_NAME ./mico-core
+            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
+            docker build -t $ACR_IMAGE_NAME -f Dockerfile.mico-core .
             docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}
-            docker push $WEB_IMAGE_NAME
+            docker push $ACR_IMAGE_NAME
+            DOCKERHUB_IMAGE_NAME="ustmico/mico-core:latest"
+            docker tag $ACR_IMAGE_NAME $DOCKERHUB_IMAGE_NAME
+            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
+            docker push $DOCKERHUB_IMAGE_NAME
+
     * Deploy MICO-Core to Kubernetes:
         .. code-block:: bash
 
-            WEB_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
-            kubectl set image deployment/mico-core mico-core=$WEB_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
+            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
+            kubectl set image deployment/mico-core mico-core=$ACR_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
+
     * Build and push MICO-Frontend Docker image:
         .. code-block:: bash
 
-            WEB_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
-            docker build -t $WEB_IMAGE_NAME ./mico-admin
+            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
+            docker build -t $ACR_IMAGE_NAME -f Dockerfile.mico-admin .
             docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}
-            docker push $WEB_IMAGE_NAME
+            docker push $ACR_IMAGE_NAME
+            DOCKERHUB_IMAGE_NAME="ustmico/mico-admin:latest"
+            docker tag $ACR_IMAGE_NAME $DOCKERHUB_IMAGE_NAME
+            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
+            docker push $DOCKERHUB_IMAGE_NAME
 
     * Deploy MICO-Frontend to Kubernetes:
         .. code-block:: bash
 
-            WEB_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
-            kubectl set image deployment/mico-admin mico-admin=$WEB_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
+            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
+            kubectl set image deployment/mico-admin mico-admin=$ACR_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
+
+* Add the following post-build actions:
+    * `Discard Old Builds` (Plugin `Discard Old Build <https://wiki.jenkins.io/display/JENKINS/Discard+Old+Build+plugin>`_ required)
+        
+        * `Max # of builds to keep`: 10 (or similar)
+        * `Status to discard`: Check `Unstable` + `Failure`   
 
 Adjust heap size of JRE
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,4 +97,8 @@ Adjust heap size of JRE
 * Open the file `/etc/default/jenkins`
 * Search for `JAVA_ARGS= '-Xmx256m'` (default)
 * Remove the `#` to uncomment the line
-* Adjust the size to the desired value by changing the numeric value, e.g. to 1024
+* Adjust the size to the desired value
+* Example:
+    .. code-block:: bash
+
+        JAVA_ARGS="-Xmx3g"
