@@ -39,7 +39,7 @@ Jenkins Setup
 * Create a new Jenkins project: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-jenkins-project>`_
 * Create a Github Webhook: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-github-webhook>`_
 * Push the Docker image(s) to Azure Container Registry (ACR) manually (only first time)
-* To be able to run the integration tests, DockerHub credentials with Base64 encoding are required. Provide them as environment variables. For more information see :doc:`mico-core/integration-tests`. Set them by adjusting `~/.bashrc`:
+* To be able to run the integration tests, DockerHub credentials with Base64 encoding are required. Provide them as environment variables. For more information see :doc:`mico-core/tests/integration-tests`. Set them by adjusting `~/.bashrc`:
     .. code-block:: bash
 
         export DOCKERHUB_USERNAME_BASE64=*****
