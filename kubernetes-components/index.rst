@@ -7,6 +7,8 @@ Kubernetes Components
     azure
     istio
     knative
+    helm
+    prometheus
 
 MICO runs and operates on Kubernetes.
 This chapter describes different hosting environment and relevant third-party components like Istio and Knative.
