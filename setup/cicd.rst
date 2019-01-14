@@ -29,7 +29,7 @@ Prerequisites
 Kubernetes Setup
 ----------------
 
-Create *Azure Kubernetes Service (AKS)* and *Azure Container Registry (ACR)* like described in :doc:`Kubernetes cluster <./kubernetes-cluster>`.
+Create *Azure Kubernetes Service (AKS)* and *Azure Container Registry (ACR)* like described in :doc:`setup/Kubernetes <./kubernetes>`.
 
 Jenkins Setup
 -------------

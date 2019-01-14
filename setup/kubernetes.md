@@ -1,4 +1,4 @@
-# Kubernetes Cluster
+# Kubernetes
 
 MICO runs on the Azure Kubernetes Service (AKS).
 

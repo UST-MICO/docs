@@ -27,7 +27,7 @@ Mico is a project for designing, deploying and managing :term:`applications <app
    database
    restapi.md
    setup/index
-   kubernetes/index
+   kubernetes-components/index
    adr/index
    glossary
 

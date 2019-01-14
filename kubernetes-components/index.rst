@@ -1,5 +1,5 @@
-Kubernetes
-==========
+Kubernetes Components
+=====================
 
 .. toctree::
 
