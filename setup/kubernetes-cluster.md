@@ -2,38 +2,38 @@
 
 MICO runs on the Azure Kubernetes Service (AKS).
 
-## Environment
+## First steps
 
-**Names:**
+To connect to the cluster you need two command-line tools:
+* *kubectl*: [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+* Azure CLI *az*: [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+To be able to execute the cluster related commands set following environment variables:
 ```bash
 export LOCATION=westeurope
 export RESOURCE_GROUP=ust-mico-resourcegroup
 export CLUSTER_NAME=ust-mico-cluster
 export ACR_NAME=ustmicoregistry
-```
-
-Automatically created second resource group:
-```bash
 export RESOURCE_GROUP_NODE=MC_$RESOURCE_GROUP\_$CLUSTER_NAME\_$LOCATION
 ```
 
-**Switch context of `kubectl`:**
-```bash
-kubectl config use-context $CLUSTER_NAME-admin
-```
-
-**Login:**
+Sign in to Azure ([more information](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli)):
 ```bash
 az login
 ```
 
-**Get credentials:**
+Configure `kubectl` to connect to the cluster ([more information](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough#connect-to-the-cluster)):
 ```bash
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
 ```
 
 If a different object with the same name already exists in your cluster configuration, use `--overwrite-existing` to override it.
 
+If you use `kubectl` to connect to multiple clusters, it's useful to use multiple contexts.
+To switch to the automatically created context of the MICO cluster, use
+```bash
+kubectl config use-context $CLUSTER_NAME-admin
+```
 
 ## Cluster details
 
