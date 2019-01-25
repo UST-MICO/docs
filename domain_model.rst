@@ -10,11 +10,31 @@ Represents an application represented as a set of instances of a `MicoService`_
 
 *Required fields*
 
+    * shortName
+        A brief name for the application intended for use as a unique identifier.
+
+    * name
+        The name of the artifact. Intended for humans.
+
+    * version
+        The version of this application.
+
+    * description
+        Human readable description of this application.
+
     * services
-        List with id's of services the application is composed of.
+        The services this application is composed of.
 
     * deploymentInfo
-        Necessary information for deployment of the application.
+        The information necessary for deploying this application.
+
+*Optional fields*
+
+    * contact
+        Human readable contact information for support purposes.
+
+    * owner
+        Human readable information for the application owner who is responsible for this application.
 
 MicoApplicationDeploymentInfo
 -----------------------------
@@ -25,7 +45,7 @@ Represents the information necessary for deploying an application with all servi
 *Required fields*
 
     * serviceDeploymentInfos
-        The service deployment information for each service this application is composed of.
+        The service deployment info for each service this application is composed of (service id -> service deployment info).
 
 MicoService
 ===========
@@ -48,15 +68,21 @@ Represents a service in the context of MICO.
         Human readable description of this service.
 
     * serviceInterfaces
-        List of interfaces provided by this service.
+        The list of interfaces provided by this service.
 
-    * vcsRoot
-        The URL to the root directory, e.g. the corresponding GitHub respository.
+    * serviceCrawlingOrigin
+        Indicates where this service originates from, e.g., GitHub (downloaded and built by MICO) or DockerHub (ready-to-use image).
+
+*Optional fields*
+
+    * dependencies
+        The list of services that this service requires in order to run normally.
+
+    * predecessor
+        Same MicoService with previous version.
 
     * dockerfilePath
         The relative (to vcsRoot) path to the Dockerfile.
-
-*Optional fields*
 
     * dependencies
         List of services this service requires in order to run normally.
@@ -66,6 +92,12 @@ Represents a service in the context of MICO.
 
     * owner
         Human readable information for the service owner who is responsible for this service.
+
+    * vcsRoot
+        The URL to the root directory of, e.g., the corresponding GitHub repository.
+
+    * dockerImageUri
+        The fully qualified URI to the image on DockerHub. Either set after the image has been built by MICO (if the service originates from GitHub) or set by the user directly.
 
 MicoServiceDeploymentInfo
 -------------------------
@@ -103,8 +135,11 @@ Represents a dependency of a `MicoService`_.
 
 *Required fields*
 
-    * serviceId
-        The id of the dependend service.
+    * service
+        This is the `MicoService`_ that requires (depends on) the `MicoServiceDependency`_ #dependendService.
+
+    *  dependendService
+        This is the `MicoService`_ dependend by `MicoService`_ #service.
 
     * minVersion
         The minimum version of the depended service that is supported.
@@ -120,8 +155,8 @@ MicoServiceInterface
 
 *Required fields*
 
-    * serviceId
-        The id of the parent service.
+    * serviceInterfaceName
+        The name of this `MicoServiceInterface`_
 
     * ports 
         The list of ports.
@@ -234,6 +269,8 @@ The deployment strategy to use to replace an existing `MicoService`_ with new on
 
     * type
         The type of this deployment strategy, can Recreate or RollingUpdate. Default is RollingUpdate.
+
+*Optional fields*
 
     * maxInstancesOnTopPercent
         The maximum number of instances that can be scheduled above the desired number of instances during the update. Value can be an absolute number or a percentage of desired instances. This can not be 0 if maxUnavailable is 0. Absolute number is calculated from percentage by rounding up.If both fields are specified, the percentage will be used. Defaults to 25%.
