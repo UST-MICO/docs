@@ -9,6 +9,7 @@ Kubernetes Components
     knative
     helm
     prometheus
+    kube-state-metrics
 
 MICO runs and operates on Kubernetes.
 This chapter describes different hosting environment and relevant third-party components like Istio and Knative.
