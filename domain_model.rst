@@ -93,8 +93,11 @@ Represents a service in the context of MICO.
     * owner
         Human readable information for the service owner who is responsible for this service.
 
-    * vcsRoot
-        The URL to the root directory of, e.g., the corresponding GitHub repository.
+    * gitCloneUrl
+        The URL to clone the corresponding GitHub repository.
+
+    * gitReleaseInfoUrl
+        The URL to the get the information about a specific git release.
 
     * dockerImageUri
         The fully qualified URI to the image on DockerHub. Either set after the image has been built by MICO (if the service originates from GitHub) or set by the user directly.
@@ -158,7 +161,7 @@ MicoServiceInterface
     * serviceInterfaceName
         The name of this `MicoServiceInterface`_
 
-    * ports 
+    * ports
         The list of ports.
 
 *Optional fields*
@@ -203,9 +206,9 @@ Represents a basic port with a port number and port type (protocol).
 
     * number
         The port number.
-    
+
     * type
-        The type (protocol) of this port. 
+        The type (protocol) of this port.
 
 MicoImageContainer
 ==================
@@ -218,7 +221,7 @@ Represents a container running in a Kubernetes Pod.
     * image
         The name of the Docker image. Default is the `MicoService`_ shortname
 
-    * ports 
+    * ports
         The list of `MicoPort`_ for this service.
 
 *Optional fields*
@@ -252,7 +255,7 @@ Represents a resource constraint specifying the CPU units and memory. Can be use
             * 1 GCP Core
             * 1 Azure vCore
             * 1 IBM vCPU
-            * 1 Hyperthread on a bare-metal Intel processor with Hyperthreading. 
+            * 1 Hyperthread on a bare-metal Intel processor with Hyperthreading.
 
             Can also be specified as a fraction up to precision 0.001.
 
