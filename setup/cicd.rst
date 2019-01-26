@@ -1,7 +1,7 @@
-Continous Integration & Continous Deployment
-============================================
+CI/CD Pipeline
+==============
 
-Describes setup of a Continous Integration and Continous Deployment Pipeline with Kubernetes, Jenkins, and Docker hosted on Microsoft Azure. 
+Describes setup of a Continous Integration and Continous Deployment Pipeline with Kubernetes, Jenkins, and Docker hosted on Microsoft Azure.
 
 .. role:: bash(code)
     :language: bash
@@ -19,7 +19,7 @@ Prerequisites
     * :bash:`sudo nano /etc/profile.d/maven.sh`
     * Add the following lines to maven.sh:
         .. code-block:: bash
-        
+
             export JAVA_HOME=<PATH_TO_YOUR_JAVA_HOME>
             export M2_HOME=/opt/maven
             export MAVEN_HOME=/opt/maven
@@ -49,7 +49,7 @@ Jenkins Setup
     * Execute unit tests with maven: :bash:`mvn test`
     * Execute integration tests with maven: :bash:`mvn failsafe:integration-test`
     * [Optional] Stop the build if an integration test fails: :bash:`mvn verify`
-    * Build and push MICO-Core Docker image: 
+    * Build and push MICO-Core Docker image:
         .. code-block:: bash
 
             ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
@@ -87,9 +87,9 @@ Jenkins Setup
 
 * Add the following post-build actions:
     * `Discard Old Builds` (Plugin `Discard Old Build <https://wiki.jenkins.io/display/JENKINS/Discard+Old+Build+plugin>`_ required)
-        
+
         * `Max # of builds to keep`: 10 (or similar)
-        * `Status to discard`: Check `Unstable` + `Failure`   
+        * `Status to discard`: Check `Unstable` + `Failure`
 
 Adjust heap size of JRE
 ~~~~~~~~~~~~~~~~~~~~~~~
