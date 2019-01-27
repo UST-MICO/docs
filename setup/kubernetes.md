@@ -164,7 +164,7 @@ metadata:
   labels:
     run: mico-admin
   name: mico-admin-service
-  namespace: default
+  namespace: mico-system
 spec:
   loadBalancerIP: 40.68.22.7
   type: LoadBalancer
@@ -272,14 +272,14 @@ echo "Service principal ID: $SP_APP_ID"
 echo "Service principal password: $SP_PASSWD"
 ```
 
-Create a new namespace `build-bot`:
+Create a new namespace `mico-build-bot`:
 ```bash
-kubectl create namespace build-bot
+kubectl create namespace mico-build-bot
 ```
 
 Create a `Secret` with the name `build-bot-acr-secret`:
 ```bash
-kubectl create secret docker-registry build-bot-acr-secret --docker-server $ACR_NAME.azurecr.io --docker-username $SP_APP_ID --docker-password $SP_PASSWD --namespace=build-bot
+kubectl create secret docker-registry build-bot-acr-secret --docker-server $ACR_NAME.azurecr.io --docker-username $SP_APP_ID --docker-password $SP_PASSWD --namespace=mico-build-bot
 ```
 
 Create a `ServiceAccount` with the name `build-bot-acr`:
@@ -288,16 +288,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: build-bot-acr
-  namespace: build-bot
+  namespace: mico-build-bot
 secrets:
 - name: build-bot-acr-secret
 ```
 
 ### Authentication to Docker Hub
 
-Create a new namespace `build-bot` (if not yet created):
+Create a new namespace `mico-build-bot` (if not yet created):
 ```bash
-kubectl create namespace build-bot
+kubectl create namespace mico-build-bot
 ```
 
 Create a `Secret` with the name `build-bot-dockerhub-secret`:
@@ -307,30 +307,41 @@ kind: Secret
 type: kubernetes.io/basic-auth
 metadata:
   name: build-bot-dockerhub-secret
-  namespace: build-bot
+  namespace: mico-build-bot
   annotations:
     build.knative.dev/docker-0: https://index.docker.io/v1/
 data:
   # Use 'echo -n "username" | base64 -w 0' to generate this string
-  username: BASE64_ENCODED_USERNAME
+  username: ${DOCKERHUB_USERNAME_BASE64}
   # Use 'echo -n "password" | base64 -w 0' to generate this string
-  password: BASE64_ENCODED_PASSWORD
+  password: ${DOCKERHUB_PASSWORD_BASE64}
 ```
 
-Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `service-account.yaml`:
+Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `build-bot-dockerhub-service-account.yaml`:
 ```yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: build-bot-dockerhub
-  namespace: build-bot
+  namespace: mico-build-bot
 secrets:
 - name: build-bot-dockerhub-secret
 ```
 
+Provide your DockerHub credentials in Base64 encoding as environment variables:
+```bash
+export DOCKERHUB_USERNAME_BASE64=$(echo -n "username" | base64 -w 0)
+export DOCKERHUB_PASSWORD_BASE64=$(echo -n "password" | base64 -w 0)
+```
+
+Insert the environment variables into the secret configuration file:
+```bash
+envsubst < build-bot-dockerhub-secret.yaml > build-bot-dockerhub-secret-with-credentials.yaml
+```
+
 Apply the manifest files to your cluster:
 ```bash
-kubectl apply -f docker-secret.yaml && kubectl apply -f service-account.yaml
+kubectl apply -f build-bot-dockerhub-secret-with-credentials.yaml build-bot-dockerhub-service-account.yaml
 ```
 
 ### Build
@@ -343,7 +354,7 @@ apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
   name: build-hello
-  namespace: build-bot
+  namespace: mico-build-bot
 spec:
   serviceAccountName: build-bot-acr
   source:
@@ -364,7 +375,7 @@ apiVersion: build.knative.dev/v1alpha1
 kind: Build
 metadata:
   name: build-hello
-  namespace: build-bot
+  namespace: mico-build-bot
 spec:
   serviceAccountName: build-bot-dockerhub
   source:
