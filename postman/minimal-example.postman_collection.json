@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "0a53af76-7a20-4ab8-9f7d-18ed1223d8e2",
+		"name": "Minimal Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. createApplication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"shortName\": \"hello\",\r\n  \"name\": \"hello-application\",\r\n  \"version\": \"v1.0.0\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2. importMicoServiceFromGitHub",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "https://github.com/UST-MICO/hello"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/import/github",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"import",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3. createServiceInterface",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serviceInterfaceName\": \"hello-service\",\r\n    \"ports\": [\r\n        {\r\n            \"number\": 80,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 80\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version",
+						"interfaces",
+						""
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. addServiceToApplication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shortName\": \"hello\",\r\n    \"version\": \"v1.0.0\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/services",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"services"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. deploy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploy"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6. getInterfacePublicIpByName",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName/publicIP/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version",
+						"interfaces",
+						":serviceInterfaceName",
+						"publicIP",
+						""
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceInterfaceName",
+							"value": "{{serviceInterfaceName}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7. getApplicationDeploymentInformation",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploymentInformation"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllApplications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

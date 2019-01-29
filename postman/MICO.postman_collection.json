@@ -1,0 +1,1355 @@
+{
+	"info": {
+		"_postman_id": "397e15d3-2b12-4fff-948a-062c119a7823",
+		"name": "MICO",
+		"description": "A Management System for Microservice Compositions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "actuator",
+			"item": [
+				{
+					"name": "links",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/health",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/health/:component",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"health",
+								":component"
+							],
+							"variable": [
+								{
+									"key": "component"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/health/:component/:instance",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"health",
+								":component",
+								":instance"
+							],
+							"variable": [
+								{
+									"key": "component"
+								},
+								{
+									"key": "instance"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/info",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for actuator"
+		},
+		{
+			"name": "applications",
+			"item": [
+				{
+					"name": "getAllApplications",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newApplication"
+						},
+						"url": {
+							"raw": "http://{{host}}/applications",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplicationsByShortName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								""
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplicationByShortNameAndVersion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateApplication",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "application"
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deploy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version/deploy",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"deploy"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplicationDeploymentInformation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"deploymentInformation"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addServiceToApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "serviceFromBody"
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version/services",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"services"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for applications"
+		},
+		{
+			"name": "error",
+			"item": [
+				{
+					"name": "error",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "HEAD",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "error",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/error",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"error"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for error"
+		},
+		{
+			"name": "services",
+			"item": [
+				{
+					"name": "getServiceList",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createService",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newService"
+						},
+						"url": {
+							"raw": "http://{{host}}/services",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "importMicoServiceFromGitHub",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "url"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/import/github",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								"import",
+								"github"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVersionsOfService",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								""
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getServiceByShortNameAndVersion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateService",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"shortName\": \"hello\",\r\n    \"name\": \"UST-MICO/hello\",\r\n    \"version\": \"v2.0.0\",\r\n    \"gitCloneUrl\": \"https://github.com/UST-MICO/hello.git\",\r\n    \"dockerfilePath\": \"Dockerfile\",\r\n    \"dockerImageUri\": null\r\n}\r\n"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteService",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDependees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependees"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createNewDependee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newServiceDependee"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependees"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllDependees",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependees"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDependee",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependees/:shortNameToDelete/:versionToDelete",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependees",
+								":shortNameToDelete",
+								":versionToDelete"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "shortNameToDelete",
+									"value": "{{shortNameToDelete}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								},
+								{
+									"key": "versionToDelete",
+									"value": "{{versionToDelete}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDependers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependers",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependers"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInterfacesOfService",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								""
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createServiceInterface",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "serviceInterface"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								""
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInterfaceByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								":serviceInterfaceName"
+							],
+							"variable": [
+								{
+									"key": "serviceInterfaceName",
+									"value": "{{serviceInterfaceName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteServiceInterface",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								":serviceInterfaceName"
+							],
+							"variable": [
+								{
+									"key": "serviceInterfaceName",
+									"value": "{{serviceInterfaceName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getInterfacePublicIpByName",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName/publicIP/",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								":serviceInterfaceName",
+								"publicIP",
+								""
+							],
+							"variable": [
+								{
+									"key": "serviceInterfaceName",
+									"value": "{{serviceInterfaceName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for services"
+		}
+	]
+}
