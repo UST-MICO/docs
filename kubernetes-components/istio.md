@@ -47,7 +47,7 @@ Helm parameters:
 * `gateways.istio-ingressgateway.enabled=false`: Ingress gateway won't be installed
 * `gateways.istio-egressgateway.enabled=false`: Egress gateway won't be installed
 * `galley.enabled=false`: Galley won't be installed
-* `sidecarInjectorWebhook.enabled=true`: Automatic sidecar-injector will be installed (default)
+* `sidecarInjectorWebhook.enabled=false`: Automatic sidecar-injector won't be installed
 * `mixer.policy.enabled=false`: Mixer Policy won't be installed
 * `mixer.telemetry.enabled=true`: Mixer Telemetry will be installed (default)
 * `global.proxy.envoyStatsd.enabled=false`: Disable Statsd (default)
@@ -66,7 +66,7 @@ helm template install/kubernetes/helm/istio --name istio --namespace istio-syste
   --set gateways.istio-ingressgateway.enabled=false \
   --set gateways.istio-egressgateway.enabled=false \
   --set galley.enabled=false \
-  --set sidecarInjectorWebhook.enabled=true \
+  --set sidecarInjectorWebhook.enabled=false \
   --set mixer.policy.enabled=false \
   --set mixer.telemetry.enabled=true \
   --set global.proxy.envoyStatsd.enabled=false \

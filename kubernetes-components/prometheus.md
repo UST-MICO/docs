@@ -1,9 +1,39 @@
 # Prometheus
 
+## Installation
+
+We use the YAML files of the GitHub repository [giantswarm/prometheus](https://github.com/giantswarm/prometheus) for the installation of Prometheus and Grafana.
+
+Get yaml file:
+```bash
+wget https://raw.githubusercontent.com/giantswarm/kubernetes-prometheus/master/manifests-all.yaml -O install/kubernetes/monitoring.yaml
+```
+
+Install it:
+```bash
+kubectl apply -f install/kubernetes/monitoring.yaml
+```
+
+## Dashboard
+
 To open Prometheus dashboard, enter the following command:
 ```bash
-kubectl port-forward -n istio-system $(kubectl get pods --namespace istio-system --selector=app=prometheus --output=jsonpath="{.items..metadata.name}") 9090
+kubectl port-forward -n monitoring $(kubectl get pods --namespace monitoring --selector="app=prometheus,component=core" --output=jsonpath="{.items..metadata.name}") 9090:9090
 ```
+
+To open Grafana dashboard, enter the following command:
+```bash
+kubectl port-forward -n monitoring $(kubectl get pods --namespace monitoring --selector="app=grafana,component=core" --output=jsonpath="{.items..metadata.name}") 3000:3000
+```
+
+Login to Grafana:
+* username: admin
+* password: admin
+
+Currently installed dashboards:
+* [Kubernetes Cluster Monitoring](http://localhost:3000/dashboard/db/kubernetes-cluster-monitoring-via-prometheus)
+* [Kubernetes Pod Resources](http://localhost:3000/dashboard/db/kubernetes-pod-resources)
+* [Prometheus Stats](http://localhost:3000/dashboard/db/prometheus-stats)
 
 ## API
 
