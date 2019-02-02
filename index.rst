@@ -29,7 +29,7 @@ Mico is a project for designing, deploying and managing :term:`applications <app
    setup/index
    kubernetes-components/index
    adr/index
-   postman/index
+   debugging-testing/index
    glossary
 
 
