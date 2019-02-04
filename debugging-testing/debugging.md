@@ -10,7 +10,7 @@ Access `cypher-shell`:
 NEO4J_POD_NAME=$(kubectl get pods -n mico-system --selector=run=neo4j --output=jsonpath={.items..metadata.name})
 
 # Run bash inside the container
-kubectl exec $NEO4J_POD_NAME -n $MICO_TEST_NAMESPACE -it /bin/bash
+kubectl exec $NEO4J_POD_NAME -n mico-system -it /bin/bash
 
 # Run cypher-shell
 bash-4.4# cypher-shell
