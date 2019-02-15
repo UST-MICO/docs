@@ -173,10 +173,58 @@ az aks browse --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 
 ## Azure Container Registry (ACR)
 
-**Login:**
+**All images are stored in DockerHub in public. ACR is not used anymore.**
+
+At the beginning of the development of MICO the Azure Container Registry (ACR) was used to store the container images of the MICO system components.
+Because DockerHub was used as the container registry for the images build by MICO anyway, there was no reason two use two container registry at the same time.
+
+**Preparation:**
+
+Set environment variable:
+```bash
+export ACR_NAME=ustmicoregistry
+```
+
+Login:
 ```bash
 az acr login --name $ACR_NAME
 ```
+
+### Create Azure Container Registry (ACR)
+
+**Create ACR:**
+```bash
+az acr create --resource-group $RESOURCE_GROUP \
+--name $ACR_NAME \
+--sku Basic
+```
+
+For more information see [Tutorial: Deploy and use Azure Container Registry](https://docs.microsoft.com/en-us/azure/aks/tutorial-kubernetes-prepare-acr).
+
+### Grant Kuberentes Cluster access to ACR
+
+When you create an AKS cluster, Azure also creates a service principal. We will use this auto-generated service principal for authentication with the ACR registry.
+
+**[Grant AKS read access to ACR](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-aks#grant-aks-access-to-acr)**:
+```bash
+#!/bin/bash
+
+AKS_RESOURCE_GROUP=$RESOURCE_GROUP
+AKS_CLUSTER_NAME=$CLUSTER_NAME
+ACR_RESOURCE_GROUP=$RESOURCE_GROUP
+ACR_NAME=$ACR_NAME
+
+# Get the id of the service principal configured for AKS
+CLIENT_ID=$(az aks show --resource-group $AKS_RESOURCE_GROUP --name $AKS_CLUSTER_NAME --query "servicePrincipalProfile.clientId" --output tsv)
+
+# Get the ACR registry resource id
+ACR_ID=$(az acr show --name $ACR_NAME --resource-group $ACR_RESOURCE_GROUP --query "id" --output tsv)
+
+# Create role assignment
+az role assignment create --assignee $CLIENT_ID --role Reader --scope $ACR_ID
+```
+
+### Manage ACR
 
 **List container images:**
 ```bash

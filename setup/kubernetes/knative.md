@@ -1,74 +1,33 @@
 # Knative
 
-## Related User Stories
-
-### User Story: [Import services from GitHub](https://github.com/UST-MICO/mico/issues/26)
-
-We want to import services by entering a GitHub URL based on meta-data:
-* Repo name = service name
-* Tags = Service versions
-* Repo must contain a Dockerfile
-* Dockerfile must be on top-level
-* Import dialog could have an input field to specify the relative Dockerfile location
-
-### User Story: [Evaluate Knative build](https://github.com/UST-MICO/mico/issues/49)
-
-See [ADR-0013 Source-to-Image Workflow](../adr/0013-source-to-image-workflow.md).
-
-## Installation
-
-### On Minikube
+## Installation on Minikube
 
 See chapter [Minikube](./minikube.md) for instructions.
 
-### On Azure
+## Installation on Azure
 
 See chapter [Azure Kubernetes Service](./azure.md) for instructions.
 
 ## Source-to-Image workflow (only Knative Build)
 
-For a Source-to-Image workflow only Knative Build is required (Knative Serving is not required to create and run builds).
+**This is currently the only usage of Knative for MICO.**
 
-How to create a Kubernetes cluster is described in [Azure Kubernetes Service](./azure.md). Consider to use a less expensive VM than *Standard_DS3_v2* for this example (e.g. *Standard_B2s*).
-Note that we only want to install Knative Build (not the full Knative system). Istio is not required to run Knative Build.
+[Knative Build](https://github.com/knative/build) is used to achieve a *Source-to-Image workflow*. [Knative Serving](https://github.com/knative/serving) is currently not used.
 
-After installing Knative Build, we are ready to create and run a `Build`.
+Istio is not required to run Knative Build.
 
-How a simple `Build` can be created and be executed is written down in [Creating a simple Knative Build](https://github.com/knative/docs/blob/master/build/creating-builds.md).
+### Installation
 
-More `Build` examples: [Knative `Build` resources](https://github.com/knative/docs/blob/master/build/builds.md).
+**[Installing Knative](https://github.com/knative/docs/blob/master/install/Knative-with-AKS.md#installing-knative):**
+```bash
+# Install Knative Build and its dependencies:
+kubectl apply --filename https://github.com/knative/build/releases/download/v0.3.0/release.yaml
 
-There is already a set of curated and supported `Build Templates` available in the Knative [`build-templates`](https://github.com/knative/build-templates) repository. For a `Dockerfile` build and the subsequent push of the resulting image the usage of *Kaniko* as the `Builder` is recommended. It is also used in the [Source-to-URL workflow](#source-to-url-workflow-knative-build-serving).
-
-### Example application
-
-Apply at first a `Secret` and a `Service Account` so that the resulting image can be pushed to a docker registry (here: Docker Hub).
-
-**`build.yaml`:**
-```yaml
-apiVersion: build.knative.dev/v1alpha1
-kind: Build
-metadata:
-  name: kaniko-build
-spec:
-  serviceAccountName: build-bot
-  source:
-    git:
-      url: https://github.com/dgageot/hello.git
-      revision: master
-  steps:
-  - name: build-and-push
-    image: gcr.io/kaniko-project/executor
-    args:
-    - --dockerfile=/workspace/Dockerfile
-    - --destination=docker.io/ustmico/hello
+# Monitor the Knative components:
+kubectl get pods --namespace knative-build
 ```
 
-**Increase log level:**
-
-Add `--verbosity=debug` to `args`.
-
-### Different container registries
+### Authentication to a container registry
 
 **Different destinations:**
 
@@ -84,14 +43,154 @@ Depending on your target container registry, there are different ways to authent
 * ACR: [Azure Container Registry authentication with service principals](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal)
 * GCR: [GoogleCloudPlatform/knative-build-tutorials/docker-build/](https://github.com/GoogleCloudPlatform/knative-build-tutorials/tree/master/docker-build)
 
-The Authentication to ACR doesn't work yet!
+#### DockerHub
+
+Create a new namespace `mico-build-bot` (if not yet created):
+```bash
+kubectl create namespace mico-build-bot
+```
+
+Create a `Secret` with the name `build-bot-dockerhub-secret`:
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/basic-auth
+metadata:
+  name: build-bot-dockerhub-secret
+  namespace: mico-build-bot
+  annotations:
+    build.knative.dev/docker-0: https://index.docker.io/v1/
+data:
+  # Use 'echo -n "username" | base64 -w 0' to generate this string
+  username: ${DOCKERHUB_USERNAME_BASE64}
+  # Use 'echo -n "password" | base64 -w 0' to generate this string
+  password: ${DOCKERHUB_PASSWORD_BASE64}
+```
+
+Create a new `Service Account` manifest which is used to link the build process to the secret. Save this file as `build-bot-dockerhub-service-account.yaml`:
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot-dockerhub
+  namespace: mico-build-bot
+secrets:
+- name: build-bot-dockerhub-secret
+```
+
+Provide your DockerHub credentials in Base64 encoding as environment variables:
+```bash
+export DOCKERHUB_USERNAME_BASE64=$(echo -n "username" | base64 -w 0)
+export DOCKERHUB_PASSWORD_BASE64=$(echo -n "password" | base64 -w 0)
+```
+
+Insert the environment variables into the secret configuration file:
+```bash
+envsubst < build-bot-dockerhub-secret.yaml > build-bot-dockerhub-secret-with-credentials.yaml
+```
+
+Apply the manifest files to your cluster:
+```bash
+kubectl apply -f build-bot-dockerhub-secret-with-credentials.yaml build-bot-dockerhub-service-account.yaml
+```
+
+#### Azure Container Registry
+
+**The Authentication to ACR doesn't work yet on Azure!**
 ```log
 failed to push to destination: unexpected end of JSON input
 ```
 
 ACR is officially not supported by Kaniko: [Issue#425](https://github.com/GoogleContainerTools/kaniko/issues/425)
 
+Therefore DockerHub ist used.
+
+---
+
+There are already at least two `Service Principals` for following requirements:
+* Read access from the AKS cluster to `pull` images
+* Write access from the Jenkins Pipeline to `push` images
+
+Now it's required to create another `Service Principal` with write access to the registry.
+
+[Create a `Service Principal`](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-auth-service-principal#create-a-service-principal):
+```bash
+#!/bin/bash
+SERVICE_PRINCIPAL_NAME=ust-mico-acr-knative-build
+
+ACR_REGISTRY_ID=$(az acr show --name $ACR_NAME --query id --output tsv)
+
+SP_PASSWD=$(az ad sp create-for-rbac --name $SERVICE_PRINCIPAL_NAME --scopes $ACR_REGISTRY_ID --role contributor --query password --output tsv)
+SP_APP_ID=$(az ad sp show --id http://$SERVICE_PRINCIPAL_NAME --query appId --output tsv)
+
+echo "Service principal ID: $SP_APP_ID"
+echo "Service principal password: $SP_PASSWD"
+```
+
+Create a new namespace `mico-build-bot`:
+```bash
+kubectl create namespace mico-build-bot
+```
+
+Create a `Secret` with the name `build-bot-acr-secret`:
+```bash
+kubectl create secret docker-registry build-bot-acr-secret --docker-server $ACR_NAME.azurecr.io --docker-username $SP_APP_ID --docker-password $SP_PASSWD --namespace=mico-build-bot
+```
+
+Create a `ServiceAccount` with the name `build-bot-acr`:
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: build-bot-acr
+  namespace: mico-build-bot
+secrets:
+- name: build-bot-acr-secret
+```
+
+
+### Usage of Knative Build
+
+Now we are ready to create and run a `Build`.
+
+How a simple `Build` can be created and be executed is written down in [Creating a simple Knative Build](https://github.com/knative/docs/blob/master/build/creating-builds.md).
+
+More `Build` examples: [Knative `Build` resources](https://github.com/knative/docs/blob/master/build/builds.md).
+
+There is already a set of curated and supported `Build Templates` available in the Knative [`build-templates`](https://github.com/knative/build-templates) repository. For a `Dockerfile` build and the subsequent push of the resulting image the usage of *Kaniko* as the `Builder` is recommended. It is also used in the [Source-to-URL workflow](#source-to-url-workflow-knative-build-serving).
+
+**Example application:**
+
+Apply at first a `Secret` and a `Service Account` so that the resulting image can be pushed to a docker registry (here: Docker Hub).
+
+**`build.yaml`:**
+```yaml
+apiVersion: build.knative.dev/v1alpha1
+kind: Build
+metadata:
+  name: build-hello
+  namespace: mico-build-bot
+spec:
+  serviceAccountName: build-bot-dockerhub
+  source:
+    git:
+      url: https://github.com/dgageot/hello.git
+      revision: master
+  steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor
+    args:
+    - --dockerfile=/workspace/Dockerfile
+    - --destination=docker.io/ustmico/hello
+```
+
+Increase log level:
+Add `--verbosity=debug` to `args`.
+
+
 ## Deploying an application (only Knative Serving)
+
+**Knative Serving is currently not used in MICO!**
 
 There are multiple sample applications, developed on Knative, available: [Knative serving sample applications](https://github.com/knative/docs/blob/master/serving/samples/README.md)
 
@@ -172,6 +271,8 @@ kubectl get pods --watch
 How to access the service is described in section [Access a service](#access-a-service).
 
 ## Source-to-URL workflow (Knative Build + Serving)
+
+**Knative Serving is currently not used in MICO!**
 
 This section describes how to use Knative to go from source code in a git repository to a running application with a URL.
 Knative Build and Knative Serving are required.
