@@ -3,13 +3,14 @@ Setup
 
 .. toctree::
 
-    azure-kubernetes-service
+    setup
+    aks
     ide
     cicd
     kubernetes/index
 
-This chapter covers all information about the current MICO setup.
-The current MICO development environment that runs on the Azure Kubernetes Service (AKS) is described in :doc:`Azure Kubernetes Service <azure-kubernetes-service>`.
+This chapter covers all information about the current MICO setup. The setup itself is described in :doc:`MICO Setup <setup>`.
+The Azure Kubernetes Service (AKS) is the used for the current Kubernetes development environment and is described in :doc:`Azure Kubernetes Service <aks>`.
 
 More details about different Kubernetes components that are used for MICO are described in section :doc:`Kubernetes <kubernetes/index>`.
 
