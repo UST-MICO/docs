@@ -1,7 +1,7 @@
 CI/CD Pipeline
 ==============
 
-Describes setup of a Continous Integration and Continous Deployment Pipeline with Kubernetes, Jenkins, and Docker hosted on Microsoft Azure.
+Describes setup of a Continous Integration and Continous Deployment Pipeline with Kubernetes, Jenkins, and DockerHub.
 
 .. role:: bash(code)
     :language: bash
@@ -29,67 +29,23 @@ Prerequisites
 Kubernetes Setup
 ----------------
 
-Create *Azure Kubernetes Service (AKS)* and *Azure Container Registry (ACR)* like described in :doc:`setup/Azure Kubernetes Service <./azure-kubernetes-service>`.
+Create a Kubernetes cluster with *Azure Kubernetes Service (AKS)* like described in :doc:`setup/Azure Kubernetes Service <./aks>`.
 
 Jenkins Setup
 -------------
 * Deploy a Jenkins VM through the Azure Marketplace
-* Create Jenkins environment variable to hold ACR login server with the name: ACR_LOGINSERVER (`<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-jenkins-environment-variable>`_)
-* Create Jenkins credentials to access ACR: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-jenkins-credential-for-acr>`_
-* Create a new Jenkins project: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-jenkins-project>`_
+* Create Jenkins credentials to access DockerHub
 * Create a Github Webhook: `<https://docs.microsoft.com/en-us/azure/aks/jenkins-continuous-deployment#create-a-github-webhook>`_
-* Push the Docker image(s) to Azure Container Registry (ACR) manually (only first time)
 * To be able to run the integration tests, DockerHub credentials with Base64 encoding are required. Provide them as environment variables. For more information see :doc:`mico-core/tests/integration-tests`. Set them by adjusting `~/.bashrc`:
     .. code-block:: bash
 
         export DOCKERHUB_USERNAME_BASE64=*****
         export DOCKERHUB_PASSWORD_BASE64=*****
-* Add the following build scripts:
-    * Build multi-module MICO project with maven: :bash:`mvn clean compile package -B -DskipTests`
-    * Execute unit tests with maven: :bash:`mvn test`
-    * Execute integration tests with maven: :bash:`mvn failsafe:integration-test`
-    * [Optional] Stop the build if an integration test fails: :bash:`mvn verify`
-    * Build and push MICO-Core Docker image:
-        .. code-block:: bash
-
-            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
-            docker build -t $ACR_IMAGE_NAME -f Dockerfile.mico-core .
-            docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}
-            docker push $ACR_IMAGE_NAME
-            DOCKERHUB_IMAGE_NAME="ustmico/mico-core:latest"
-            docker tag $ACR_IMAGE_NAME $DOCKERHUB_IMAGE_NAME
-            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
-            docker push $DOCKERHUB_IMAGE_NAME
-
-    * Deploy MICO-Core to Kubernetes:
-        .. code-block:: bash
-
-            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-core:kube${BUILD_NUMBER}"
-            kubectl set image deployment/mico-core mico-core=$ACR_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
-
-    * Build and push MICO-Frontend Docker image:
-        .. code-block:: bash
-
-            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
-            docker build -t $ACR_IMAGE_NAME -f Dockerfile.mico-admin .
-            docker login ${ACR_LOGINSERVER} -u ${ACR_ID} -p ${ACR_PASSWORD}
-            docker push $ACR_IMAGE_NAME
-            DOCKERHUB_IMAGE_NAME="ustmico/mico-admin:latest"
-            docker tag $ACR_IMAGE_NAME $DOCKERHUB_IMAGE_NAME
-            docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}
-            docker push $DOCKERHUB_IMAGE_NAME
-
-    * Deploy MICO-Frontend to Kubernetes:
-        .. code-block:: bash
-
-            ACR_IMAGE_NAME="${ACR_LOGINSERVER}/mico-admin:kube${BUILD_NUMBER}"
-            kubectl set image deployment/mico-admin mico-admin=$ACR_IMAGE_NAME --kubeconfig /var/lib/jenkins/config
-
-* Add the following post-build actions:
-    * `Discard Old Builds` (Plugin `Discard Old Build <https://wiki.jenkins.io/display/JENKINS/Discard+Old+Build+plugin>`_ required)
-
-        * `Max # of builds to keep`: 10 (or similar)
-        * `Status to discard`: Check `Unstable` + `Failure`
+* Create a new Jenkins Pipeline project: `<https://jenkins.io/doc/book/pipeline/>`_
+    * Enable "GitHub hook trigger for GITScm polling"
+    * Provide Pipeline definition as a "Pipeline script from SCM"
+        * Use "Git" and add the repository URL to `<https://github.com/UST-MICO/mico>`_
+        * Set the script path to :bash:`Jenkinsfile`
 
 Adjust heap size of JRE
 ~~~~~~~~~~~~~~~~~~~~~~~
