@@ -57,18 +57,9 @@ For this purpose the script [`/install/kubernetes/test-setup.sh`](https://github
 
 ### Preparation
 
-Set the environment variable `MICO_TEST_NAMESPACE` to your desired namespace name (e.g. `mico-testing-1337`):
-```bash
-export MICO_TEST_NAMESPACE=mico-testing-1337
-```
+Prepare yourself to enter a name for the test namespace (e.g. `mico-testing-1337`) as well as your credentials for DockerHub.
 
-Set the following environment variables to authenticate to DockerHub:
-```bash
-export DOCKERHUB_USERNAME_BASE64=...
-export DOCKERHUB_PASSWORD_BASE64=...
-```
-
-Now you are able to execute the script `install/kubernetes/test-setup.sh`.
+Now you are able to execute the interactive setup script `install/kubernetes/test-setup.sh`.
 
 The Neo4j database needs ~5min until it is ready.
 You can check the current status with
