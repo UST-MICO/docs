@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "397e15d3-2b12-4fff-948a-062c119a7823",
+		"_postman_id": "f82236de-0e6f-4a51-8ae1-4f9b23205e33",
 		"name": "MICO",
 		"description": "A Management System for Microservice Compositions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -24,11 +24,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/actuator",
+							"raw": "http://localhost:8080/actuator",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"actuator"
 							]
@@ -51,11 +52,41 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/actuator/health",
+							"raw": "http://localhost:8080/actuator/configprops",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"configprops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/health",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
 							"path": [
 								"actuator",
 								"health"
@@ -79,11 +110,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/actuator/health/:component",
+							"raw": "http://localhost:8080/actuator/health/:component",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"actuator",
 								"health",
@@ -113,11 +145,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/actuator/health/:component/:instance",
+							"raw": "http://localhost:8080/actuator/health/:component/:instance",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"actuator",
 								"health",
@@ -151,14 +184,182 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/actuator/info",
+							"raw": "http://localhost:8080/actuator/info",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"actuator",
 								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/loggers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"loggers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/loggers/:name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"loggers",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "body"
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/loggers/:name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"loggers",
+								":name"
+							],
+							"variable": [
+								{
+									"key": "name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/metrics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"metrics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/actuator/metrics/:requiredMetricName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"actuator",
+								"metrics",
+								":requiredMetricName"
+							],
+							"variable": [
+								{
+									"key": "requiredMetricName"
+								}
 							]
 						}
 					},
@@ -185,11 +386,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications",
+							"raw": "http://localhost:8080/applications",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications"
 							]
@@ -213,14 +415,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "newApplication"
+							"raw": "newApplicationDto"
 						},
 						"url": {
-							"raw": "http://{{host}}/applications",
+							"raw": "http://localhost:8080/applications",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications"
 							]
@@ -243,15 +446,47 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/",
+							"raw": "http://localhost:8080/applications/:shortName",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications",
-								":shortName",
-								""
+								":shortName"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllVersionsOfAnApplication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName"
 							],
 							"variable": [
 								{
@@ -278,11 +513,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version",
+							"raw": "http://localhost:8080/applications/:shortName/:version",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications",
 								":shortName",
@@ -318,14 +554,52 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "application"
+							"raw": "applicationDto"
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version",
+							"raw": "http://localhost:8080/applications/:shortName/:version",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteApplication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
 							"path": [
 								"applications",
 								":shortName",
@@ -361,11 +635,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/deploy",
+							"raw": "http://localhost:8080/applications/:shortName/:version/deploy",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications",
 								":shortName",
@@ -387,7 +662,7 @@
 					"response": []
 				},
 				{
-					"name": "getApplicationDeploymentInformation",
+					"name": "getServiceDeploymentInformation",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -401,16 +676,158 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation",
+							"raw": "http://localhost:8080/applications/:shortName/:version/deploymentInformation/:serviceShortName",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications",
 								":shortName",
 								":version",
-								"deploymentInformation"
+								"deploymentInformation",
+								":serviceShortName"
+							],
+							"variable": [
+								{
+									"key": "serviceShortName",
+									"value": "{{serviceShortName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateServiceDeploymentInformation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "serviceDeploymentInfoDTO"
+						},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version/deploymentInformation/:serviceShortName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"deploymentInformation",
+								":serviceShortName"
+							],
+							"variable": [
+								{
+									"key": "serviceShortName",
+									"value": "{{serviceShortName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promoteApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newVersion"
+						},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version/promote",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"promote"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getServicesFromApplication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version/services",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"services"
 							],
 							"variable": [
 								{
@@ -442,19 +859,104 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "serviceFromBody"
+							"raw": "providedService"
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/services",
+							"raw": "http://localhost:8080/applications/:shortName/:version/services",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"applications",
 								":shortName",
 								":version",
 								"services"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteServiceFromApplication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version/services/:serviceShortName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"services",
+								":serviceShortName"
+							],
+							"variable": [
+								{
+									"key": "serviceShortName",
+									"value": "{{serviceShortName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStatusOfApplication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/applications/:shortName/:version/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"status"
 							],
 							"variable": [
 								{
@@ -491,11 +993,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -519,11 +1022,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -547,11 +1051,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -575,11 +1080,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -599,11 +1105,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -630,11 +1137,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -658,11 +1166,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/error",
+							"raw": "http://localhost:8080/error",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"error"
 							]
@@ -691,11 +1200,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services",
+							"raw": "http://localhost:8080/services",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services"
 							]
@@ -722,13 +1232,50 @@
 							"raw": "newService"
 						},
 						"url": {
-							"raw": "http://{{host}}/services",
+							"raw": "http://localhost:8080/services",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVersionsFromGitHub",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/services/import/github?url={{url}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"services",
+								"import",
+								"github"
+							],
+							"query": [
+								{
+									"key": "url",
+									"value": "{{url}}"
+								}
 							]
 						}
 					},
@@ -750,14 +1297,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "url"
+							"raw": "crawlingInfo"
 						},
 						"url": {
-							"raw": "http://{{host}}/services/import/github",
+							"raw": "http://localhost:8080/services/import/github",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								"import",
@@ -782,15 +1330,47 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/",
+							"raw": "http://localhost:8080/services/:shortName",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
-								":shortName",
-								""
+								":shortName"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAllVersionsOfService",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/services/:shortName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"services",
+								":shortName"
 							],
 							"variable": [
 								{
@@ -817,11 +1397,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version",
+							"raw": "http://localhost:8080/services/:shortName/:version",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -857,14 +1438,15 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"shortName\": \"hello\",\r\n    \"name\": \"UST-MICO/hello\",\r\n    \"version\": \"v2.0.0\",\r\n    \"gitCloneUrl\": \"https://github.com/UST-MICO/hello.git\",\r\n    \"dockerfilePath\": \"Dockerfile\",\r\n    \"dockerImageUri\": null\r\n}\r\n"
+							"raw": "service"
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version",
+							"raw": "http://localhost:8080/services/:shortName/:version",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -896,11 +1478,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version",
+							"raw": "http://localhost:8080/services/:shortName/:version",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -935,11 +1518,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"raw": "http://localhost:8080/services/:shortName/:version/dependees",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -979,11 +1563,12 @@
 							"raw": "newServiceDependee"
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"raw": "http://localhost:8080/services/:shortName/:version/dependees",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1016,11 +1601,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees",
+							"raw": "http://localhost:8080/services/:shortName/:version/dependees",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1053,11 +1639,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees/:shortNameToDelete/:versionToDelete",
+							"raw": "http://localhost:8080/services/:shortName/:version/dependees/:shortNameToDelete/:versionToDelete",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1089,6 +1676,47 @@
 					"response": []
 				},
 				{
+					"name": "getDependencyGraph",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/services/:shortName/:version/dependencyGraph",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependencyGraph"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getDependers",
 					"request": {
 						"method": "GET",
@@ -1103,11 +1731,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependers",
+							"raw": "http://localhost:8080/services/:shortName/:version/dependers",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1143,17 +1772,17 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
 								":version",
-								"interfaces",
-								""
+								"interfaces"
 							],
 							"variable": [
 								{
@@ -1188,17 +1817,17 @@
 							"raw": "serviceInterface"
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
 								":version",
-								"interfaces",
-								""
+								"interfaces"
 							],
 							"variable": [
 								{
@@ -1229,11 +1858,62 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName",
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces/:serviceInterfaceName",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"interfaces",
+								":serviceInterfaceName"
+							],
+							"variable": [
+								{
+									"key": "serviceInterfaceName",
+									"value": "{{serviceInterfaceName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMicoServiceInterface",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "modifiedMicoServiceInterface"
+						},
+						"url": {
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces/:serviceInterfaceName",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1271,11 +1951,12 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName",
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces/:serviceInterfaceName",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
@@ -1316,25 +1997,66 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName/publicIP/",
+							"raw": "http://localhost:8080/services/:shortName/:version/interfaces/:serviceInterfaceName/publicIP",
 							"protocol": "http",
 							"host": [
-								"{{host}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"services",
 								":shortName",
 								":version",
 								"interfaces",
 								":serviceInterfaceName",
-								"publicIP",
-								""
+								"publicIP"
 							],
 							"variable": [
 								{
 									"key": "serviceInterfaceName",
 									"value": "{{serviceInterfaceName}}"
 								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStatusOfService",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/services/:shortName/:version/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"status"
+							],
+							"variable": [
 								{
 									"key": "shortName",
 									"value": "{{shortName}}"
