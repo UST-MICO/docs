@@ -106,6 +106,29 @@ Represents a service in the context of MICO.
     * dockerImageUri
         The fully qualified URI to the image on DockerHub. Either set after the image has been built by MICO (if the service originates from GitHub) or set by the user directly.
 
+MicoServiceDependency
+---------------------
+Represents a dependency of a `MicoService`_.
+
+.. image:: res/MicoServiceDependency.png
+
+*Required fields*
+
+    * id
+        The id of this service dependency.
+    
+    * service
+        This is the `MicoService`_ that requires (depends on) the depended service.
+
+    * dependedService
+        This is the `MicoService`_ depended by this service.
+
+    * minVersion
+        The minimum version of the depended service that is supported.
+
+    * maxVersion 
+        The maximum version of the depended service that is supported.
+
 MicoServiceDeploymentInfo
 -------------------------
 Represents the information necessary for deploying a single service.
@@ -114,8 +137,14 @@ Represents the information necessary for deploying a single service.
 
 *Required fields*
 
-    * containers
-        The list of containers to run within this service.
+    * id
+        The id of this service deployment info.
+
+    * application
+        The `MicoApplication`_ that uses a `MicoService`_ this deployment refers to.
+
+    * service
+        The `MicoService`_ this deployment refers to.
 
 *Optional fields*
 
@@ -134,26 +163,6 @@ Represents the information necessary for deploying a single service.
     * restartPolicy
         Restart policy for all containers. Default is Always.
 
-MicoServiceDependency
----------------------
-Represents a dependency of a `MicoService`_.
-
-.. image:: res/MicoServiceDependency.png
-
-*Required fields*
-
-    * service
-        This is the `MicoService`_ that requires (depends on) the `MicoServiceDependency`_ #dependendService.
-
-    *  dependendService
-        This is the `MicoService`_ dependend by `MicoService`_ #service.
-
-    * minVersion
-        The minimum version of the depended service that is supported.
-
-    * maxVersion
-        The maximum version of the depended service that is supported.
-
 MicoServiceInterface
 --------------------
  Represents a interface, e.g., REST API, of a `MicoService`_.
@@ -162,11 +171,14 @@ MicoServiceInterface
 
 *Required fields*
 
+    * id
+        The id of this service interface.
+
     * serviceInterfaceName
-        The name of this `MicoServiceInterface`_
+        The name of this `MicoServiceInterface`_. Pattern is the same than for Kubernetes Service names.
 
     * ports
-        The list of ports.
+        The list of ports. Must not be empty.
 
 *Optional fields*
 
@@ -190,103 +202,75 @@ Represents a basic port with a port number and port type (protocol).
 
 *Required fields*
 
-    * number
+    * id
+        The id of this service port.
+
+    * port
         The port number of the externally exposed port.
 
     * type
-        The type (protocol) of the port.
+        The type (protocol) of the port. Default port type is MicoPortType.TCP.
 
     * targetPort
-        The port of the container.
+        The port inside the container.
 
+MicoPortType
+------------
+Enumeration for all port types, e.g., TCP, supported by MICO.
 
-MicoPort
-========
-Represents a basic port with a port number and port type (protocol).
+.. image:: res/MicoPortType.png
 
-.. image:: res/MicoPort.png
+* TCP
+    Transmission Control Protocol.
 
-*Required fields*
+* UDP
+    User Datagram Protocol.
 
-    * number
-        The port number.
+MicoServiceDeploymentInfoQueryResult
+------------------------------------
 
-    * type
-        The type (protocol) of this port.
+.. image:: res/MicoServiceDeploymentInfoQueryResult.png
 
-MicoImageContainer
-==================
-Represents a container running in a Kubernetes Pod.
+* application
 
-.. image:: res/MicoImageContainer.png
+* serviceDeploymentInfo
 
-*Required fields*
+* service
 
-    * image
-        The name of the Docker image. Default is the `MicoService`_ shortname
+MicoServiceCrawlingOrigin
+=========================
+Enumeration for the various places a service may originate from.
 
-    * ports
-        The list of `MicoPort`_ for this service.
+.. image:: res/MicoServiceCrawlingOrigin.png
 
-*Optional fields*
+* GITHUB
+    Indicates that a service originates from some GitHub respository.
 
-    * name
-        The name of the container (in the Kubernetes Pod). Default is `MicoService`_ shortname.
+* DOCKER
+    Indicates that a service originates from Docker.
 
-    * resourceLowerLimit
-        Limit describing the minimum amount of compute resources allowed. If omitted it defaults to the upper limit if that is explicitly specified.
+* NOT_DEFINED
+    Undefined.
 
-    * resourceUpperLimit
-        Limit describing the maximum amount of compute resources allowed.
+MicoVersion
+===========
+Wrapper for a {@link Version} that adds the functionality for a version prefix, so that versions like, e.g., 'v1.2.3' are possible.
 
-    * readOnlyRootFileSystem
-        Indicates whether this container should have a read-only root file system. Defaults to false.
+.. image:: res/MicoVersion.png
 
-    * runAsNonRoot
-        Indicates whether the service must run as a non-root user. If somehow not run as non-root user (not UID 0) it will fail to start. Default to false.
+* prefix
+    String prefix of this version, e.g., 'v'.
 
-MicoResourceConstraint
-======================
-Represents a resource constraint specifying the CPU units and memory. Can be used as a upper (limiting) and lower (requesting) constraint.
+* version
+    The actual semantic version.
 
-.. image:: res/MicoResourceConstraint.png
+* valueOf(String version)
+    Creates a new instance of MicoVersion as a result of parsing the specified version string. 
+    Prefixes are possible as everything before the first digit in the given version string is treated as a prefix to the actual semantic version. 
+    Note that the prefix can only consist of letters.
 
-*Required fields*
+* forIntegers(int major, int minor, int patch)
+    Creates a new instance of MicoVersion for the specified version numbers.
 
-    * cpuUnits
-        Measured in CPU units. One Kubernetes CPU (unit) is equivaletnt to:
-            * 1 AWS vCPU
-            * 1 GCP Core
-            * 1 Azure vCore
-            * 1 IBM vCPU
-            * 1 Hyperthread on a bare-metal Intel processor with Hyperthreading.
-
-            Can also be specified as a fraction up to precision 0.001.
-
-    * memoryInBytes
-        Memory in bytes.
-
-MicoDeploymentStrategy
-======================
-The deployment strategy to use to replace an existing `MicoService`_ with new ones.
-
-.. image:: res/MicoDeploymentStrategy.png
-
-*Required fields*
-
-    * type
-        The type of this deployment strategy, can Recreate or RollingUpdate. Default is RollingUpdate.
-
-*Optional fields*
-
-    * maxInstancesOnTopPercent
-        The maximum number of instances that can be scheduled above the desired number of instances during the update. Value can be an absolute number or a percentage of desired instances. This can not be 0 if maxUnavailable is 0. Absolute number is calculated from percentage by rounding up.If both fields are specified, the percentage will be used. Defaults to 25%.
-
-    * maxInstancesOnTopAbsolute
-        The maximum (absolute) number of instances that can be scheduled above the desired number of instances during the update. This can not be 0 if maxUnavailable is 0. If the percentage is also specified, it will be used prior to this absolute number.
-
-    * maxInstancesBelowPercent
-        The maximum number of instances that can be unavailable during the update. Value can be an absolute number or a percentage of desired pods. Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. If both fields are specified, the percentage will be used. Defaults to 25%.
-
-    * maxInstancesBelow
-        The maximum (absolute) number of instances that can be unavailable during the update. This can not be 0 if maxSurge is 0. If the percentage is also specified, it will be used prior to this absolute number.
+* forIntegersWithPrefix(String prefix, int major, int minor, int patch)
+    Creates a new instance of MicoVersion for the specified version numbers with the specified prefix string.
