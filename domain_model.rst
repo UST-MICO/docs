@@ -4,11 +4,14 @@ Domain Model
 
 MicoApplication
 ===============
-Represents an application represented as a set of instances of a `MicoService`_
+Represents an application represented as a set of instances of `MicoService`_
 
 .. image:: res/MicoApplication.png
 
 *Required fields*
+
+    * id
+        The id of this application.
 
     * shortName
         A brief name for the application intended for use as a unique identifier.
@@ -22,13 +25,10 @@ Represents an application represented as a set of instances of a `MicoService`_
     * description
         Human readable description of this application.
 
-    * services
-        The services this application is composed of.
-
-    * deploymentInfo
-        The information necessary for deploying this application.
-
 *Optional fields*
+
+    * serviceDeploymentInfos
+        The list of service deployment information this application uses for the deployment of the required services. Null values are skipped.
 
     * contact
         Human readable contact information for support purposes.
@@ -36,16 +36,17 @@ Represents an application represented as a set of instances of a `MicoService`_
     * owner
         Human readable information for the application owner who is responsible for this application.
 
-MicoApplicationDeploymentInfo
------------------------------
-Represents the information necessary for deploying an application with all services.
+MicoLabel
+=========
+Represents a simple key-value pair label. Necessary since Neo4j does not allow to persist Map implementations.
 
-.. image:: res/MicoApplicationDeploymentInfo.png
+.. image:: res/MicoLabel.png
 
-*Required fields*
+* key
+    Key of the label.
 
-    * serviceDeploymentInfos
-        The service deployment info for each service this application is composed of (service id -> service deployment info).
+* value
+    Value of the label.
 
 MicoService
 ===========
@@ -55,34 +56,34 @@ Represents a service in the context of MICO.
 
 *Required fields*
 
+    * id
+        The id of this service. MUST be readable and writable from the perspective of the Jackson mapper to handle recursive service dependencies.       
+
     * shortName
-        Brief name for the service intended to be used as unique identifier.
+        A brief name for the service. In conjunction with the version it must be unique. Pattern is the same as the one for Kubernetes Service names.
 
     * name
-        Full name of the artifact, intended for humans.
+        The name of the artifact. Intended for humans. Required only for the usage in the UI.
 
     * version
-        Version of this service.
+        The version of this service. E.g. the GitHub release tag.
 
     * description
-        Human readable description of this service.
-
-    * serviceInterfaces
-        The list of interfaces provided by this service.
+        Human readable description of this service. Is allowed to be empty (default). Null values are skipped.
 
     * serviceCrawlingOrigin
-        Indicates where this service originates from, e.g., GitHub (downloaded and built by MICO) or DockerHub (ready-to-use image).
+        Indicates where this service originates from, e.g., GitHub (downloaded and built by MICO) or DockerHub (ready-to-use image). Null is ignored.
 
 *Optional fields*
 
+    * serviceInterfaces
+        The list of interfaces this service provides. Is read only. Use special API for updating.
+
     * dependencies
-        The list of services that this service requires in order to run normally.
+        The list of services that this service requires in order to run normally. Is read only. Use special API for updating.
 
     * predecessor
         Same MicoService with previous version.
-
-    * dockerfilePath
-        The relative (to vcsRoot) path to the Dockerfile.
 
     * dependencies
         List of services this service requires in order to run normally.
@@ -94,10 +95,13 @@ Represents a service in the context of MICO.
         Human readable information for the service owner who is responsible for this service.
 
     * gitCloneUrl
-        The URL to clone the corresponding GitHub repository.
+        The URL that could be used for a git clone, to clone the current master branch.
 
     * gitReleaseInfoUrl
         The URL to the get the information about a specific git release.
+   
+    * dockerfilePath
+        The relative (to vcsRoot) path to the Dockerfile.
 
     * dockerImageUri
         The fully qualified URI to the image on DockerHub. Either set after the image has been built by MICO (if the service originates from GitHub) or set by the user directly.
