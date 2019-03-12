@@ -6,50 +6,66 @@ Structure Overview
 
 This is how the structure of the API should look like.
 
--  :http:get:`/services/`
+-  :http:get:`/services`
 
-    -  :http:get:`GET /(id)/ </services/(str:id)/>`
+    -  :http:get:`GET /(shortName)/ </services/{shortName}>`
 
-    -  :http:get:`GET /(shortName)/ </services/(str:shortName)/>`
+        -  :http:get:`GET /(version)/ </services/{shortName}/{version}>`
 
-        -  :http:get:`GET /(version)/ </services/(str:shortName)/(str:version)/>`
+            -  :http:get:`GET /interfaces/ </services/{shortName}/{version}/interfaces>`
 
-            -  :http:get:`GET /interfaces/ </services/(str:shortName)/(str:version)/interfaces/>`
+                -  :http:get:`GET /(serviceInterfaceName)/publicIP/ </services/{shortName}/{version}/interfaces/{serviceInterfaceName}/publicIP>`
 
-            -  :http:get:`GET /dependees/ </services/(str:shortName)/(str:version)/dependees/>`
+            -  :http:get:`GET /dependees/ </services/{shortName}/{version}/dependees>`
 
-            -  :http:get:`GET /dependers/ </services/(str:shortName)/(str:version)/dependers/>`
+            -  :http:get:`GET /dependers/ </services/{shortName}/{version}/dependers>`
 
-            -  :http:get:`GET /status/ </services/(str:shortName)/(str:version)/status/>`
+            -  :http:get:`GET /dependencyGraph/ </services/{shortName}/{version}/dependencyGraph>`
+
+            -  :http:post:`POST /promote/ </services/{shortName}/{version}/promote>`
+
+            -  :http:get:`GET /status/ </services/{shortName}/{version}/status>`
 
     -  :http:get:`GET /import/ </services/import/>`
 
-        -  :http:post:`POST /(type)/ </services/import/(str:type)/>`
+        -  :http:get:`GET /github/ </services/import/github>`
 
--  :http:get:`/applications/`
+        -  :http:post:`POST /github/ </services/import/github>`
 
-    -  :http:get:`GET /(id)/ </applications/(str:id)/>`
+-  :http:get:`/applications`
 
-    -  :http:get:`GET /(shortName)/ </applications/(str:shortName)/>`
+    -  :http:get:`GET /(shortName)/ </applications/{shortName}>`
 
-        -  :http:get:`GET /(version)/ </applications/(str:shortName)/(str:version)/>`
+        -  :http:get:`GET /(version)/ </applications/{shortName}/{version}>`
 
-            -  :http:get:`GET /services/ </applications/(str:shortName)/(str:version)/services/>`
+            -  :http:get:`GET /services/ </applications/{shortName}/{version}/services>`
 
-            -  :http:get:`GET /status/ </applications/(str:shortName)/(str:version)/status/>`
+            -  :http:get:`GET /deploymentInformation/ </applications/{shortName}/{version}/deploymentInformation/{serviceShortName}>`
 
-            -  :http:get:`GET /deploy/ </applications/(str:shortName)/(str:version)/deploy/>`
+            -  :http:post:`POST /promote/ </applications/{shortName}/{version}/promote>`
+
+            -  :http:get:`GET /status/ </applications/{shortName}/{version}/status>`
+
+            -  :http:post:`POST /deploy/ </applications/{shortName}/{version}/deploy>`
 
 -  :http:get:`/jobs/`
 
    -  :http:get:`GET /(id)/ </jobs/(str:id)/>`
 
--  :http:get:`/cluster/*`
+
+Openapi Specification
+---------------------
+
+Current API status:
+
+.. openapi:: openapi.json
 
 
 
-Method Details
---------------
+Method Details (specification)
+------------------------------
+
+Specification for how the api should look like.
 
 .. http:get:: /services/
 
@@ -99,8 +115,6 @@ Method Details
             "description": "...",
             "...": "...",
         }
-
-.. http:get:: /services/(str:id)/
 
 .. http:get:: /services/(str:shortName)/
 
@@ -206,9 +220,4 @@ Method Details
 .. http:post:: /applications/(str:shortName)/(str:version)/deploy/
 
 .. http:get:: /cluster/*
-
-
-.. todo:: uncomment openapi specification if api changes are merged
-
-.. .. openapi:: openapi.json
 

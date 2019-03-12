@@ -3,3 +3,4 @@ recommonmark
 sphinxcontrib-httpdomain
 sphinxcontrib-openapi
 sphinx_rtd_theme
+requests

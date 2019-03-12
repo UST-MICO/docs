@@ -6,7 +6,7 @@ Documentation: [readthedocs](http://mico-docs.readthedocs.io)
 
 ## Useful links
 
-* [Sphinx](http://www.sphinx-doc.org/en/master/)  
+* [Sphinx](http://www.sphinx-doc.org/en/master/)
    Sphinx is a tool to compile ReStructuredText documentation into a variety of formats.
 * [ReStructuredText](http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
 * [Getting started (readthedocs)](https://docs.readthedocs.io/en/latest/intro/getting-started-with-sphinx.html#using-markdown-with-sphinx)
@@ -40,6 +40,8 @@ Make sure you have the `dot` command from `graphviz` and a basic `LaTeX` environ
 ```bash
 make html
 ```
+
+If the mico backend is running on `localhost:8080` `make html` will automatically update the `openapi.json` file.
 
 open `_build/html/index.html` in your browser
 

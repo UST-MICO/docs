@@ -97,7 +97,7 @@ kubectl apply -f build-bot-dockerhub-secret-with-credentials.yaml build-bot-dock
 #### Azure Container Registry
 
 **The Authentication to ACR doesn't work yet on Azure!**
-```log
+```text
 failed to push to destination: unexpected end of JSON input
 ```
 

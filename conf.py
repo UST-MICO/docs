@@ -36,6 +36,14 @@ def run_role(self, name, *args, **kwargs):
 
 DummyStateMachine.run_role = run_role
 
+if not on_rtd:
+    import requests
+    from pathlib import Path
+    openapi = requests.get('http://localhost:8080/v2/api-docs')
+    if openapi.status_code == 200:
+        with Path('openapi.json').open(mode='w') as _file:
+            _file.write(openapi.text)
+
 
 # -- Project information -----------------------------------------------------
 
