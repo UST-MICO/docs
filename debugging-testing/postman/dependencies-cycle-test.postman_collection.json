@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "0a53af76-7a20-4ab8-9f7d-18ed1223d8e2",
-		"name": "minimal-example",
+		"_postman_id": "05ae0d43-84d9-4c6b-bc3b-3229d61dcb7c",
+		"name": "dependencies-cycle-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "1. createApplication",
+			"name": "createService A",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -21,259 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"shortName\": \"{{shortName}}\",\r\n  \"name\": \"{{name}}\",\r\n  \"version\": \"{{version}}\"\r\n}\r\n"
-				},
-				"url": {
-					"raw": "http://{{host}}/applications",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "2. importMicoServiceFromGitHub",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"url\": \"{{githubCloneUrl}}\",\n\t\"version\": \"{{serviceVersion}}\"\n}"
-				},
-				"url": {
-					"raw": "http://{{host}}/services/import/github",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"services",
-						"import",
-						"github"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "3. createServiceInterface",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"serviceInterfaceName\": \"{{serviceInterfaceName}}\",\r\n    \"ports\": [\r\n        {\r\n            \"port\": 80,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 80\r\n        }\r\n    ]\r\n}"
-				},
-				"url": {
-					"raw": "http://{{host}}/services/{{serviceShortName}}/{{serviceVersion}}/interfaces/",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"services",
-						"{{serviceShortName}}",
-						"{{serviceVersion}}",
-						"interfaces",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "4. addServiceToApplication",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/services/{{serviceShortName}}/{{serviceVersion}}",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}",
-						"services",
-						"{{serviceShortName}}",
-						"{{serviceVersion}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "5. deploy",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploy",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}",
-						"deploy"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "6. getInterfacePublicIpByName",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/services/{{serviceShortName}}/{{serviceVersion}}/interfaces/{{serviceInterfaceName}}/publicIP/",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"services",
-						"{{serviceShortName}}",
-						"{{serviceVersion}}",
-						"interfaces",
-						"{{serviceInterfaceName}}",
-						"publicIP",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "7. getStatusOfApplication",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/status",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}",
-						"status"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAllApplications",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/applications",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getServiceList",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
+					"raw": "{\n    \"shortName\": \"svc-a\",\n    \"name\": \"mico-service-a\",\n    \"version\": \"v1.0.0\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/services",
@@ -289,69 +37,9 @@
 			"response": []
 		},
 		{
-			"name": "getApplicationByShortNameAndVersion",
+			"name": "createService B",
 			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getServiceDeploymentInformation",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName}}",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}",
-						"deploymentInformation",
-						"{{serviceShortName}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "updateServiceDeploymentInformation",
-			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Accept",
@@ -364,27 +52,156 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 2,\n    \"minReadySecondsBeforeMarkedAvailable\": 5,\n    \"labels\": [\n        {\n            \"key\": \"value1\",\n            \"value\": \"value1\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"envVar1\",\n            \"value\": \"value1\"\n        }\n    ],\n    \"imagePullPolicy\": \"NEVER\",\n    \"restartPolicy\": \"NEVER\"\n}"
+					"raw": "{\n    \"shortName\": \"svc-b\",\n    \"name\": \"mico-service-b\",\n    \"version\": \"v1.0.0\"\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName}}",
+					"raw": "http://{{host}}/services",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{version}}",
-						"deploymentInformation",
-						"{{serviceShortName}}"
+						"services"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "getVersionsFromGitHub",
+			"name": "createService C",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shortName\": \"svc-c\",\n    \"name\": \"mico-service-c\",\n    \"version\": \"v1.0.0\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewDependee A→B",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dependedService\": {\r\n    \"shortName\": \"svc-b\",\r\n    \"version\": \"v1.0.0\"\r\n  },\r\n  \"maxVersion\": \"v1.0.0\",\r\n  \"minVersion\": \"v1.0.0\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/svc-a/v1.0.0/dependees",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-a",
+						"v1.0.0",
+						"dependees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewDependee B→C",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dependedService\": {\r\n    \"shortName\": \"svc-c\",\r\n    \"version\": \"v1.0.0\"\r\n  },\r\n  \"maxVersion\": \"v1.0.0\",\r\n  \"minVersion\": \"v1.0.0\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/svc-b/v1.0.0/dependees",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-b",
+						"v1.0.0",
+						"dependees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewDependee C→B",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"dependedService\": {\r\n    \"shortName\": \"svc-b\",\r\n    \"version\": \"v1.0.0\"\r\n  },\r\n  \"maxVersion\": \"v1.0.0\",\r\n  \"minVersion\": \"v1.0.0\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/svc-c/v1.0.0/dependees",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-c",
+						"v1.0.0",
+						"dependees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceByShortNameAndVersion A",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -398,21 +215,240 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/services/import/github?url={{githubCloneUrl}}",
+					"raw": "http://{{host}}/services/svc-a/v1.0.0",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"services",
-						"import",
-						"github"
+						"svc-a",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDependencyGraph of A",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/svc-a/v1.0.0/dependencyGraph",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
 					],
-					"query": [
-						{
-							"key": "url",
-							"value": "{{githubCloneUrl}}"
-						}
+					"path": [
+						"services",
+						"svc-a",
+						"v1.0.0",
+						"dependencyGraph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getDependees of A",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/svc-a/v1.0.0/dependees",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-a",
+						"v1.0.0",
+						"dependees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDependee B of A",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-a/v1.0.0/dependees/svc-b/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-a",
+						"v1.0.0",
+						"dependees",
+						"svc-b",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDependee C of B",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-b/v1.0.0/dependees/svc-c/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-b",
+						"v1.0.0",
+						"dependees",
+						"svc-c",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteDependee B of C",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-c/v1.0.0/dependees/svc-b/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-c",
+						"v1.0.0",
+						"dependees",
+						"svc-b",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteService A",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-a/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-a",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteService B",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-b/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-b",
+						"v1.0.0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteService C",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/services/svc-c/v1.0.0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"svc-c",
+						"v1.0.0"
 					]
 				}
 			},
