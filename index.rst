@@ -27,6 +27,7 @@ Mico is a project for designing, deploying and managing :term:`applications <app
    database
    restapi.md
    setup/index
+   tutorials/index
    adr/index
    debugging-testing/index
    glossary
