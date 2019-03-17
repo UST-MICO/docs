@@ -12,6 +12,11 @@ Depending on which component of MICO you want to test, there are different ways 
     * [Update Kubernetes deployment in cluster](#update-kubernetes-deployment-in-cluster)
     * [Check current configuration](#check-current-configuration)
     * [Clean up](#clean-up)
+  * [Testing in cluster with Telepresence](#testing-in-cluster-with-telepresence)
+    * [Installation](#installation)
+    * [Usage with local `mico-core`](#usage-with-local-mico-core)
+    * [Usage with local `mico-admin`](#usage-with-local-mico-admin)
+    * [Usage with IntelliJ](#usage-with-intellij)
 
 ## Local testing without cluster
 
@@ -22,12 +27,17 @@ Use `docker-compose` to start `mico-core` and `neo4j` as the database:
 docker-compose up --build
 ```
 
+To only start Neo4j as a Docker container use
+```bash
+docker run -p 7687:7687 -p 7474:7474 -e NEO4J_dbms_security_auth__enabled=false --volume=$HOME/neo4j/data:/data --volume=$HOME/neo4j/logs:/logs neo4j:3.5.3
+```
+
 ## Local testing of the MICO backend with access to the cluster
 
 Currently you can't use `docker-compose` for that, because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
-An alternative is to use `kubectl` that is installed in your system. If you don't have installed `kubectl` yet, you should do that. For more information see [/Setup/Kubernetes](./setup/kubernetes.md).
+An alternative is to use `kubectl` that is installed on your host system. If you don't have `kubectl` installed yet, you should do that now. For more information see [Setup](../setup/index).
 
-Start Neo4j either as a Docker container or as a local instance installed in your system (`dbms.security.auth_enabled` must be set to `false`).
+Start Neo4j either as a Docker container or as a local instance installed on your system (`dbms.security.auth_enabled` must be set to `false`).
 
 To execute `mico-core`, build it first with Maven
 ```bash
@@ -64,19 +74,19 @@ Now you are able to execute the interactive setup script `install/kubernetes/tes
 The Neo4j database needs ~5min until it is ready.
 You can check the current status with
 ```bash
-kubectl get pods -n ${MICO_TEST_NAMESPACE} --watch
+kubectl get pods -n ${NAMESPACE} --watch
 ```
 
 ### Usage
 
 `mico-admin` gets after some seconds a public IP. To watch the service for changes use
 ```bash
-kubectl get svc mico-admin -n ${MICO_TEST_NAMESPACE} --watch
+kubectl get svc mico-admin -n ${NAMESPACE} --watch
 ```
 
 To get the external IP directly use
 ```bash
-echo $(kubectl get svc mico-admin -n ${MICO_TEST_NAMESPACE} -o 'jsonpath={.status.loadBalancer.ingress[0].ip}')
+echo $(kubectl get svc mico-admin -n ${NAMESPACE} -o 'jsonpath={.status.loadBalancer.ingress[0].ip}')
 ```
 
 You can use the IP to access the dashboard in your browser.
@@ -85,9 +95,9 @@ You can use the IP to access the dashboard in your browser.
 * `kubectl proxy --port=8080`
   Example:
   ```bash
-  curl localhost:8080/api/v1/namespaces/${MICO_TEST_NAMESPACE}/services/mico-core/proxy/applications
+  curl localhost:8080/api/v1/namespaces/${NAMESPACE}/services/mico-core/proxy/applications
   ```
-* `kubectl port-forward svc/mico-core -n ${MICO_TEST_NAMESPACE} 8080:8080`
+* `kubectl port-forward svc/mico-core -n ${NAMESPACE} 8080:8080`
   Example:
   ```bash
   curl localhost:8080/applications
@@ -99,18 +109,17 @@ To update a single deployment you can change the Docker image of the specific de
 
 Example with deployment `mico-core`:
 ```bash
-# Build a new Docker image
-docker build -t ustmico/mico-core:localbuild -f Dockerfile.mico-core .
+# Build a new Docker image (change tag name)
+docker build -f Dockerfile.mico-core -t ustmico/mico-core:mico-1337 .
 
 # Push it to DockerHub
-docker push ustmico/mico-core:localbuild
+docker push ustmico/mico-core:mico-1337
 
 # Set the image of the Kubernetes deployment
-kubectl set image deployment/mico-core mico-core=ustmico/mico-core:localbuild -n ${MICO_TEST_NAMESPACE}
+kubectl set image deployment/mico-core mico-core=ustmico/mico-core:mico-1337 -n ${NAMESPACE}
 
 # If the image is already set, you can restart the pod with the new image
-MICO_CORE_POD_NAME=$(kubectl get pods -n ${MICO_TEST_NAMESPACE} --selector=run=mico-core --output=jsonpath={.items..metadata.name})
-kubectl delete pod ${MICO_CORE_POD_NAME} -n ${MICO_TEST_NAMESPACE}
+kubectl -n $NAMESPACE delete pod $(kubectl get pods -n $NAMESPACE --selector=run=mico-core --output=jsonpath={.items..metadata.name})
 ```
 
 ### Check current configuration
@@ -127,5 +136,49 @@ curl localhost:8080/actuator/configprops | python3 -m json.tool > configprops.js
 
 If you are finished with testing, delete the namespace:
 ```bash
-kubectl delete namespace ${MICO_TEST_NAMESPACE}
+kubectl delete namespace ${NAMESPACE}
 ```
+
+## Testing in cluster with Telepresence
+
+[Telepresence](https://www.telepresence.io/) is a tool to debug Kubernetes services locally.
+
+**For Windows users:** Telepresence basically supports WSL, however some important features are missing (see [Windows support](https://www.telepresence.io/reference/windows)). Therefore I wasn't able to get it running in my environment.
+
+### Installation
+
+[Installing Telepresence](https://www.telepresence.io/reference/install):
+```bash
+curl -s https://packagecloud.io/install/repositories/datawireio/telepresence/script.deb.sh | sudo bash
+sudo apt install --no-install-recommends telepresence
+```
+
+### Usage with local `mico-core`
+
+Build `mico-core` with Docker:
+```bash
+docker build -f Dockerfile.mico-core -t ustmico/mico-core:localbuild .
+```
+
+Swap the Kubernetes deployment with the local Docker image:
+```bash
+telepresence --namespace mico-system --swap-deployment mico-core --docker-run \
+  --rm -it ustmico/mico-core:localbuild
+```
+
+### Usage with local `mico-admin`
+
+Build `mico-admin` with Docker:
+```bash
+docker build -f Dockerfile.mico-admin -t ustmico/mico-admin:localbuild .
+```
+
+Swap the Kubernetes deployment with the local Docker image:
+```bash
+telepresence --namespace mico-system --swap-deployment mico-admin --docker-run \
+  --rm -it ustmico/mico-admin:localbuild
+```
+
+### Usage with IntelliJ
+
+See [Debugging a Java Rate Limiter Service using Telepresence and IntelliJ IDEA](https://www.telepresence.io/tutorials/intellij).
