@@ -22,9 +22,9 @@ To add a new service interface click on the :guilabel:`Provides` button in the :
 
 .. note::
 
-    :samp:`Exposed Port Number` is the port exposed by the docker container.
+    :samp:`Exposed Port Number` is the port that will be exposed in kubernetes.
 
-    :samp:`Target Port Number` is the port that will be exposed in kubernetes.
+    :samp:`Target Port Number` is the port exposed by the docker container.
 
 After adding a interface to a service the detail page should look something like this:
 
