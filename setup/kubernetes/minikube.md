@@ -81,7 +81,7 @@ If you are using Mac OS or Linux you have to change the `vm-driver`. For Linux s
 **Start Minikube with Hyper-V:**
 ```bash
 minikube start --memory=8192 --cpus=4 \
-  --kubernetes-version=v1.11.4 \
+  --kubernetes-version=v1.12.6 \
   --vm-driver=hyperv \
   --hyperv-virtual-switch "ExternalSwitch" \
   --bootstrapper=kubeadm \

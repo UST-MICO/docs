@@ -42,7 +42,7 @@ kubectl config use-context $CLUSTER_NAME-admin
 * Nodes: 3
 * OS Disk Size: 30 GB
 * Location: westeurope
-* Kubernetes version: 1.11.5
+* Kubernetes version: 1.12.6
 
 **Get the details for a managed Kubernetes cluster:**
 ```bash
@@ -67,7 +67,7 @@ az aks get-upgrades --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --outp
 
 **Upgrade Kubernetes to specific version:**
 ```bash
-az aks upgrade --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --kubernetes-version 1.11.5
+az aks upgrade --name $CLUSTER_NAME --resource-group $RESOURCE_GROUP --kubernetes-version 1.12.6
 ```
 
 **Confirm that the upgrade was successful:**
@@ -89,7 +89,7 @@ Our self created resource group is named `ust-mico-resourcegroup`. Whenever a re
 az aks create --resource-group $RESOURCE_GROUP \
 --name $CLUSTER_NAME \
 --generate-ssh-keys \
---kubernetes-version 1.11.5 \
+--kubernetes-version 1.12.6 \
 --node-vm-size Standard_B2s \
 --node-count 2
 ```
