@@ -260,10 +260,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"BACKEND_REST_API\",\n            \"value\": \"rest-r3f4cpb7.mico-david.svc.cluster.local\"\n        }\n    ],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}",
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -273,8 +273,7 @@
 						"{{shortName}}",
 						"{{version}}",
 						"deploymentInformation",
-						"{{serviceShortName-frontend}}",
-						"{{serviceVersion-frontend}}"
+						"{{serviceShortName-frontend}}"
 					]
 				}
 			},
@@ -299,7 +298,7 @@
 					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"backend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-backend}}/{{serviceVersion-backend}}",
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-backend}}",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -309,8 +308,7 @@
 						"{{shortName}}",
 						"{{version}}",
 						"deploymentInformation",
-						"{{serviceShortName-backend}}",
-						"{{serviceVersion-backend}}"
+						"{{serviceShortName-backend}}"
 					]
 				}
 			},
@@ -508,7 +506,7 @@
 			"response": []
 		},
 		{
-			"name": "11.1 import - new frontend",
+			"name": "11.1 promoteService - new frontend",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -523,60 +521,26 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"url\": \"{{githubCloneUrl-frontend}}\",\n\t\"version\": \"{{serviceVersion-frontend-newVersion}}\"\n}"
+					"raw": "{\r\n  \"version\": \"{{serviceVersion-frontend-newVersion}}\"\r\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/services/import/github",
+					"raw": "http://{{host}}/services/ {{serviceShortName-frontend}}}/{{serviceVersion-frontend}}/promote",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"services",
-						"import",
-						"github"
+						" {{serviceShortName-frontend}}}",
+						"{{serviceVersion-frontend}}",
+						"promote"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "11.2 createServiceInterface - new frontend",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"serviceInterfaceName\": \"{{serviceInterfaceName-frontend}}\",\r\n    \"ports\": [\r\n        {\r\n            \"port\": 80,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 80\r\n        }\r\n    ]\r\n}"
-				},
-				"url": {
-					"raw": "http://{{host}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend-newVersion}}/interfaces/",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"services",
-						"{{serviceShortName-frontend}}",
-						"{{serviceVersion-frontend-newVersion}}",
-						"interfaces",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "11.3 addServiceToApplication - new frontend",
+			"name": "11.2 addServiceToApplication - new frontend",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -612,7 +576,7 @@
 			"response": []
 		},
 		{
-			"name": "11.4 updateServiceDeploymentInformation - new frontend",
+			"name": "11.3 updateServiceDeploymentInformation - new frontend",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -630,7 +594,7 @@
 					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"BACKEND_REST_API\",\n            \"value\": \"rest-r3f4cpb7.mico-david.svc.cluster.local\"\n        }\n    ],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}/{{serviceVersion-frontend-newVersion}}",
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -640,8 +604,7 @@
 						"{{shortName}}",
 						"{{newVersion}}",
 						"deploymentInformation",
-						"{{serviceShortName-frontend}}",
-						"{{serviceVersion-frontend-newVersion}}"
+						"{{serviceShortName-frontend}}"
 					]
 				}
 			},
@@ -835,7 +798,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}",
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -845,8 +808,7 @@
 						"{{shortName}}",
 						"{{version}}",
 						"deploymentInformation",
-						"{{serviceShortName-frontend}}",
-						"{{serviceVersion-frontend}}"
+						"{{serviceShortName-frontend}}"
 					]
 				}
 			},
@@ -867,7 +829,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}/{{serviceVersion-frontend-newVersion}}",
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}",
 					"protocol": "http",
 					"host": [
 						"{{host}}"
@@ -877,8 +839,7 @@
 						"{{shortName}}",
 						"{{newVersion}}",
 						"deploymentInformation",
-						"{{serviceShortName-frontend}}",
-						"{{serviceVersion-frontend-newVersion}}"
+						"{{serviceShortName-frontend}}"
 					]
 				}
 			},
