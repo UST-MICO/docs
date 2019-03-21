@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "36dfc47e-c82a-4806-b352-299a34eb45d3",
+		"_postman_id": "c0f1a0a8-d8fb-4d85-83aa-7c7c1b3ab688",
 		"name": "MICO",
 		"description": "A Management System for Microservice Compositions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -403,7 +403,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "newApplicationDto"
+							"raw": "applicationDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/applications",
@@ -538,7 +538,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "applicationDto"
+							"raw": "applicationRequestDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/applications/:shortName/:version",
@@ -752,7 +752,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "newVersion"
+							"raw": "newVersionDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/applications/:shortName/:version/promote",
@@ -821,50 +821,6 @@
 					"response": []
 				},
 				{
-					"name": "addServiceToApplication",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "providedService"
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/services",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"services"
-							],
-							"variable": [
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "deleteServiceFromApplication",
 					"request": {
 						"method": "DELETE",
@@ -892,6 +848,57 @@
 								{
 									"key": "serviceShortName",
 									"value": "{{serviceShortName}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addServiceToApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/applications/:shortName/:version/services/:serviceShortName/:serviceVersion",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":shortName",
+								":version",
+								"services",
+								":serviceShortName",
+								":serviceVersion"
+							],
+							"variable": [
+								{
+									"key": "serviceShortName",
+									"value": "{{serviceShortName}}"
+								},
+								{
+									"key": "serviceVersion",
+									"value": "{{serviceVersion}}"
 								},
 								{
 									"key": "shortName",
@@ -1150,6 +1157,144 @@
 			"description": "Folder for error"
 		},
 		{
+			"name": "jobs",
+			"item": [
+				{
+					"name": "getAllJobs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/jobs",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getJobById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/jobs/:id",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"jobs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteJob",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/jobs/:id",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"jobs",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getJobStatusByApplicationShortNameAndVersion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/jobs/:shortName/:version/status",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"jobs",
+								":shortName",
+								":version",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Folder for jobs"
+		},
+		{
 			"name": "services",
 			"item": [
 				{
@@ -1195,7 +1340,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "newService"
+							"raw": "serviceDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/services",
@@ -1398,7 +1543,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "service"
+							"raw": "serviceDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/services/:shortName/:version",
@@ -1502,50 +1647,6 @@
 					"response": []
 				},
 				{
-					"name": "createNewDependee",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "newServiceDependee"
-						},
-						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"services",
-								":shortName",
-								":version",
-								"dependees"
-							],
-							"variable": [
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "deleteAllDependees",
 					"request": {
 						"method": "DELETE",
@@ -1583,6 +1684,57 @@
 					"response": []
 				},
 				{
+					"name": "createNewDependee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/dependees/:dependeeShortName/:dependeeVersion",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"dependees",
+								":dependeeShortName",
+								":dependeeVersion"
+							],
+							"variable": [
+								{
+									"key": "dependeeShortName",
+									"value": "{{dependeeShortName}}"
+								},
+								{
+									"key": "dependeeVersion",
+									"value": "{{dependeeVersion}}"
+								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "deleteDependee",
 					"request": {
 						"method": "DELETE",
@@ -1594,7 +1746,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/services/:shortName/:version/dependees/:shortNameToDelete/:versionToDelete",
+							"raw": "http://{{host}}/services/:shortName/:version/dependees/:dependeeShortName/:dependeeVersion",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -1604,25 +1756,25 @@
 								":shortName",
 								":version",
 								"dependees",
-								":shortNameToDelete",
-								":versionToDelete"
+								":dependeeShortName",
+								":dependeeVersion"
 							],
 							"variable": [
+								{
+									"key": "dependeeShortName",
+									"value": "{{dependeeShortName}}"
+								},
+								{
+									"key": "dependeeVersion",
+									"value": "{{dependeeVersion}}"
+								},
 								{
 									"key": "shortName",
 									"value": "{{shortName}}"
 								},
 								{
-									"key": "shortNameToDelete",
-									"value": "{{shortNameToDelete}}"
-								},
-								{
 									"key": "version",
 									"value": "{{version}}"
-								},
-								{
-									"key": "versionToDelete",
-									"value": "{{versionToDelete}}"
 								}
 							]
 						}
@@ -1765,7 +1917,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "serviceInterface"
+							"raw": "serviceInterfaceRequestDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/services/:shortName/:version/interfaces",
@@ -1839,7 +1991,7 @@
 					"response": []
 				},
 				{
-					"name": "updateMicoServiceInterface",
+					"name": "updateServiceInterface",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -1854,7 +2006,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "modifiedMicoServiceInterface"
+							"raw": "updatedServiceInterfaceRequestDto"
 						},
 						"url": {
 							"raw": "http://{{host}}/services/:shortName/:version/interfaces/:serviceInterfaceName",
@@ -1962,6 +2114,50 @@
 									"key": "serviceInterfaceName",
 									"value": "{{serviceInterfaceName}}"
 								},
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promoteService",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newVersionDto"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/promote",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"promote"
+							],
+							"variable": [
 								{
 									"key": "shortName",
 									"value": "{{shortName}}"

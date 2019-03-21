@@ -1,0 +1,935 @@
+{
+	"info": {
+		"_postman_id": "1e97b503-2555-4a4e-af36-9945e223eee0",
+		"name": "extended-scenario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. createApplication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"shortName\": \"{{shortName}}\",\r\n  \"name\": \"{{name}}\",\r\n  \"version\": \"{{version}}\",\r\n  \"description\": \"Real World application with a frontend and a backend\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.1 importMicoServiceFromGitHub - frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\": \"{{githubCloneUrl-frontend}}\",\n\t\"version\": \"{{serviceVersion-frontend}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/import/github",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"import",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.2 importMicoServiceFromGitHub - backend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\": \"{{githubCloneUrl-backend}}\",\n\t\"version\": \"{{serviceVersion-backend}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/import/github",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"import",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.1 createServiceInterface - frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serviceInterfaceName\": \"{{serviceInterfaceName-frontend}}\",\r\n    \"ports\": [\r\n        {\r\n            \"port\": 80,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 80\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}/interfaces/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend}}",
+						"interfaces",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.2 createServiceInterface - backend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serviceInterfaceName\": \"{{serviceInterfaceName-backend}}\",\r\n    \"ports\": [\r\n        {\r\n            \"port\": 80,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 8080\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-backend}}/{{serviceVersion-backend}}/interfaces/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-backend}}",
+						"{{serviceVersion-backend}}",
+						"interfaces",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.1 addServiceToApplication - frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.2 addServiceToApplication - backend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/services/{{serviceShortName-backend}}/{{serviceVersion-backend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"services",
+						"{{serviceShortName-backend}}",
+						"{{serviceVersion-backend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.1 updateServiceDeploymentInformation - frontend",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"deploymentInformation",
+						"{{serviceShortName-frontend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.2 updateServiceDeploymentInformation - backend",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"backend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-backend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"deploymentInformation",
+						"{{serviceShortName-backend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.1 deploy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"deploy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.2 getJobStatusByApplicationShortNameAndVersion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/jobs/{{shortName}}/{{version}}/status",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"jobs",
+						"{{shortName}}",
+						"{{version}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.1 getInterfacePublicIpByName - frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}/interfaces/{{serviceInterfaceName-frontend}}/publicIP/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend}}",
+						"interfaces",
+						"{{serviceInterfaceName-frontend}}",
+						"publicIP",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.2 getInterfacePublicIpByName - backend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-backend}}/{{serviceVersion-backend}}/interfaces/{{serviceInterfaceName-backend}}/publicIP/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-backend}}",
+						"{{serviceVersion-backend}}",
+						"interfaces",
+						"{{serviceInterfaceName-backend}}",
+						"publicIP",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.3 getStatusOfApplication",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/status",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10. promoteApplication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"version\": \"{{newVersion}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/promote",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"promote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11.1 promoteService - new frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"version\": \"{{serviceVersion-frontend-newVersion}}\"\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/ {{serviceShortName-frontend}}}/{{serviceVersion-frontend}}/promote",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						" {{serviceShortName-frontend}}}",
+						"{{serviceVersion-frontend}}",
+						"promote"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11.2 addServiceToApplication - new frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend-newVersion}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend-newVersion}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11.3 updateServiceDeploymentInformation - new frontend",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"BACKEND_REST_API\",\n            \"value\": \"rest-r3f4cpb7.mico-david.svc.cluster.local\"\n        }\n    ],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"deploymentInformation",
+						"{{serviceShortName-frontend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12.1 deploy - new frontend",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"deploy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12.2 getJobStatus of new version",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/jobs/{{shortName}}/{{newVersion}}/status",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"jobs",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllApplications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getApplicationByShortNameAndVersion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getApplicationByShortNameAndVersion newVersion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceDeploymentInformation - frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"deploymentInformation",
+						"{{serviceShortName-frontend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceDeploymentInformation - new frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/deploymentInformation/{{serviceShortName-frontend}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"deploymentInformation",
+						"{{serviceShortName-frontend}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStatusOfService - frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}/status/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend}}",
+						"status",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getInterfacesOfService frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/{{serviceShortName-frontend}}/{{serviceVersion-frontend}}/interfaces",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"{{serviceShortName-frontend}}",
+						"{{serviceVersion-frontend}}",
+						"interfaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteJob",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/jobs/cbd7ee82-cdd0-42d9-82d1-132b2db412a0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"jobs",
+						"cbd7ee82-cdd0-42d9-82d1-132b2db412a0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
