@@ -22,6 +22,7 @@ To create a service manually fill in all the fields in the dialog:
     :samp:`Version` must consist of three numbers formatted like in https://semver.org/spec/v2.0.0.html
 
 
+.. _importing-a-service-from-github:
 
 Importing a service from GitHub
 -------------------------------
