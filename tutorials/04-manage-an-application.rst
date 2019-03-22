@@ -19,7 +19,7 @@ First :doc:`add some services <01-add-a-service>` and an :doc:`application <03-a
    The Application :samp:`New Application` includes both services.
 
 
-To add the services to the application use the :guilabel:`Services` button on the right.
+To add the services to the application, use the :guilabel:`Services` button on the right.
 
 
 .. figure:: images/application-detail.*
@@ -34,7 +34,7 @@ This is also true for the :samp:`UST-MICO/react-redux-realworld-example-app` ser
 
 The service needs the environment variable :envvar:`BACKEND_REST_API` to `find the backend at runtime <https://github.com/UST-MICO/react-redux-realworld-example-app#docker-build>`_.
 
-The deployment info for a service contains these environment variables and other deployment specific information like the number of replicas to start.
+The deployment info for a service contains these environment variables and other deployment specific information, like the number of replicas, to start.
 It is displayed right below the service in the box on the right.
 
 To edit the deployment information use the gear icon.
@@ -45,9 +45,15 @@ To edit the deployment information use the gear icon.
 Deploying an Application
 ------------------------
 
-To deploy an application use the :guilabel:`deploy` button below the application name.
+To deploy an application, use the :guilabel:`deploy` button below the application name.
 
 
+
+
+Undeploying an Application
+------------------------
+
+To undeploy a deployed application, use the :guilabel:`undeploy` button below the application name.
 
 
 
@@ -55,7 +61,7 @@ To deploy an application use the :guilabel:`deploy` button below the application
 Create a new Application Version
 --------------------------------
 
-To create a new application version use the :guilabel:`create next Version` Button and choose the next version to create.
+To create a new application version, use the :guilabel:`create next Version` Button and choose the next version to create.
 
 .. figure:: images/create-new-application-version-dialog.*
    :name: create-new-application-version-dialog

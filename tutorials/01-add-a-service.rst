@@ -17,9 +17,9 @@ To create a service manually fill in all the fields in the dialog:
 
 .. note::
 
-    :samp:`Short Name` must be all lowercase contain only (latin) letters numbers and `-` and must start with a letter.
+    :samp:`Short Name` must be all lowercase containing only (latin) letters, numbers and `-` and must start with a letter.
 
-    :samp:`Version` must consist of three numbers formatted like in https://semver.org/spec/v2.0.0.html
+    :samp:`Version` must consist of three numbers formatted like in https://semver.org/spec/v2.0.0.html (semantic versioning)
 
 
 .. _importing-a-service-from-github:
@@ -41,7 +41,7 @@ Open the :guilabel:`GitHub` tab in the dialog and enter the url to the github re
    :name: new-service-dialog-github-step1
 
 
-In the next step you can choose to import the `latest` version or a specific version.
+In the next step you can choose to import the `latest` or a specific version.
 
 .. warning:: The import from GitHub feature only works if the repository has releases that match the `semantic versioning <https://semver.org/spec/v2.0.0.html>`_ schema!
 
@@ -59,14 +59,21 @@ You can also choose a specific release to import.
 After adding the service
 ------------------------
 
-You will be redirected to the service detail page if the service was added successfully.
+You will be redirected to the service detail page, if the service was added successfully.
+
+.. TODO update picture
 
 .. figure:: images/service-detail.*
    :name: service-detail
 
-In the top right corner you can select the version of the service you want to view.
+In the top right corner you can select the services version which is displayed.
 
-Right under the service name on the left you can delete this specific service version with the :guilabel:`delete version` button.
+Right below the service name on the left, you can delete this specific service version with the :guilabel:`delete version` button.
+Further, you can create the next service version, if the currently selected version is the latest.
+Thereby, the next version number (next major, next minor, next patch) can be selected.
+The new version will be a copy of the previous latest version with an updated version number.
+
+.. TODO insert picture of promote service dialog
 
 On the right side you can find a button to :guilabel:`Edit` the service and Buttons to add :term:`service interfaces <service interface>` :guilabel:`Provides` and to add dependencies :guilabel:`Dependees` to this service.
 

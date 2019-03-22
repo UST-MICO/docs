@@ -26,35 +26,35 @@ To add a new service interface click on the :guilabel:`Provides` button in the :
 
     :samp:`Target Port Number` is the port exposed by the docker container.
 
-After adding a interface to a service the detail page should look something like this:
+After adding a interface to a service, the detail page should look something like this:
 
 .. figure:: images/service-detail-with-service-interface.*
    :name: service-detail-with-service-interface
 
-To edit a service intervace click on the text of the service interface.
+To edit a service intervace, click on the text of the service interface.
 
-To delete a service interface use the trashbin icon right beside the service interface.
+To delete a service interface, use the trashbin icon right beside the service interface.
 
 
 
 Manage service dependencies
 ---------------------------
 
-To add an existing service as a dependency to this service use the :guilabel:`Dependees` button.
+To add an existing service as a dependency to this service, use the :guilabel:`Dependees` button.
 
 You can then select the service (and the specific version of that service) that you want to have as a dependency.
 
 .. figure:: images/choose-service-dependency-dialog.*
    :name: choose-service-dependency-dialog
 
-If you have added a dependency the name of the dependency will show up under the :guilabel:`Dependees` button.
+If you have added a dependency, the name of the dependency will show up below the :guilabel:`Dependees` button.
 
 .. figure:: images/service-detail-with-dependency.*
    :name: service-detail-with-dependency
 
 You can directly go to the detail page of a dependency by clicking on the name of the dependency.
 
-To remove a dependency use the trashbin icon right beside its name.
+To remove a dependency, use the trashbin icon right beside its name.
 
 You can also view the whole dependency graph for the service in the :guilabel:`Dependency Graph` tab.
 
