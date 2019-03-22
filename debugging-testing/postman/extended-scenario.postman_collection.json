@@ -260,7 +260,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"frontend\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"APPLICATION_NAME\",\n            \"value\": \"REAL_WORLD\"\n        }\n    ],\n    \"interfaceConnections\": [\n        {\n            \"environmentVariableName\": \"BACKEND_REST_API\",\n            \"micoServiceShortName\": \"spring-boot-realworld-example-app\",\n            \"micoServiceInterfaceName\": \"rest\"\n        }\n    ],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-frontend}}",
@@ -295,7 +295,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"backend\"\n        }\n    ],\n    \"environmentVariables\": [],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [\n        {\n            \"key\": \"component\",\n            \"value\": \"backend\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"APPLICATION_NAME\",\n            \"value\": \"REAL_WORLD\"\n        }\n    ],\n    \"imagePullPolicy\": \"IfNotPresent\"\n}"
 				},
 				"url": {
 					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/deploymentInformation/{{serviceShortName-backend}}",
@@ -666,6 +666,33 @@
 						"{{shortName}}",
 						"{{newVersion}}",
 						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "undeploy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{version}}/undeploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{version}}",
+						"undeploy"
 					]
 				}
 			},
