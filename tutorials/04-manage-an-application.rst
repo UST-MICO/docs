@@ -39,19 +39,48 @@ It is displayed right below the service in the box on the right.
 
 To edit the deployment information use the gear icon.
 
+In the dialog you can edit the following settings:
 
+Replicas
+    The number of replicas to scale the service.
+MicoLabelRequestDTO
+    Key value pairs that get mapped to kubernetes labels.
+MicoEnvironmentVariableRequestDTO
+    Environment variables to set for the container.
+MicoInterfaceConnectionRequestDTO
+    Connections to service interfaces of other services. The address of the service interface gets stored in the environment variable.
+Image Pull Policy
+    When to reload image from dockerhub.
+
+To connect the frontend with the backend service we need to add an interface connection with the following values to the frontend service.
+
+*  **Environment Variable Name:** :envvar:`BACKEND_REST_API`
+*  **Interface Name:** :samp:`backend`
+*  **Service Short Name:** :samp:`spring-boot-realworld-example-app`
+
+.. warning::
+
+    The actual values depend on the included services of the application!
+
+    The assumptions for this tutorial are listed in the note at the top of this tutorial.
+
+.. figure:: images/edit-frontend-deployment-info-dialog.*
+   :name: edit-frontend-deployment-info-dialog
 
 
 Deploying an Application
 ------------------------
 
 To deploy an application, use the :guilabel:`deploy` button below the application name.
+The actual deployment can take a few minutes depending on the services included in the application.
 
+Upon completion of the deployment you can see a list of ips under :guilabel:`Public IPs`.
+Each service has its own ip.
 
 
 
 Undeploying an Application
-------------------------
+--------------------------
 
 To undeploy a deployed application, use the :guilabel:`undeploy` button below the application name.
 
