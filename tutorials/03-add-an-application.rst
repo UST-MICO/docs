@@ -8,14 +8,14 @@ To add a new application click on the :guilabel:`new Application` button in the 
 .. figure:: images/add-new-application.*
    :name: add-new-application
 
-Fill in the values un the dialog. For :samp:`Short Name` and :samp:`Version` the same restrictions as for services apply.
+Fill in the values of the dialog. For :samp:`Short Name` and :samp:`Version` the same restrictions as for services apply.
 
 .. figure:: images/new-application-dialog.*
    :name: new-application-dialog
 
 You can choose the services for the new application now with the :guilabel:`pick Services` button.
 
-Alternatively you can add services to the application after it has been created.
+Services still can be added, removed or changed after the creation.
 
 .. figure:: images/service-picker-for-new-application-dialog.*
    :name: service-picker-for-new-application-dialog
@@ -32,15 +32,16 @@ The selected services are shown in the create new application dialog.
 After adding the application
 ----------------------------
 
-You will be redirected to the application detail page if the application was added successfully.
+You will be redirected to the application detail page, if the application was added successfully.
 
 .. figure:: images/application-detail.*
    :name: application-detail
 
-On the application detail page you can choose the version of the application in the top right corner.
+On the application detail page, you can choose the version of the application in the top right corner.
 
-Right under the application name on the left you can deploy the application with the :guilabel:`deploy`,
-create a new version of this application with the :guilabel:`create next Version` Button or
+Right below the application name on the left, you can deploy the application with the :guilabel:`deploy` button, 
+undeploy a the application with the :guilabel:`undeploy` button,
+create a new version of this application with the :guilabel:`create next Version` button or
 delete this specific application version with the :guilabel:`delete version` button.
 
 On the right side you can find a :guilabel:`Services` button to add services to the application.
