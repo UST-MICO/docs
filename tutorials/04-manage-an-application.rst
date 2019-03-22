@@ -32,10 +32,11 @@ Editing deployment information of services
 Some services need environment variables at runtime to work correctly.
 This is also true for the :samp:`UST-MICO/react-redux-realworld-example-app` service.
 
-The service needs the environment variable :envvar:`BACKEND_REST_API` to `find the backend at runtime <https://github.com/UST-MICO/react-redux-realworld-example-app#docker-build>`_.
+The service needs the environment variable :envvar:`BACKEND_REST_API` to 
+`find the backend at runtime <https://github.com/UST-MICO/react-redux-realworld-example-app#docker-build>`_.
 
 The deployment info for a service contains these environment variables and other deployment specific information, like the number of replicas, to start.
-It is displayed right below the service in the box on the right.
+It is displayed below the service in the box on the right.
 
 To edit the deployment information use the gear icon.
 
@@ -48,11 +49,12 @@ MicoLabelRequestDTO
 MicoEnvironmentVariableRequestDTO
     Environment variables to set for the container.
 MicoInterfaceConnectionRequestDTO
-    Connections to service interfaces of other services. The address of the service interface gets stored in the environment variable.
+    Connections to service interfaces of other services. 
+    The address of the service interface gets stored in a specified environment variable.
 Image Pull Policy
     When to reload image from dockerhub.
 
-To connect the frontend with the backend service we need to add an interface connection with the following values to the frontend service.
+To connect the frontend with the backend service, we need to add an interface connection with the following values to the frontend service:
 
 *  **Environment Variable Name:** :envvar:`BACKEND_REST_API`
 *  **Interface Name:** :samp:`backend`
@@ -72,9 +74,9 @@ Deploying an Application
 ------------------------
 
 To deploy an application, use the :guilabel:`deploy` button below the application name.
-The actual deployment can take a few minutes depending on the services included in the application.
+The actual deployment can take a few minutes, depending on the services included in the application.
 
-Upon completion of the deployment you can see a list of ips under :guilabel:`Public IPs`.
+Upon completion of the deployment, you can see a list of ips under :guilabel:`Public IPs`.
 Each service has its own ip.
 
 
