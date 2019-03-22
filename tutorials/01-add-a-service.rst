@@ -43,7 +43,11 @@ Open the :guilabel:`GitHub` tab in the dialog and enter the url to the github re
 
 In the next step you can choose to import the `latest` or a specific version.
 
-.. warning:: The import from GitHub feature only works if the repository has releases that match the `semantic versioning <https://semver.org/spec/v2.0.0.html>`_ schema!
+.. warning:: 
+
+    The import from GitHub feature only works if the repository has releases that match 
+    the `semantic versioning <https://semver.org/spec/v2.0.0.html>`_ schema! It is also necessary to 
+    include a dockerfile in the root folder of the repository.
 
 
 .. figure:: images/new-service-dialog-github-step2.*
