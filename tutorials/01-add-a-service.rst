@@ -17,9 +17,9 @@ To create a service manually fill in all the fields in the dialog:
 
 .. note::
 
-    :samp:`Short Name` must be all lowercase containing only (latin) letters, numbers and `-` and must start with a letter.
+    :samp:`Short Name` must be all lowercase, contain only (latin) letters, numbers and the character :samp:`-`. Also the fist character must be a letter.
 
-    :samp:`Version` must consist of three numbers formatted like in https://semver.org/spec/v2.0.0.html (semantic versioning)
+    :samp:`Version` must consist of three numbers formatted like in https://semver.org/spec/v2.0.0.html (semantic versioning).
 
 
 .. _importing-a-service-from-github:
