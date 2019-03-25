@@ -63,7 +63,7 @@ kubectl port-forward svc/prometheus -n monitoring 9090:9090
 
 ### Testing mico-core
 
-To test the locally running `mico-core` you can either use `mico-admin` (start it also locally) or make requests with *curl* or *Postman*. For Postman there are some collections and environments provided. See the [postman directory](./postman) for more information.
+To test the locally running `mico-core` you can either use `mico-admin` (start it also locally) or make requests with *curl* or *Postman*. For Postman there are some collections and environments provided. See the [postman directory](./postman/index) for more information.
 
 ### Neo4j
 

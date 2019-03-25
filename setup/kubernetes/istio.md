@@ -9,11 +9,11 @@ Istio 1.1 is available as a preliminary snapshot release. A first release candid
 
 **[Prerequisites](https://preliminary.istio.io/docs/setup/kubernetes/helm-install/#prerequisites):**
 
-1. [Download the Istio release](/docs/setup/kubernetes/download-release/).
+1. [Download the Istio release](https://istio.io/docs/setup/kubernetes/download/).
 
-2. Perform any necessary [platform-specific setup](/docs/setup/kubernetes/platform-setup/).
+2. Perform the necessary [platform-specific setup](https://istio.io/docs/setup/kubernetes/prepare/platform-setup/).
 
-3. Check the [Requirements for Pods and Services](/docs/setup/kubernetes/spec-requirements/) on Pods and Services.
+3. Check the [Requirements for Pods and Services](https://istio.io/docs/setup/kubernetes/prepare/requirements/) on Pods and Services.
 
 4. [Install the Helm client](https://docs.helm.sh/using_helm/).
 
@@ -85,8 +85,7 @@ kubectl apply -f $HOME/istio-telemetry.yaml
 ```
 
 **References:**
-* [Minimal Istio Installation](https://istio.io/docs/setup/kubernetes/minimal-install/)
-* [Installation Options](https://istio.io/docs/reference/config/installation-options/)
+* [Customizable Install with Helm](https://istio.io/docs/setup/kubernetes/install/helm/)
 * [Helm Configuration](https://github.com/istio/istio/blob/master/install/kubernetes/helm/istio/README.md#configuration)
 * [Helm Values](https://github.com/istio/istio/blob/master/install/kubernetes/helm/istio/values.yaml)
 
@@ -104,7 +103,7 @@ kubectl get namespace -L istio-injection
 
 ## Upgrade Istio
 
-[Upgrading Istio](https://istio.io/docs/setup/kubernetes/upgrading-istio/)
+[Upgrading Istio](https://istio.io/docs/setup/kubernetes/upgrade/steps/)
 
 1. [Download the new Istio release](https://github.com/istio/istio/releases) and change directory to the new release directory.
 

@@ -84,7 +84,7 @@ Chosen option: Kaniko, because it is designed for the use case we need. It works
 [GitHub: kaniko](https://github.com/GoogleContainerTools/kaniko)
 
 * Good, because it is a popular open source project created by Google
-* Good, because it is well documented and easy to use (readymade [executor image](gcr.io/kaniko-project/executor) exists)
+* Good, because it is well documented and easy to use (readymade executor image `gcr.io/kaniko-project/executor` exists)
 * Good, because it is designed to work on Kubernetes
 * Good, because it is daemonless
 * Good, because it does not need privileged rights (however it requires to run as root inside the build container)
