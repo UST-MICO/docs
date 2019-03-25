@@ -86,7 +86,7 @@ We want to use a state of the art database that can store services/applications 
 
 .. important::
 
-    The :samp:`Service Description` entity in the model describes a :term:`service interface`.
+    The :samp:`Service Description` entity in the model describes a :term:`Service Interface`.
 ```
 
 ### Data Model Graph
@@ -139,7 +139,7 @@ We want to use a state of the art database that can store services/applications 
 
 .. important::
 
-    The :samp:`Service Description` entity in the model describes a :term:`service interface`.
+    The :samp:`Service Description` entity in the model describes a :term:`Service Interface`.
 ```
 
 

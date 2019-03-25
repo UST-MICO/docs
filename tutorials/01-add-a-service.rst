@@ -79,7 +79,7 @@ The new version will be a copy of the previous latest version with an updated ve
 
 .. TODO insert picture of promote service dialog
 
-On the right side you can find a button to :guilabel:`Edit` the service and Buttons to add :term:`service interfaces <service interface>` :guilabel:`Provides` and to add dependencies :guilabel:`Dependees` to this service.
+On the right side you can find a button to :guilabel:`Edit` the service and Buttons to add :term:`service interfaces <Service Interface>` :guilabel:`Provides` and to add dependencies :guilabel:`Dependees` to this service.
 
 .. figure:: images/service-detail-edit.*
    :name: service-detail-edit

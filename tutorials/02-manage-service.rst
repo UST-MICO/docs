@@ -9,7 +9,7 @@ How To manage a service
 Manage service interfaces
 -------------------------
 
-The :term:`service interfaces <service interface>` are used to map the open ports of the service docker container to ports of the kubernetes service.
+The :term:`service interfaces <Service Interface>` are used to map the open ports of the service docker container to ports of the kubernetes service.
 
 .. todo:: link kubernetes service to glossar or somewhere
 

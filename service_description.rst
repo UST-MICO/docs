@@ -3,11 +3,9 @@
 Service Description
 ===================
 
-Attributes describing a :term:`service`. The attributes are mainly taken from `Pivio`_.
+Attributes describing a :term:`MICO Service`. The attributes are mainly taken from `Pivio`_.
 
 .. _Pivio: http://pivio.io/docs/#_general
-
-.. todo:: Specify information for :term:`external services <external service>`.
 
 
 Mandatory Fields
@@ -57,7 +55,7 @@ owner
 service
     provides
         What and where does this artefact provide services?
-        This part describes a :term:`service interface`.
+        This part describes a :term:`Service Interface`.
 
         description
             See above.

@@ -8,7 +8,7 @@
 Welcome to MICO's documentation!
 ================================
 
-Mico is a project for designing, deploying and managing :term:`applications <application>` consisting of multiple :term:`services <service>`.
+Mico is a project for designing, deploying and managing :term:`applications <MICO Application>` consisting of multiple :term:`services <MICO Service>`.
 
 .. seealso::
 
