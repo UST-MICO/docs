@@ -5,6 +5,8 @@ Depending on which component of MICO you want to test, there are different ways 
 * [Testing](#testing)
   * [Local testing without cluster](#local-testing-without-cluster)
   * [Local testing of the MICO backend with access to the cluster](#local-testing-of-the-mico-backend-with-access-to-the-cluster)
+    * [Testing mico-core](#testing-mico-core)
+    * [Neo4j](#neo4j)
   * [Local testing of the MICO dashboard with access to the cluster](#local-testing-of-the-mico-dashboard-with-access-to-the-cluster)
   * [Testing in cluster with own namespace](#testing-in-cluster-with-own-namespace)
     * [Preparation](#preparation)
@@ -27,31 +29,62 @@ Use `docker-compose` to start `mico-core` and `neo4j` as the database:
 docker-compose up --build
 ```
 
-To only start Neo4j as a Docker container use
+To only start `neo4j` use
 ```bash
-docker run -p 7687:7687 -p 7474:7474 -e NEO4J_dbms_security_auth__enabled=false --volume=$HOME/neo4j/data:/data --volume=$HOME/neo4j/logs:/logs neo4j:3.5.3
+docker-compose up neo4j
 ```
 
 ## Local testing of the MICO backend with access to the cluster
 
-Currently you can't use `docker-compose` for that, because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
-An alternative is to use `kubectl` that is installed on your host system. If you don't have `kubectl` installed yet, you should do that now. For more information see [Setup](../setup/index).
+With this approach you are able to debug `mico-core` locally. Furthermore you are able to connect the Neo4j browser to a local instance (simple way to view what's going on in the database).
+It is required to have `kubectl` installed on your system. If you don't have `kubectl` installed yet, you should do that now. For more information see [Setup](../setup/index).
 
-Start Neo4j either as a Docker container or as a local instance installed on your system (`dbms.security.auth_enabled` must be set to `false`).
-
-To execute `mico-core`, build it first with Maven
+Start Neo4j and Redis locally. The easiest way is to use `docker-compose`:
 ```bash
-mvn -B -f mico-core/pom.xml clean package -Dmaven.test.skip=true
+docker-compose up neo4j redis
 ```
 
-and run the jar file
+To start `mico-core` locally there are basically 3 ways:
+
+* Start with your IDE, to be able to debug `mico-core` (recommended)
+
+* Build and start with maven:
+  ```bash
+  mvn -B -f mico-core/pom.xml clean package -Dmaven.test.skip=true
+  java -jar -Dspring.profiles.active=dev mico-core/target/mico-core-1.0-SNAPSHOT.jar
+  ```
+
+* `docker-compose` is currently not an option because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
+
+Last but not least you should provide a way to connect to Prometheus. This is required if you want to retrieve the status of a deployed MicoApplication and its MicoServices. The easiest way is connect to the running Prometheus instance inside your cluster by making a port-forwarding:
 ```bash
-java -jar mico-core/target/mico-core-1.0-SNAPSHOT.jar
+kubectl port-forward svc/prometheus -n monitoring 9090:9090
+```
+
+### Testing mico-core
+
+To test the locally running `mico-core` you can either use `mico-admin` (start it also locally) or make requests with *curl* or *Postman*. For Postman there are some collections and environments provided. See the [postman directory](./postman) for more information.
+
+### Neo4j
+
+You can connect to the remote interface of Neo4j via [http://localhost:7474/browser](http://localhost:7474/browser/).
+In the browser you are able to use the Cypher Shell and execute cypher statements.
+
+Get all:
+```sql
+MATCH (n)
+RETURN n;
+```
+
+Delete all:
+```sql
+MATCH (n)
+DETACH DELETE n;
 ```
 
 ## Local testing of the MICO dashboard with access to the cluster
 
-`mico-admin` needs access to `mico-core`. You can achieve that by using a port forwaring:
+`mico-admin` needs access to `mico-core`. You can either start `mico-core` locally or access `mico-core` in the Kubernetes cluster by using a port forwaring:
 ```bash
 kubectl port-forward svc/mico-core -n mico-system 8080:8080
 ```
@@ -109,16 +142,14 @@ To update a single deployment you can change the Docker image of the specific de
 
 Example with deployment `mico-core`:
 ```bash
-# Build a new Docker image (change tag name)
-docker build -f Dockerfile.mico-core -t ustmico/mico-core:mico-1337 .
-
-# Push it to DockerHub
-docker push ustmico/mico-core:mico-1337
+# Build a new Docker image (change tag name e.g. to the corresponding issue number) and push it to DockerHub
+docker build -f Dockerfile.mico-core -t ustmico/mico-core:42-fix-api . && docker push ustmico/mico-core:42-fix-api
 
 # Set the image of the Kubernetes deployment
-kubectl set image deployment/mico-core mico-core=ustmico/mico-core:mico-1337 -n ${NAMESPACE}
+kubectl set image deployment/mico-core mico-core=ustmico/mico-core:42-fix-api -n ${NAMESPACE}
 
-# If the image is already set, you can restart the pod with the new image
+# If there was another image set, the pods of the deployment will automatically be restarted with the new image
+# If the image was already set, you must restart the pod manually
 kubectl -n $NAMESPACE delete pod $(kubectl get pods -n $NAMESPACE --selector=run=mico-core --output=jsonpath={.items..metadata.name})
 ```
 
