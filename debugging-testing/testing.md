@@ -56,6 +56,8 @@ To start `mico-core` locally there are basically 3 ways:
 
 * `docker-compose` is currently not an option because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
 
+Per default the Spring profile `dev` set in `application.properties` configures `mico-core` to use the Kubernetes namespace `mico-testing` as the target for the `Builds` and the finally running *MicoServices*. This namespace must include the Kubernetes `Secret` and the `ServiceAccount` for the authentication to DockerHub. To create the namespace `mico-testing` with this resources included you can use the script [`/install/kubernetes/test-setup-only-build-environment.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup-only-build-environment.sh).
+
 Last but not least you should provide a way to connect to Prometheus. This is required if you want to retrieve the status of a deployed MicoApplication and its MicoServices. The easiest way is connect to the running Prometheus instance inside your cluster by making a port-forwarding:
 ```bash
 kubectl port-forward svc/prometheus -n monitoring 9090:9090
@@ -96,13 +98,13 @@ Even then you are able to use a local instance of `mico-admin` and access `mico-
 ## Testing in cluster with own namespace
 
 To be able to test in an exclusive environment, you can deploy MICO in a separate namespace inside the cluster.
-For this purpose the script [`/install/kubernetes/test-setup.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup.sh) in the [MICO repository](https://github.com/UST-MICO/mico) can be used.
+For this purpose the script [`/install/kubernetes/test-setup-all-in-own-namespace.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup-all-in-own-namespace.sh) in the [MICO repository](https://github.com/UST-MICO/mico) can be used.
 
 ### Preparation
 
 Prepare yourself to enter a name for the test namespace (e.g. `mico-testing-1337`) as well as your credentials for DockerHub.
 
-Now you are able to execute the interactive setup script `install/kubernetes/test-setup.sh`.
+Now you are able to execute the interactive setup script `install/kubernetes/test-setup-all-in-own-namespace.sh`.
 
 The Neo4j database needs ~5min until it is ready.
 You can check the current status with
