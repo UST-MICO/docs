@@ -36,6 +36,75 @@ Represents an application represented as a set of instances of `MicoService`_
     * owner
         Human readable information for the application owner who is responsible for this application.
 
+MicoApplicationJobStatus
+========================
+Represents the job status for a `MicoApplication`_. Contains a list of jobs.
+
+.. image:: res/MicoApplicationJobStatus.png
+
+* applicationShortName
+    The short name of the application.
+
+* applicationVersion
+    The version of the application.
+
+* status
+    The aggregated status of jobs for the `MicoApplication`_.
+
+* jobs 
+    The list of jobs for the `MicoApplication`_.
+
+MicoEnvironmentVariable
+=======================
+An environment variable represented as a simple key-value pair. Necessary since Neo4j does not allow to persist properties of composite types.
+
+.. image:: res/MicoEnvironmentVariable.png
+
+* name
+    Name of the environment variable.
+
+* value
+    Value of the environment variable.
+
+MicoServiceBackgroundJob
+========================
+Background job for a `MicoService`_.
+
+.. image:: res/MicoServiceBackgroundJob.png
+
+* future
+    The actual job future.
+
+* serviceShortName
+    The short name of the corresponding `MicoService`_.
+
+* serviceVersion
+    The version of the corresponding `MicoService`_.
+
+* type 
+    The type of this job.
+
+* status
+    The current status of this Job.
+
+* errorMessage
+    An error message in case the job has failed.
+
+KubernetesDeploymentInfo
+========================
+Information about the Kubernetes resources that are created through an actual deployment of a `MicoService`_.
+
+.. image:: res/KubernetesDeploymentInfo.png
+
+* namespace
+    The namespace in which the Kubernetes deployment is created.
+
+* deploymentName
+    The name of the Kubernetes deployment created by a `MicoService`_.
+
+* serviceNames
+    The names of the Kubernetes services created by `MicoServiceInterface`_.
+
 MicoLabel
 =========
 Represents a simple key-value pair label. Necessary since Neo4j does not allow to persist Map implementations.
@@ -237,6 +306,21 @@ MicoServiceDeploymentInfoQueryResult
 
 * service
 
+MicoServiceInterfaceConnection
+------------------------------
+An interface connection contains the the information needed to connect a `MicoService`_ to an `MicoServiceInterface`_ of another `MicoService`_.
+
+.. image:: res/MicoServiceInterfaceConnection.png
+
+* environmentVariableName
+    Name of the environment variable that is used to set the fully qualified name of an interface.
+
+* micoServiceInterfaceName
+    Name of the `MicoServiceInterface`_ of another `MicoService`_.
+
+* micoServiceShortName
+    Name of the `MicoService`_.
+
 MicoServiceCrawlingOrigin
 =========================
 Enumeration for the various places a service may originate from.
@@ -254,7 +338,7 @@ Enumeration for the various places a service may originate from.
 
 MicoVersion
 ===========
-Wrapper for a {@link Version} that adds the functionality for a version prefix, so that versions like, e.g., 'v1.2.3' are possible.
+Wrapper for a version that adds the functionality for a version prefix, so that versions like, e.g., 'v1.2.3' are possible.
 
 .. image:: res/MicoVersion.png
 
