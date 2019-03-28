@@ -38,7 +38,7 @@ kubectl config use-context $CLUSTER_NAME-admin
 ## Cluster details
 
 **Current cluster:**
-* VM: Standard_B2s (2 vCPUs, 4 GB RAM)
+* VM: Standard_B2ms (2 vCPUs, 8 GB RAM)
 * Nodes: 3
 * OS Disk Size: 30 GB
 * Location: westeurope
@@ -51,7 +51,7 @@ az aks show --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
 
 **Costs:**
 
-With two nodes we currently consume about 3 € per day.
+With two nodes we currently consume about 4 € per day.
 
 You can check the current costs either in the [Azure Portal](https://portal.azure.com/) under "Visual Studio Enterprise - Cost analysis" or in the [subscription dashboard of your Azure account](https://account.azure.com/Subscriptions).
 
@@ -90,7 +90,7 @@ az aks create --resource-group $RESOURCE_GROUP \
 --name $CLUSTER_NAME \
 --generate-ssh-keys \
 --kubernetes-version 1.12.6 \
---node-vm-size Standard_B2s \
+--node-vm-size Standard_B2ms \
 --node-count 2
 ```
 For more information see [Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough).

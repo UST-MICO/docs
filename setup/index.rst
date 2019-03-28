@@ -5,12 +5,14 @@ Setup
 
     setup
     aks
+    gke
     ide
     cicd
     kubernetes/index
 
 This chapter covers all information about the current MICO setup. The setup itself is described in :doc:`MICO Setup <setup>`.
 The Azure Kubernetes Service (AKS) is the used for the current Kubernetes development environment and is described in :doc:`Azure Kubernetes Service <aks>`.
+The Google Kubernetes Engine is also tested with MICO and :doc:`Google Kubernetes Engine <gke>`.
 
 More details about different Kubernetes components that are used for MICO are described in section :doc:`Kubernetes <kubernetes/index>`.
 

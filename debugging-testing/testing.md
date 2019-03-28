@@ -24,14 +24,14 @@ Depending on which component of MICO you want to test, there are different ways 
 
 This is only an option if you don't need the Kubernetes API. Be aware that all calls made by `mico-core` to the Kubernetes API will cause an exception.
 
-Use `docker-compose` to start `mico-core` and `neo4j` as the database:
+Use `docker-compose` to start `mico-core`, `neo4j` and `redis` as the database:
 ```bash
 docker-compose up --build
 ```
 
-To only start `neo4j` use
+To only start `neo4j` and `redis` use
 ```bash
-docker-compose up neo4j
+docker-compose up neo4j redis
 ```
 
 ## Local testing of the MICO backend with access to the cluster
@@ -86,7 +86,7 @@ DETACH DELETE n;
 
 ## Local testing of the MICO dashboard with access to the cluster
 
-`mico-admin` needs access to `mico-core`. You can either start `mico-core` locally or access `mico-core` in the Kubernetes cluster by using a port forwaring:
+`mico-admin` needs access to `mico-core`. You can either start `mico-core` locally or access `mico-core` in the Kubernetes cluster by using a port forwarding:
 ```bash
 kubectl port-forward svc/mico-core -n mico-system 8080:8080
 ```
