@@ -702,7 +702,7 @@
 			"response": []
 		},
 		{
-			"name": "undeploy",
+			"name": "14. undeploy old version",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -722,33 +722,6 @@
 						"applications",
 						"{{shortName}}",
 						"{{version}}",
-						"undeploy"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "undeploy new version",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/hal+json"
-					}
-				],
-				"body": {},
-				"url": {
-					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/undeploy",
-					"protocol": "http",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"applications",
-						"{{shortName}}",
-						"{{newVersion}}",
 						"undeploy"
 					]
 				}
@@ -985,6 +958,33 @@
 						"{{serviceShortName-frontend}}",
 						"{{serviceVersion-frontend}}",
 						"interfaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "undeploy new version",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://{{host}}/applications/{{shortName}}/{{newVersion}}/undeploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						"{{shortName}}",
+						"{{newVersion}}",
+						"undeploy"
 					]
 				}
 			},
