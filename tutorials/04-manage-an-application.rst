@@ -32,7 +32,7 @@ Editing deployment information of services
 Some services need environment variables at runtime to work correctly.
 This is also true for the :samp:`UST-MICO/react-redux-realworld-example-app` service.
 
-The service needs the environment variable :envvar:`BACKEND_REST_API` to 
+The service needs the environment variable :envvar:`BACKEND_REST_API` to
 `find the backend at runtime <https://github.com/UST-MICO/react-redux-realworld-example-app#docker-build>`_.
 
 The deployment info for a service contains these environment variables and other deployment specific information, like the number of replicas, to start.
@@ -44,15 +44,18 @@ In the dialog you can edit the following settings:
 
 Replicas
     The number of replicas to scale the service.
-MicoLabelRequestDTO
+Labels
     Key value pairs that get mapped to kubernetes labels.
-MicoEnvironmentVariableRequestDTO
+Environment Variables
     Environment variables to set for the container.
-MicoInterfaceConnectionRequestDTO
-    Connections to service interfaces of other services. 
+Interface Connections
+    Connections to service interfaces of other services.
     The address of the service interface gets stored in a specified environment variable.
 Image Pull Policy
     When to reload image from dockerhub.
+
+.. figure:: images/edit-frontend-deployment-info-dialog.*
+   :name: edit-frontend-deployment-info-dialog
 
 To connect the frontend with the backend service, we need to add an interface connection with the following values to the frontend service:
 
@@ -66,8 +69,14 @@ To connect the frontend with the backend service, we need to add an interface co
 
     The assumptions for this tutorial are listed in the note at the top of this tutorial.
 
-.. figure:: images/edit-frontend-deployment-info-dialog.*
-   :name: edit-frontend-deployment-info-dialog
+You can also connect the service to the :samp:`backend` interface in the grapheditor.
+To do this hover with the mouse over the :samp:`UST-MICO/react-redux-realworld-example-app`
+service in the graph and drag one of the appearing circles to the :samp:`backend` interface.
+
+After dropping the edge on the :samp:`backend` interface insert the :envvar:`BACKEND_REST_API` into the dialog and confirm.
+
+.. figure:: images/connect-service-with-interface-dialog.*
+   :name: connect-service-with-interface-dialog
 
 
 Deploying an Application
@@ -79,6 +88,8 @@ The actual deployment can take a few minutes, depending on the services included
 Upon completion of the deployment, you can see a list of ips under :guilabel:`Public IPs`.
 Each service has its own ip.
 
+.. figure:: images/application-detail-deployed.*
+   :name: application-detail-deployed
 
 
 Undeploying an Application
