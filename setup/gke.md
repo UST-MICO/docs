@@ -62,6 +62,16 @@ gcloud container --project "ust-mico" clusters create "ust-mico-cluster" --regio
 ```
 For more information see [Creating a cluster](https://cloud.google.com/kubernetes-engine/docs/how-to/creating-a-cluster).
 
+**Prerequisites for using Role-Based Access Control:**
+
+To be able to install MICO, it's required to grant the user the ability to create roles in Kubernetes.
+This is a prerequisite to use use role-based access control on GKE. For more information see the GKE [instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/role-based-access-control).
+
+Grant permission for the current user:
+```bash
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config list account --format "value(core.account)")
+```
+
 ## Cluster management
 
 ### Public Access
