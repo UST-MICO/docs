@@ -72,6 +72,13 @@ Grant permission for the current user:
 kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config list account --format "value(core.account)")
 ```
 
+## Cluster deletion
+
+**Delete cluster:**
+```bash
+gcloud container --project "ust-mico" clusters delete "ust-mico-cluster"
+```
+
 ## Cluster management
 
 ### Public Access

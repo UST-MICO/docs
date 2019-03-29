@@ -95,6 +95,12 @@ az aks create --resource-group $RESOURCE_GROUP \
 ```
 For more information see [Quickstart: Deploy an Azure Kubernetes Service (AKS) cluster](https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough).
 
+## Cluster deletion
+
+**Delete cluster:**
+```bash
+az aks delete --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME \
+```
 
 ### Redeploy an Azure Kubernetes Service (AKS) cluster
 
