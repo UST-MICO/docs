@@ -153,6 +153,8 @@ Type
 ----
 Enumeration for all types of a `MicoMessage`_.
 
+.. image:: res/MicoMessage.Type.png
+
 * INFO
 * WARNING
 * ERROR
