@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>30</y>
+      <w>640</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>*MicoApplication*
+--
+-shortName: String
+-name: String
+-version: String
+-description: String
+-serviceDeploymentInfos = new ArrayList(): List&lt;MicoServiceDeploymentInfo&gt;
+-contact: String
+-owner: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

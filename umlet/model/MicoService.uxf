@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>10</y>
+      <w>760</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>*MicoService*
+--
+-shortName: String
+-name: String
+-version: String
+-description = "": String
+-serviceCrawlingOrigin = MicoServiceCrawlingOrigin.NOT_DEFINED: MicoServiceCrawlingOrigin
+-serviceInterfaces = new ArrayList(): List&lt;MicoServiceInterface&gt;
+-dependencies = new ArrayList(): List&lt;MicoServiceDependency&gt;
+-predecessor: MicoService
+-contact: String
+-owner: String
+-gitCloneUrl: String
+-gitReleaseInfoUrl: String
+-dockerfilePath: String
+-dockerImageUri: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

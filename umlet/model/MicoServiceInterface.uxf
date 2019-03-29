@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>420</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>*MicoServiceInterface*
+--
+-serviceInterfaceName: String
+-ports = new ArrayList(): List&lt;MicoServicePort&gt;
+-publicDns: String
+-description = "": String
+-protocol: String
+-transportProtocol: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

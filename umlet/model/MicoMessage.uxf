@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text/>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>50</x>
+      <y>50</y>
+      <w>330</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>**MicoMessage**
+--
+-content: String
+-type: Type
+--
++info(String content): MicoMessage
++warning(String content): MicoMessage
++error(String content): MicoMessage
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

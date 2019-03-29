@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>510</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>*MicoServiceDeploymentInfo*
+--
+-application: MicoApplication
+-service: MicoService
+-replicas = 1: int
+-minReadySecondsBeforeMarkedAvailable = 0: int
+-labels = new ArrayList(): List&lt;MicoLabel&gt;
+-imagePullPolicy = ImagePullPolicy.ALWAYS: ImagePullPolicy
+-restartPolicy = RestartPolicy.ALWAYS: RestartPolicy
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

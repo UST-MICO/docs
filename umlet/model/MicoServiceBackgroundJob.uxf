@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <help_text/>
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>130</y>
+      <w>480</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>**MicoServiceBackgroundJob**
+--
+-serialVersionUID = -8247189361567566737L: long
+-id: String
+-future: CompletableFuture&lt;?&gt;
+-serviceShortName: String
+-serviceVersion: String
+-type: Type
+-status = Status.PENDING: Status
+-errorMessage: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

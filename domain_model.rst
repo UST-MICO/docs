@@ -10,9 +10,6 @@ Represents an application represented as a set of instances of `MicoService`_
 
 *Required fields*
 
-    * id
-        The id of this application.
-
     * shortName
         A brief name for the application intended for use as a unique identifier.
 
@@ -42,17 +39,19 @@ Represents the job status for a `MicoApplication`_. Contains a list of jobs.
 
 .. image:: res/MicoApplicationJobStatus.png
 
-* applicationShortName
-    The short name of the application.
+*Fields*
 
-* applicationVersion
-    The version of the application.
+    * applicationShortName
+        The short name of the application.
 
-* status
-    The aggregated status of jobs for the `MicoApplication`_.
+    * applicationVersion
+        The version of the application.
 
-* jobs 
-    The list of jobs for the `MicoApplication`_.
+    * status
+        The aggregated status of jobs for the `MicoApplication`_.
+
+    * jobs 
+        The list of jobs for the `MicoApplication`_.
 
 MicoEnvironmentVariable
 =======================
@@ -60,11 +59,13 @@ An environment variable represented as a simple key-value pair. Necessary since 
 
 .. image:: res/MicoEnvironmentVariable.png
 
-* name
-    Name of the environment variable.
+*Fields*
 
-* value
-    Value of the environment variable.
+    * name
+        Name of the environment variable.
+
+    * value
+        Value of the environment variable.
 
 MicoServiceBackgroundJob
 ========================
@@ -72,23 +73,25 @@ Background job for a `MicoService`_.
 
 .. image:: res/MicoServiceBackgroundJob.png
 
-* future
-    The actual job future.
+*Fields*
 
-* serviceShortName
-    The short name of the corresponding `MicoService`_.
+    * future
+        The actual job future.
 
-* serviceVersion
-    The version of the corresponding `MicoService`_.
+    * serviceShortName
+        The short name of the corresponding `MicoService`_.
 
-* type 
-    The type of this job.
+    * serviceVersion
+        The version of the corresponding `MicoService`_.
 
-* status
-    The current status of this Job.
+    * type 
+        The type of this job.
 
-* errorMessage
-    An error message in case the job has failed.
+    * status
+        The current status of this Job.
+
+    * errorMessage
+        An error message in case the job has failed.
 
 KubernetesDeploymentInfo
 ========================
@@ -96,14 +99,16 @@ Information about the Kubernetes resources that are created through an actual de
 
 .. image:: res/KubernetesDeploymentInfo.png
 
-* namespace
-    The namespace in which the Kubernetes deployment is created.
+*Optional fields*
 
-* deploymentName
-    The name of the Kubernetes deployment created by a `MicoService`_.
+    * namespace
+        The namespace in which the Kubernetes deployment is created.
 
-* serviceNames
-    The names of the Kubernetes services created by `MicoServiceInterface`_.
+    * deploymentName
+        The name of the Kubernetes deployment created by a `MicoService`_.
+
+    * serviceNames
+        The names of the Kubernetes services created by `MicoServiceInterface`_.
 
 MicoLabel
 =========
@@ -111,11 +116,47 @@ Represents a simple key-value pair label. Necessary since Neo4j does not allow t
 
 .. image:: res/MicoLabel.png
 
-* key
-    Key of the label.
+*Fields*
 
-* value
-    Value of the label.
+    * key
+        Key of the label.
+
+    * value
+        Value of the label.
+
+MicoMessage
+===========
+A simple message associated with a `Type`_. Note that this class is only used for business logic purposes and instances are not persisted.
+
+.. image:: res/MicoMessage.png
+
+*Required fields*
+
+    * content
+        The actual message content.
+
+    * type
+        The `Type`_ of this message.
+
+*Methods*
+
+    * info(String content)
+        Creates a new `MicoMessage`_ instance with the type Type#INFO and the given message content.
+
+    * error(String content)
+        Creates a new `MicoMessage`_ instance with the type Type#ERROR and the given message content.
+
+    * warning(String content)
+        Creates a new `MicoMessage`_ instance with the type Type#WARNING and the given message content.
+
+Type
+----
+Enumeration for all types of a `MicoMessage`_.
+
+* INFO
+* WARNING
+* ERROR
+
 
 MicoService
 ===========
@@ -124,9 +165,6 @@ Represents a service in the context of MICO.
 .. image:: res/MicoService.png
 
 *Required fields*
-
-    * id
-        The id of this service. MUST be readable and writable from the perspective of the Jackson mapper to handle recursive service dependencies.       
 
     * shortName
         A brief name for the service. In conjunction with the version it must be unique. Pattern is the same as the one for Kubernetes Service names.
@@ -176,15 +214,12 @@ Represents a service in the context of MICO.
         The fully qualified URI to the image on DockerHub. Either set after the image has been built by MICO (if the service originates from GitHub) or set by the user directly.
 
 MicoServiceDependency
----------------------
+=====================
 Represents a dependency of a `MicoService`_.
 
 .. image:: res/MicoServiceDependency.png
 
 *Required fields*
-
-    * id
-        The id of this service dependency.
     
     * service
         This is the `MicoService`_ that requires (depends on) the depended service.
@@ -199,15 +234,12 @@ Represents a dependency of a `MicoService`_.
         The maximum version of the depended service that is supported.
 
 MicoServiceDeploymentInfo
--------------------------
+=========================
 Represents the information necessary for deploying a single service.
 
 .. image:: res/MicoServiceDeploymentInfo.png
 
 *Required fields*
-
-    * id
-        The id of this service deployment info.
 
     * application
         The `MicoApplication`_ that uses a `MicoService`_ this deployment refers to.
@@ -233,15 +265,12 @@ Represents the information necessary for deploying a single service.
         Restart policy for all containers. Default is Always.
 
 MicoServiceInterface
---------------------
+====================
  Represents a interface, e.g., REST API, of a `MicoService`_.
 
  .. image:: res/MicoServiceInterface.png
 
 *Required fields*
-
-    * id
-        The id of this service interface.
 
     * serviceInterfaceName
         The name of this `MicoServiceInterface`_. Pattern is the same than for Kubernetes Service names.
@@ -264,15 +293,12 @@ MicoServiceInterface
         The transport protocol (e.g. TCP).
 
 MicoServicePort
----------------
+===============
 Represents a basic port with a port number and port type (protocol).
 
 .. image:: res/MicoServicePort.png
 
 *Required fields*
-
-    * id
-        The id of this service port.
 
     * port
         The port number of the externally exposed port.
@@ -284,7 +310,7 @@ Represents a basic port with a port number and port type (protocol).
         The port inside the container.
 
 MicoPortType
-------------
+============
 Enumeration for all port types, e.g., TCP, supported by MICO.
 
 .. image:: res/MicoPortType.png
@@ -295,19 +321,8 @@ Enumeration for all port types, e.g., TCP, supported by MICO.
 * UDP
     User Datagram Protocol.
 
-MicoServiceDeploymentInfoQueryResult
-------------------------------------
-
-.. image:: res/MicoServiceDeploymentInfoQueryResult.png
-
-* application
-
-* serviceDeploymentInfo
-
-* service
-
 MicoServiceInterfaceConnection
-------------------------------
+==============================
 An interface connection contains the the information needed to connect a `MicoService`_ to an `MicoServiceInterface`_ of another `MicoService`_.
 
 .. image:: res/MicoServiceInterfaceConnection.png
@@ -358,3 +373,20 @@ Wrapper for a version that adds the functionality for a version prefix, so that 
 
 * forIntegersWithPrefix(String prefix, int major, int minor, int patch)
     Creates a new instance of MicoVersion for the specified version numbers with the specified prefix string.
+
+MicoServiceInterfaceConnection
+==============================
+An interface connection contains the the information needed to connect a `MicoService`_ to an `MicoServiceInterface`_ of another `MicoService`_. Instances of this class are persisted as nodes in the Neo4j database.
+
+.. image:: res/MicoServiceInterfaceConnection.png
+
+**Required fields**
+
+    * environmentVariableName
+        Name of the environment variable that is used to set the fully qualified name of an interface.
+
+    * micoServiceInterfaceName
+        Name of the `MicoServiceInterface`_ of an `MicoService`_.
+
+    * micoServiceShortName
+        Name of the `MicoService`_.
