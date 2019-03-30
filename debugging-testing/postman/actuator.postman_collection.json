@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "604b8954-4f51-41cb-86fe-288221ea183c",
+		"name": "actuator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Log Level",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/loggers/io.github.ust.mico.core",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"loggers",
+						"io.github.ust.mico.core"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Log Level",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"configuredLevel\": \"TRACE\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/loggers/io.github.ust.mico.core",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"loggers",
+						"io.github.ust.mico.core"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get HTTP  Trace",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/httptrace",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"httptrace"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Env",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/env",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"env"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Health",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/health",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/actuator/info",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"actuator",
+						"info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -376,6 +376,46 @@
 			"response": []
 		},
 		{
+			"name": "6.3 getApplicationDeploymentStatus",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentStatus",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":micoApplicationShortName",
+						":micoApplicationVersion",
+						"deploymentStatus"
+					],
+					"variable": [
+						{
+							"key": "micoApplicationShortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "micoApplicationVersion",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "7.1 getInterfacePublicIpByName - frontend",
 			"request": {
 				"method": "GET",
@@ -672,6 +712,46 @@
 			"response": []
 		},
 		{
+			"name": "12.3 get deployment status of new version",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentStatus",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":micoApplicationShortName",
+						":micoApplicationVersion",
+						"deploymentStatus"
+					],
+					"variable": [
+						{
+							"key": "micoApplicationShortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "micoApplicationVersion",
+							"value": "{{newVersion}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "13. get status of new application",
 			"request": {
 				"method": "GET",
@@ -723,6 +803,46 @@
 						"{{shortName}}",
 						"{{version}}",
 						"undeploy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceYamlByShortNameAndVersion - frontend",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version/yaml",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version",
+						"yaml"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{serviceShortName-frontend}}"
+						},
+						{
+							"key": "version",
+							"value": "{{serviceVersion-frontend}}"
+						}
 					]
 				}
 			},

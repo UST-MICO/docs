@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "c0f1a0a8-d8fb-4d85-83aa-7c7c1b3ab688",
+		"_postman_id": "e6d1281e-487c-490d-b365-d2c83351a3d8",
 		"name": "MICO",
 		"description": "A Management System for Microservice Compositions",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -59,6 +59,128 @@
 							"path": [
 								"actuator",
 								"configprops"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/env",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "body"
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/env",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "body"
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/env",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"env"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/env/:toMatch",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"env",
+								":toMatch"
+							],
+							"variable": [
+								{
+									"key": "toMatch"
+								}
 							]
 						}
 					},
@@ -159,6 +281,34 @@
 								{
 									"key": "instance"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "handle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, application/vnd.spring-boot.actuator.v2+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/actuator/httptrace",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"actuator",
+								"httptrace"
 							]
 						}
 					},
@@ -433,19 +583,19 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"applications",
-								":shortName"
+								":micoApplicationShortName"
 							],
 							"variable": [
 								{
-									"key": "shortName",
-									"value": "{{shortName}}"
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
 								}
 							]
 						}
@@ -464,19 +614,19 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"applications",
-								":shortName"
+								":micoApplicationShortName"
 							],
 							"variable": [
 								{
-									"key": "shortName",
-									"value": "{{shortName}}"
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
 								}
 							]
 						}
@@ -498,24 +648,24 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"applications",
-								":shortName",
-								":version"
+								":micoApplicationShortName",
+								":micoApplicationVersion"
 							],
 							"variable": [
 								{
-									"key": "shortName",
-									"value": "{{shortName}}"
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
 								},
 								{
-									"key": "version",
-									"value": "{{version}}"
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
 								}
 							]
 						}
@@ -541,24 +691,24 @@
 							"raw": "applicationRequestDto"
 						},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"applications",
-								":shortName",
-								":version"
+								":micoApplicationShortName",
+								":micoApplicationVersion"
 							],
 							"variable": [
 								{
-									"key": "shortName",
-									"value": "{{shortName}}"
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
 								},
 								{
-									"key": "version",
-									"value": "{{version}}"
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
 								}
 							]
 						}
@@ -577,24 +727,375 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"applications",
-								":shortName",
-								":version"
+								":micoApplicationShortName",
+								":micoApplicationVersion"
 							],
 							"variable": [
 								{
-									"key": "shortName",
-									"value": "{{shortName}}"
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
 								},
 								{
-									"key": "version",
-									"value": "{{version}}"
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getServiceDeploymentInformation",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentInformation/:micoServiceShortName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"deploymentInformation",
+								":micoServiceShortName"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								},
+								{
+									"key": "micoServiceShortName",
+									"value": "{{micoServiceShortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateServiceDeploymentInformation",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "serviceDeploymentInfoRequestDto"
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentInformation/:micoServiceShortName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"deploymentInformation",
+								":micoServiceShortName"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								},
+								{
+									"key": "micoServiceShortName",
+									"value": "{{micoServiceShortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getApplicationDeploymentStatus",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentStatus",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"deploymentStatus"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promoteApplication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "newVersionDto"
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/promote",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"promote"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getServicesFromApplication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/services",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"services"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteServiceFromApplication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/services/:micoServiceShortName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"services",
+								":micoServiceShortName"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								},
+								{
+									"key": "micoServiceShortName",
+									"value": "{{micoServiceShortName}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adds or updates an association between a MicoApplication and a MicoService. An existing and already associated MicoService with an equal short name will be replaced with its new version. Only one MicoService in one specific version is allowed per MicoApplication.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/services/:micoServiceShortName/:micoServiceVersion",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"services",
+								":micoServiceShortName",
+								":micoServiceVersion"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
+								},
+								{
+									"key": "micoServiceShortName",
+									"value": "{{micoServiceShortName}}"
+								},
+								{
+									"key": "micoServiceVersion",
+									"value": "{{micoServiceVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getStatusOfApplication",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/status",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{micoApplicationShortName}}"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{micoApplicationVersion}}"
 								}
 							]
 						}
@@ -643,227 +1144,7 @@
 					"response": []
 				},
 				{
-					"name": "getServiceDeploymentInformation",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"deploymentInformation",
-								":serviceShortName"
-							],
-							"variable": [
-								{
-									"key": "serviceShortName",
-									"value": "{{serviceShortName}}"
-								},
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateServiceDeploymentInformation",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "serviceDeploymentInfoDTO"
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"deploymentInformation",
-								":serviceShortName"
-							],
-							"variable": [
-								{
-									"key": "serviceShortName",
-									"value": "{{serviceShortName}}"
-								},
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "promoteApplication",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "newVersionDto"
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/promote",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"promote"
-							],
-							"variable": [
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getServicesFromApplication",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/services",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"services"
-							],
-							"variable": [
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deleteServiceFromApplication",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/services/:serviceShortName",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"services",
-								":serviceShortName"
-							],
-							"variable": [
-								{
-									"key": "serviceShortName",
-									"value": "{{serviceShortName}}"
-								},
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "addServiceToApplication",
+					"name": "undeploy",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -878,7 +1159,7 @@
 						],
 						"body": {},
 						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/services/:serviceShortName/:serviceVersion",
+							"raw": "http://{{host}}/applications/:shortName/:version/undeploy",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -887,57 +1168,7 @@
 								"applications",
 								":shortName",
 								":version",
-								"services",
-								":serviceShortName",
-								":serviceVersion"
-							],
-							"variable": [
-								{
-									"key": "serviceShortName",
-									"value": "{{serviceShortName}}"
-								},
-								{
-									"key": "serviceVersion",
-									"value": "{{serviceVersion}}"
-								},
-								{
-									"key": "shortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"key": "version",
-									"value": "{{version}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getStatusOfApplication",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/hal+json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}/applications/:shortName/:version/status",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":shortName",
-								":version",
-								"status"
+								"undeploy"
 							],
 							"variable": [
 								{
@@ -955,206 +1186,6 @@
 				}
 			],
 			"description": "Folder for applications"
-		},
-		{
-			"name": "error",
-			"item": [
-				{
-					"name": "error",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "HEAD",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "error",
-					"request": {
-						"method": "OPTIONS",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "*/*"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {},
-						"url": {
-							"raw": "http://{{host}}/error",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"error"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"description": "Folder for error"
 		},
 		{
 			"name": "jobs",
@@ -2196,6 +2227,46 @@
 								":shortName",
 								":version",
 								"status"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{version}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getServiceYamlByShortNameAndVersion",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/yaml",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"yaml"
 							],
 							"variable": [
 								{
