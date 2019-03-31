@@ -138,6 +138,16 @@ You can use the IP to access the dashboard in your browser.
   curl localhost:8080/applications
   ```
 
+If you really want to expose `mico-core` to the outside, you can change the type of the Kubernetes Service to `LoadBalancer`:
+```bash
+kubectl patch svc mico-core -n ${NAMESPACE} --type='json' -p '[{"op":"replace","path":"/spec/type","value":"LoadBalancer"}]'
+```
+
+Afterwards you can get the external IP of `mico-core` by using
+```bash
+echo $(kubectl get svc mico-core -n ${NAMESPACE} -o 'jsonpath={.status.loadBalancer.ingress[0].ip}')
+```
+
 ### Update Kubernetes deployment in cluster
 
 To update a single deployment you can change the Docker image of the specific deployment. Use this approach only in your separate namespace.
