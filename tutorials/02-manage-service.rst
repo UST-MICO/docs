@@ -9,9 +9,7 @@ How To manage a service
 Manage service interfaces
 -------------------------
 
-The :term:`service interfaces <Service Interface>` are used to map the open ports of the service docker container to ports of the kubernetes service.
-
-.. todo:: link kubernetes service to glossar or somewhere
+The :term:`service interfaces <Service Interface>` are used to map the open ports of the service docker container to ports of the :term:`Kubernetes service <Kubernetes Service>`.
 
 To add a new service interface click on the :guilabel:`Provides` button in the :ref:`service detail <service-detail-manage>` page.
 
@@ -25,6 +23,16 @@ To add a new service interface click on the :guilabel:`Provides` button in the :
     :samp:`Exposed Port Number` is the port that will be exposed in kubernetes.
 
     :samp:`Target Port Number` is the port exposed by the docker container.
+
+.. note::
+
+   For this tutorial the following assumptions are made:
+
+   The service :samp:`UST-MICO/react-redux-realworld-example-app` has an interface
+   :samp:`frontend` with :samp:`Exposed Port Number` 80, :samp:`Target Port Number` 80 and :samp:`type` :samp:`TCP`.
+
+   The service :samp:`UST-MICO/spring-boot-realworld-example-app` has an interface
+   :samp:`backend` with :samp:`Exposed Port Number` 80, :samp:`Target Port Number` 8080 and :samp:`type` :samp:`TCP`.
 
 After adding a interface to a service, the detail page should look something like this:
 
