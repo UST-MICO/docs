@@ -91,12 +91,27 @@ Each service has its own ip.
 .. figure:: images/application-detail-deployed.*
    :name: application-detail-deployed
 
+.. note::
+
+   :guilabel:`kubectl` commands to see what's going on in the background (also helpful if you need troubleshooting):
+
+   * Watch all pods in the whole cluster:
+     :samp:`kubectl get pods --all-namespaces --watch`
+   * Watch the pods that are building the Docker images in the background:
+     :samp:`kubectl -n mico-build-bot get pods --watch`
+   * Get the builds:
+     :samp:`kubectl -n mico-build-bot get builds`
+   * Get information about a specific build:
+     :samp:`kubectl -n mico-build-bot describe build build-react-redux-realworld-example-app-v1-0-0`
+   * Get the logs of a specific build:
+     :samp:`kubectl -n mico-build-bot logs <pod-name> -c build-step-build-and-push`
+   * Get all resources that were created as part of the deployment of the application(s):
+     :samp:`kubectl -n mico-workspace get all`
 
 Undeploying an Application
 --------------------------
 
 To undeploy a deployed application, use the :guilabel:`undeploy` button below the application name.
-
 
 
 
