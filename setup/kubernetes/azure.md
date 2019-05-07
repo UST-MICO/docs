@@ -54,7 +54,7 @@ Create the AKS cluster:
 az aks create --resource-group $RESOURCE_GROUP \
 --name $CLUSTER_NAME \
 --generate-ssh-keys \
---kubernetes-version 1.12.6 \
+--kubernetes-version 1.13.5 \
 --node-vm-size Standard_DS3_v2 \
 --node-count 1
 ```

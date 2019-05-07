@@ -26,8 +26,6 @@ Configure `kubectl` to connect to the cluster ([more information](https://docs.m
 az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --admin
 ```
 
-If a different object with the same name already exists in your cluster configuration, use `--overwrite-existing` to override it.
-
 If you use `kubectl` to connect to multiple clusters, it's useful to use multiple contexts.
 To switch to the automatically created context of the MICO cluster, use
 ```bash
@@ -42,7 +40,7 @@ kubectl config use-context $CLUSTER_NAME-admin
 * Nodes: 3
 * OS Disk Size: 30 GB
 * Location: westeurope
-* Kubernetes version: 1.12.6
+* Kubernetes version: 1.13.5
 
 **Get the details for a managed Kubernetes cluster:**
 ```bash
@@ -89,7 +87,7 @@ Our self created resource group is named `ust-mico-resourcegroup`. Whenever a re
 az aks create --resource-group $RESOURCE_GROUP \
 --name $CLUSTER_NAME \
 --generate-ssh-keys \
---kubernetes-version 1.12.6 \
+--kubernetes-version 1.13.5 \
 --node-vm-size Standard_B2ms \
 --node-count 2
 ```
