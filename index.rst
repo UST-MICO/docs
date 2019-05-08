@@ -29,6 +29,7 @@ Mico is a project for designing, deploying and managing :term:`applications <MIC
    setup/index
    tutorials/index
    adr/index
+   messaging/index
    debugging-testing/index
    glossary
 
