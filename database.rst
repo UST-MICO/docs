@@ -37,7 +37,9 @@ Initial graph based on :doc:`adr/0007-database-technology`.
 Service
 -------
 
-Attributes based on :doc:`service_description`.
+Attributes describing a :term:`MICO Service` are mainly taken from `Pivio`_.
+
+.. _Pivio: http://pivio.io/docs/#_general
 
 .. list-table::
    :header-rows: 1
@@ -72,10 +74,10 @@ Attributes based on :doc:`service_description`.
      - :samp:`Max Musterman, musterman@muster.de`
    * - tags
      - To be defined
-     - 
+     -
    * - links
      - To be defined
-     - 
+     -
    * - owner
      - Human readable team information.
      - :samp:`Max Musterman, Company Y`

@@ -22,15 +22,14 @@ Mico is a project for designing, deploying and managing :term:`applications <MIC
    :caption: Contents:
 
    dev/mockups/index
-   service_description
    domain_model
    database
+   messaging/index
    restapi.md
    setup/index
+   debugging-testing/index
    tutorials/index
    adr/index
-   messaging/index
-   debugging-testing/index
    glossary
 
 
