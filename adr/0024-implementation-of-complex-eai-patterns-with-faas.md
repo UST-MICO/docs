@@ -58,15 +58,18 @@ A content enricher needs to perform requests to get the content to inject into t
 
 ## Affected patterns
 
-| Pattern              | dynamic config | destinations | stateful |
-|:---------------------|:--------------:|:------------:|:--------:|
-| Router               | no             | yes          | maybe    |
-| Dynamic Router       | yes            | yes          | maybe    |
-| Content based Router | maybe          | yes          | maybe    |
-| Aggregator           | no             | no           | yes      |
-| Resequencer          | no             | no           | yes      |
-| Process Manager      | maybe          | yes          | maybe    |
-
+```eval_rst
+======================= ================ ============== ==========
+ Pattern                 dynamic config   destinations   stateful
+======================= ================ ============== ==========
+Router                  no               yes            maybe
+Dynamic Router          yes              yes            maybe
+Content based Router    maybe            yes            maybe
+Aggregator              no               no             yes
+Resequencer             no               no             yes
+Process Manager         maybe            yes            maybe
+======================= ================ ============== ==========
+```
 
 ## Decision Outcome
 
