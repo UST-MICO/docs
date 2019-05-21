@@ -13,7 +13,7 @@ This log lists the architectural decisions for MICO.
    *
 
 
-For new ADRs, please use :doc:`tamplate.md <template>` as basis.
+For new ADRs, please use :doc:`template.md <template>` as basis.
 
 .. seealso::
 
