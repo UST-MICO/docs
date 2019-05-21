@@ -1,9 +1,5 @@
 # Function to component mapping
 
-* Status: [accepted | superseeded by [ADR-0005](0005-example.md) | deprecated | …] <!-- optional -->
-* Deciders: [list everyone involved in the decision] <!-- optional -->
-* Date: [YYYY-MM-DD when the decision was last updated] <!-- optional -->
-
 Technical Story: [Issue #713](https://github.com/UST-MICO/mico/issues/713) <!-- optional -->
 
 ## Context and Problem Statement
@@ -13,61 +9,69 @@ which handles the communication with Kafka and a FaaS solution. The business log
 
 ## Decision Drivers <!-- optional -->
 
-* [driver 1, e.g., a force, facing concern, …]
-* [driver 2, e.g., a force, facing concern, …]
-* … <!-- numbers of drivers can vary -->
+* MUST be supported by the language/technology which is used to implement the generic component
+* MUST be easy to integrate into MICO
+* SHOULD be a well known and proven solution
 
 ## Considered Options
 
-* [option 1]
-* [option 2]
-* [option 3]
-* … <!-- numbers of options can vary -->
+* Environment variables
+* Function registry
+* Control Topic
+* Function composition
+* Function proxy
+* Configuration file
 
 ## Decision Outcome
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+Chosen option: "Environment variables", because MICO already supports this and it is easy to implement in the generic component.
 
-### Positive Consequences <!-- optional -->
+## Pros and Cons of the Options 
 
-* [e.g., improvement of quality attribute satisfaction, follow-up decisions required, …]
-* …
+### Environment variables
 
-### Negative consequences <!-- optional -->
+This option uses environment variables to store the necessary information. These variables are controlled by MICO.
 
-* [e.g., compromising quality attribute, follow-up decisions required, …]
-* …
+* Good, because MICO already supports setting environment variables
+* Good, because most languages support reading environment variables
+* Good, because we need environment variables anyway because we need to provide the Kafka configuration
+* Good, because it is a well known and proven solution
+* Good, because it follows the (twelve-factor app methodology)[https://12factor.net/de/config]
+* Bad, because the configuration can not be changed on the fly (do we want this?)
 
-## Pros and Cons of the Options <!-- optional -->
+### Function registry
 
-### [option 1]
+We implement a separate component which stores the mapping of the functions to the instances of the generic component. We could evaluate if (Apache ZooKeeper)[https://zookeeper.apache.org] or (etcd)[https://github.com/etcd-io/etcd] fits this purpose.
 
-[example | description | pointer to more information | …] <!-- optional -->
+* Good, because the mapping can change in the fly
+* Good, because there is support for this approach in most languages
+* Bad, because more development/evaluation overhead
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+### Control Topic
 
-### [option 2]
+We already use Kafka so we could follow the [dynamic router pattern](https://www.enterpriseintegrationpatterns.com/patterns/messaging/DynamicRouter.html) and use a control channel(topic) to configure the instances. This topic could use the [compaction feature](https://kafka.apache.org/documentation/#compaction) to always retain the last known configuration for each message key.
 
-[example | description | pointer to more information | …] <!-- optional -->
+* Good, because we already decided to use Kafka
+* Good, because this option provides a log of configuration changes
+* Bad, because the configuration for Kafka could not be provided via this method
+* Bad, because more development/evaluation overhead
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
 
-### [option 3]
+### Function composition
 
-[example | description | pointer to more information | …] <!-- optional -->
+We don't implement the generic component as a separate component but as a function which is hosted on the FaaS solution. There is a [Kafka connector](https://github.com/openfaas-incubator/kafka-connector) for OpenFaaS. Then compose the functions with a composer like [this](https://github.com/s8sg/faas-flow) or follow the workflow techniques described in the OpenFaaS [documentation](https://github.com/openfaas/workshop/blob/master/lab4.md#create-workflows).
 
-* Good, because [argument a]
-* Good, because [argument b]
-* Bad, because [argument c]
-* … <!-- numbers of pros and cons can vary -->
+* Good, because the basic components for this approach already exist
+* Good, because no separate generic component is necessary
+* Bad, because the composer does not seem to be very mature and proven
 
-## Links <!-- optional -->
+### Function proxy (API Gateway)
 
-* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
-* … <!-- numbers of links can vary -->
+Each instance of the generic component calls the API gateway which handles the routing/mapping to the functions.
+
+* Good, because each instance of the generic component calls the same gateway and therefore needs the same configuration
+* Bad, because we don't have this proxy and therefore this adds development overhead
+
+### Configuration file
+
+Generate a configuration file per instance of the generic component and deploy it with the instance. Same pros and cons like environment variables but more complexity for file generation/parsing and deployment.
