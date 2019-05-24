@@ -16,12 +16,11 @@ The framework will be [Apache Kafka](https://kafka.apache.org) [See ADR0021](002
 Pro: 
 * Easy setup with [Spring boot](https://spring.io/projects/spring-kafka)
 * Java is the only language in which every team member is proficient in
-* ???
 
 ### Python
 Python was only used in the prototyping stage and was not explored further
 
 ## Decision Outcome
 
-We want to use Java.
+We want to use Java. Since existing knowledge and experience is given for everyone.
 
