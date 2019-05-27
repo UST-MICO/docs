@@ -2,5 +2,6 @@ Sphinx
 recommonmark
 sphinxcontrib-httpdomain
 sphinxcontrib-openapi
+sphinx_markdown_tables
 sphinx_rtd_theme
 requests
