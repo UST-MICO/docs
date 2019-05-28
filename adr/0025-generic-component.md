@@ -1,4 +1,4 @@
-# [WIP] Generic component requirements
+# [WIP] Kafka-faas-connector requirements (aka generic component requirements)
 
 
 Technical Story: [https://github.com/UST-MICO/mico/issues/724]
@@ -20,11 +20,11 @@ The transformation and the routing logic is provided via functions which are hos
 
 ## Decision Outcome
 
-Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+Chosen option: Kafka-faas-connector, because we don't want to mix messaging and business logic in the functions and need to have dynamic topics which are not supported by the OpenFaaS Kafka connector at the moment.
 
 ## Detailed Option describtion
 
-### Generic message processor component
+### Kafka-faas-connector (aka generic message processor component)
 
 As described above we could solve this with a generic message processor component which reads messages from an input topic, hands them over to a function and then acts upon the results. This could either be to post the transformed message to an output topic (message transformer) or to send the original message to a function determined output topic (message router). This generic message processor needs the following capabilities:
 
