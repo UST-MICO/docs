@@ -21,6 +21,9 @@ Theoretically, all Enterprise Integration Pattern could be implemented as Simple
 In the following outcome it is assumed that we have two types of generic components:
 - Generic Transformation Component: Provide each message to a user-defined function and forward the result to a predefined target topic
 - Generic Routing Component: Provide each message to a user-defined function and forward the result to the topic, that is returned by the user-defined function.
+
+Both components read from a single topic.
+
 We also assume that the user can not provide external resources (like a database)
 
 ### Routing Patterns
@@ -30,25 +33,67 @@ We also assume that the user can not provide external resources (like a database
 | Content-Based router       | All rules are implemented in the user-defined function                                                                               | The topic, to which it is routed                                            | Yes                                                      |
 | Message Filter             | All rules are implemented in the user-defined function                                                                               | Either nothing, or the topic to which it is routed                          | Yes                                                      |
 | Dynamic Router             | All rules are implemented in the user-defined function                                                                               | The topic, to which it is routed                                            | No                                                       |
-| Recipient List             | The recipients are either hard coded in the user-defined function, <br/>or in a external database, which can be accessed by the function. | All topics, to which the message shall be forwarded                         | No                                                       |
+| Recipient List             | The recipients are hard coded in the user-defined function | All topics, to which the message shall be forwarded                         | Yes                                                       |
 | Splitter                   | The splitting rules are implemented in the user-defined function                                                                     | The sub messages, that contain the splitted <br/>content of the original message | Yes                                                      |
-| Aggregator                 | The user provides a message storage, in which the messages can <br/>be stored until they are aggregated                                   | The aggregated message                                                      | No                                                       |
-| Resequencer                | The user provides a message storage, in which the messages can <br/>be stored until they are forwarded in the right order                 | The (correct) sequence of messages                                          | No                                                       |
-| Composed Message <br/>Processor | Can be implemented by combining a Splitter, Router and Aggregator                                                                    | The composed message                                                        | No (since the aggregator <br/>is not considered to be simple) |
-| Scatter-Gather             | Can be implemented by combining an aggregator, multiple <br/>transformers and a topic, to which all transformers subscribe                | the transformed and aggregated message                                      | No (since the aggregator <br/>is not considered to be simple) |
-| Routing Slip               | Not appropriate as Simple Composition Component                                                                                      | -                                                                           | No                                                       |
-| Process Manager            | Not appropriate as Simple Composition Component                                                                                      | -                                                                           | No                                                       |
-| Message Broker             | Not appropriate as Simple Composition Component                                                                                      | -                                                                           | No                                                       |
+| Aggregator                 | Would require that the user provides a message storage, <br/>in which the messages can be stored until they are aggregated                                   | The aggregated message                                                      | No                                                       |
+| Resequencer                | Would require that the user provides a message storage, <br/>in which the messages can be stored until they are forwarded in the right order                 | The (correct) sequence of messages                                          | No                                                       |
+| Composed Message <br/>Processor | Could be implemented by combining a Splitter, Router and Aggregator                                                                    | The composed message                                                        | No (since the aggregator <br/>is not considered to be simple) |
+| Scatter-Gather             | Could be implemented by combining an aggregator, multiple <br/>transformers and a topic, to which all transformers subscribe                | the transformed and aggregated message                                      | No (since the aggregator <br/>is not considered to be simple) |
+| Routing Slip               | Probably too complex <br/>for Simple Composition Component                                                                                      | -                                                                           | No                                                       |
+| Process Manager            | Probably too complex <br/>for Simple Composition Component                                                                                      | -                                                                           | No                                                       |
+| Message Broker             | Probably too complex <br/>for Simple Composition Component                                                                                      | -                                                                           | No                                                       |
 
 
 ### Transformation Patterns
 
 | Name                 | Implementation Strategy                                                                                                                                                                        | Return Value                     | Possible as Simple <br/>Composition Component |
 |----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|------------------------------------------|
-| Content Enricher     | In most cases: User provides database which contains the information <br/>that shall be added to a message. The user defined-function implements <br/>the database access and the transformation process | The transformed message          | No                                       |
+| Content Enricher     | The user-defined function contains all the information, that may eventually be added to a message  | The transformed message          | Yes                                       |
 | Content Filter       | The user-defined function implements the whole process of filtering <br/>out content of a message                                                                                                   | The filtered message             | Yes                                      |
 | Envelope Wrapper     | A Content Enricher for wrapping a message in an envelope. A <br/>Content Filter for unwrapping                                                                                                      | -                                | Yes                                      |
-| Claim Check          | Combination of a special Content Filter for replacing message data <br/>with a 'claim', and a Content Enricher <br/>for recovering the data. Also a database for storing the data until it is recovered  | -                                | No                                       |
+| Claim Check          | Combination of a special Content Filter for replacing message data <br/>with a 'claim', and a Content Enricher <br/>for recovering the data. Also a data storage for storing the data until it is recovered  | -                                | No                                       |
 | Normalizer           | A combination of a Router, and a set of Translators                                                                                                                                            | The transformed message          | Yes                                      |
 | Canonical Data Model | The user-defined function is implemented in such a way, that <br/>receives/returns messages with a canoncial data format                                                                            | Message in canonical data format | Yes                                      |
+
+### System Management
+
+Control Bus
+It would be necessary to receive from more than one topic
+-
+No
+
+Detour
+Would require a control bus
+-- 
+No
+
+WireTap
+Special case of Recipient List
+The topic to which the message is forwarded
+Yes
+
+Message History
+Every user-defined function adds itself to the message history of a function
+The modified message
+Yes
+
+Message Store
+Would require, that a data storage is available
+-- 
+No
+
+Smart Proxy
+Would require a data storage for storing the return address
+-- 
+No
+
+Test Message
+Would require, that the Test Data Verifier receives from two topics
+-- 
+No
+
+Channel Purger
+This would be a feature, that is implemented in the Generic Component. <br/>It is not planned yet
+-- 
+No
 
