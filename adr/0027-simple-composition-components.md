@@ -18,13 +18,14 @@ We want to have a list of all Enterprise Integration Patterns, that can be imple
 Theoretically, all Enterprise Integration Pattern could be implemented as Simple Composition Components
 
 ## Decision Outcome
-In the following outcome it is assumed that we have two types of generic components:
-- Generic Transformation Component: Provide each message to a user-defined function and forward the result to a predefined target topic
-- Generic Routing Component: Provide each message to a user-defined function and forward the result to the topic, that is returned by the user-defined function.
+The following tables describes for all Routing, Transformation and Management patterns, if they can be implemented as Simple Composition Components (As defined above). 
 
-Both components read from a single topic.
-
-We also assume that the user can not provide external resources (like a database)
+The following assumptions are made:
+- We have two Generic Components:
+  - A Generic Transformation Component: Provide each message to a user-defined function and forward the result to a predefined target topic
+  - A Generic Routing Component: Provides each message to a user-defined function and forward the result to the topic, that is returned by the user-defined function.
+- Both components read from a single topic only
+- There are no external resources available (e.g. for storing a state)
 
 ### Routing Patterns
 
@@ -57,43 +58,13 @@ We also assume that the user can not provide external resources (like a database
 
 ### System Management
 
-Control Bus
-It would be necessary to receive from more than one topic
--
-No
-
-Detour
-Would require a control bus
--- 
-No
-
-WireTap
-Special case of Recipient List
-The topic to which the message is forwarded
-Yes
-
-Message History
-Every user-defined function adds itself to the message history of a function
-The modified message
-Yes
-
-Message Store
-Would require, that a data storage is available
--- 
-No
-
-Smart Proxy
-Would require a data storage for storing the return address
--- 
-No
-
-Test Message
-Would require, that the Test Data Verifier receives from two topics
--- 
-No
-
-Channel Purger
-This would be a feature, that is implemented in the Generic Component. <br/>It is not planned yet
--- 
-No
-
+| Name            | Implementation Strategy                                                                      | Return Value                                | Possible as Simple Composition Component |
+|-----------------|----------------------------------------------------------------------------------------------|---------------------------------------------|:----------------------------------------:|
+| Control Bus     | It would be necessary to receive from more than one topic                                    | -                                           | No                                       |
+| Detour          | Would require a control bus                                                                  | -                                           | No                                       |
+| Wire Tap        | Special case of Recipient List                                                               | The topic to which the message is forwarded | Yes                                      |
+| Message History | Every user-defined function adds a reference of itself to the message history of a function  | The modified message                        | Yes                                      |
+| Message Store   | Would require, that a data storage is available                                              | -                                           | Yes                                      |
+| Smart Proxy     | Would require a data storage for storing the return address                                  | -                                           | No                                       |
+| Test Message    | Would require, that the Test Data Verifier receives from two topics                          | -                                           | No                                       |
+| Channel Purger  | This would be a feature, that is implemented in the Generic Component. It is not planned yet | -                                           | No                                       |
