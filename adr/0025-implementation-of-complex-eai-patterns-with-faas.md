@@ -4,11 +4,9 @@
 ## Context and Problem Statement
 
 Some [Enterprise Integration Patterns](https://www.enterpriseintegrationpatterns.com) have a complex structure where parts of the behaviour can be implemented generically while some parts need to be modifiable by the end user (in our case the system admin using MICO).
-We have already decided to use a FaaS platform to provide this modifiability in form of code as configuration.
+We have already [decided to use a FaaS platform](0023-faas.md) to provide this modifiability in form of code as configuration.
 While this works well for most patterns, for some of the more complex patterns it is not easy to allow modifiability via FaaS.
-This is especially the case if the user want to write as little code as possible meaning the generic part of the component has to be implemented by the MICO team.
-
-<!-- TODO reference other adrs -->
+This is especially the case if the user want to write as little code as possible meaning the [generic part](0025-generic-component.md) of the component has to be implemented by the MICO team.
 
 
 ## Decision Drivers
@@ -68,6 +66,7 @@ Content based Router    maybe            yes            maybe
 Aggregator              no               no             yes
 Resequencer             no               no             yes
 Process Manager         maybe            yes            maybe
+Message Normalizer      maybe            no             no
 ======================= ================ ============== ==========
 ```
 
