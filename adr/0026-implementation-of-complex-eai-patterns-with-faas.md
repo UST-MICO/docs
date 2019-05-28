@@ -72,7 +72,17 @@ Message Normalizer      maybe            no             no
 
 ## Decision Outcome
 
-TODO
+**Where to implement logic**: To be decided
+
+**State of configuration channels**: To be decided
+
+**Stateful functions**: To be decided
+
+**Routing**: We will support custom routing decisions in the FaaS function by always interpreting a routing slip if it is present.
+The routing slip has to support multiple destinations for one routing step.
+This will also allow us to make more patterns possible (everything that is not stateful) with a single generic kafka to FaaS connector.
+
+**Intermediate requests**: To be decided
 
 
 ## Evaluation of Options
