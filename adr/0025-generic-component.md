@@ -31,10 +31,13 @@ As described above we could solve this with a generic message processor componen
 * Read messages from a Kafka topic
 * Call a function hosted on a FaaS solution with a message payload
 * Receive zero, one or multiple (splitter) messages from the function
-* Call a function with a message payload and receive a topic as a result
+* Call a function with a message payload and read the [routingslip attributes](https://mico-docs.readthedocs.io/en/latest/messaging/cloudevents.html) of all returned messages
+* Route each returned message according to its routing slip
 * Send messages to a function or configuration determined topic 
 * If there was an error during processing, then send the message to an Invalid Message Topic
 * If there was an error during routing (topic does not exist), then send the message to a Dead Letter Topic
+* Attach a message history to the message. The history contains the name of the generic component and the name of the configured FaaS function.
+* Use an HTTP interface for debugging and metrics (Spring actuator)
 * TODO State handling for aggregator and other stateful message patterns
 
 ### OpenFaaS Kafka connector
