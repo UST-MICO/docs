@@ -2,10 +2,10 @@
 
 Technical Story: 
 - Depends on: 
-  - https://github.com/UST-MICO/mico/issues/724
+  - [Generic Component Requirements](https://mico-docs.readthedocs.io/en/latest/adr/0025-generic-component.html)
 - Related issues: 
-  - https://github.com/UST-MICO/mico/issues/717
-  - https://github.com/UST-MICO/mico/issues/718
+  - [717](https://github.com/UST-MICO/mico/issues/717)
+  - [718](https://github.com/UST-MICO/mico/issues/718)
 
 ## Context and Problem Statement
 A Simple Composition Component is a [Generic Component](https://github.com/UST-MICO/mico/issues/724), that follows the concept of a certain [Enterprise Integration Pattern](https://www.enterpriseintegrationpatterns.com) by invoking a user-defined (or predefined) openFaaS function and acting upon its results. In contrast to the [Complex Integration Components](https://github.com/UST-MICO/docs/blob/master/adr/0025-implementation-of-complex-eai-patterns-with-faas.md) there are no further efforts (such as maintaining a state) needed for implementing the corresponding Simple Composition Component. 
