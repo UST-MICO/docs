@@ -158,10 +158,10 @@ Get the assigned IP address:
 az network public-ip show --resource-group $RESOURCE_GROUP_NODE --name mico-dashboard-ip --query ipAddress --output tsv
 ```
 
-Public static IP address: 137.117.227.218
+Public static IP address: 52.174.51.116
 
-*Side note:* It was not possible to expose the deployment `mico-admin` via the command `kubectl expose deployment mico-admin --external-ip=137.117.227.218 ...` because it created a complete new IP address instead of just using the specified external IP address.
+*Side note:* It was not possible to expose the deployment `mico-admin` via the command `kubectl expose deployment mico-admin --external-ip=52.174.51.116 ...` because it created a complete new IP address instead of just using the specified external IP address.
 
 **Dashboard:**
 
-The dashboard of `mico-admin` is accessible via [http://137.117.227.218/dashboard](http://137.117.227.218/dashboard).
+The dashboard of `mico-admin` is accessible via [http://52.174.51.116/dashboard](http://52.174.51.116/dashboard).
