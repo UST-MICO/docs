@@ -2,7 +2,7 @@
 
 ## Installation
 
-We use the YAML files of the GitHub repository [prometheus/prometheus](https://github.com/prometheus/prometheus/) for the installation of Prometheus.
+We use the YAML files of the GitHub repository [prometheus/prometheus](https://github.com/prometheus/prometheus/) and from [giantswarm/prometheus](https://github.com/giantswarm/prometheus) for the installation of Prometheus modified for our use.
 
 Install it:
 ```bash
