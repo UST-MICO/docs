@@ -21,7 +21,7 @@ It requires the third-party components:
 
 - Neo4j
 - Knative Build
-- Prometheus (+Grafana)
+- Prometheus
 - kube-state-metrics
 
 For each component there is an own Kubernetes configuration file (YAML) placed in the directory install/kubernetes. They create the following namespace and deployment structure:
@@ -52,9 +52,17 @@ For each component there is an own Kubernetes configuration file (YAML) placed i
 - monitoring
 
   - prometheus-core
-  - grafana-core
   - kube-state-metrics
   - alertmanager
+
+- openfaas
+
+    - gateway
+    - faas-idler
+
+- openfaas-fn
+
+    - deployed functions
 
 The mentioned components are all Kubernetes _Deployment_ resources except `neo4j-core` and `redis`. Both are Kubernetes _StatefulSet_ resources to be able to store the data persistently. The Neo4j is a graph database and is used to store all MICO resources. Redis is a key-value database and is used to store the background jobs.
 
