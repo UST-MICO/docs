@@ -147,3 +147,8 @@ Because an application is a service itself it also includes all attributes of a 
      - :samp:`7e7e1828-e845-11e8-9f32-f2801f1b9fd1`
 
 .. todo:: Add necessary attributes for deployments, list all attributes
+
+Possible Nodes and Relationships
+--------------------------------
+
+.. image:: res/MICO-NodesAndRelationships.png
