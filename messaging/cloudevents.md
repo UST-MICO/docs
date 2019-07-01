@@ -85,6 +85,7 @@ Currently we depend on the [CloudEvents specification v0.2](https://github.com/c
     "type" : "io.github.ust.mico.result",
     "source" : "/router",
     "id" : "A234-1234-1234",
+    "correlationid": "A234-1234-1234",
     "time" : "2019-05-08T17:31:00Z",
     "contenttype" : "application/json",
     "data" : {
@@ -103,9 +104,9 @@ Currently we depend on the [CloudEvents specification v0.2](https://github.com/c
         }
     ],
     "routingslip": [
-        "final-destination",
+        ["final-destination"],
         ["filter", "debug-topic"],
-        "next-destination"
+        ["next-destination"]
     ]
 }
 ```
