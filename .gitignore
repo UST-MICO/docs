@@ -1,6 +1,7 @@
 _build
 _static
 .mypy_cache
+.DS_Store
 .sonarlint
 .vscode
 venv

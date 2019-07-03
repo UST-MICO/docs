@@ -60,3 +60,4 @@ open `_build/html/index.html` in your browser
 * sphinx.ext.graphviz
 * [sphinxcontrib.httpdomain](https://sphinxcontrib-httpdomain.readthedocs.io/en/stable/)
 * [sphinxcontrib.openapi](https://sphinxcontrib-openapi.readthedocs.io)
+* [sphinx.markdown-tables](https://github.com/ryanfox/sphinx-markdown-tables)
