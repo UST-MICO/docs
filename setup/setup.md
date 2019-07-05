@@ -55,16 +55,22 @@ For each component there is an own Kubernetes configuration file (YAML) placed i
   - kube-state-metrics
   - alertmanager
 
+- kafka
+
+  - kafka
+  - pzoo
+  - zoo
+
 - openfaas
 
-    - gateway
-    - faas-idler
+  - gateway
+  - faas-idler
 
 - openfaas-fn
 
-    - deployed functions
+  - custom functions
 
-The mentioned components are all Kubernetes _Deployment_ resources except `neo4j-core` and `redis`. Both are Kubernetes _StatefulSet_ resources to be able to store the data persistently. The Neo4j is a graph database and is used to store all MICO resources. Redis is a key-value database and is used to store the background jobs.
+The most of the mentioned components are Kubernetes _Deployment_ resources. `neo4j-core`, `redis`, `kafka`, `pzoo` and `zoo` are Kubernetes _StatefulSet_ resources to be able to store the data persistently. The Neo4j is a graph database and is used to store all MICO resources. Redis is a key-value database and is used to store the background jobs.
 
 At the beginning the namespaces `mico-build-bot` and `mico-workspace` are empty. `mico-build-bot` is used for the build processing of the Docker images using _Knative Build_ and _Kaniko_. `mico-workspace` is used for the deployment of MICO services. Via labels they are composed to MICO applications.
 

@@ -4,21 +4,16 @@
 
 To install Kafka in our cluster we use the setup provided by the community GitHub repository [Yolean/kubernetes-kafka](https://github.com/Yolean/kubernetes-kafka).
 
-**Installation in AKS:**
+**Modifications:**
+* `kafka/50kafka.yml`, `zookeeper/50pzoo.yml` and `zookeeper/51zoo.yml`: Remove `storageClassName: standard`
 
-Modifications:
-* `/variants/aks-managed/kustomization.yaml`:
-  
-  Use `../dev-small` instead of `../scale-3-5` of the base
-
-Install Kafka:
+Install Kafka with its dependencies:
 ```bash
-kubectl apply -f 00-namespace.yml && kubectl apply -k ./variants/aks-managed/
+kubectl apply -f 00-namespace.yml && kubectl apply -k ./variants/dev-small/
 ```
 
 ## Access to Kafka
 
-Access inside the cluster
 Kafka is available under `bootstrap.kafka:9092` inside the cluster.
 
 Access to the Kafka Broker:
@@ -51,7 +46,7 @@ Consumer:
 
 Producer:
 ```bash
-/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --group mico --topic transform-request
+/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic transform-request
 ```
 
 Sample Cloud Events messages are documented [here](https://mico-docs.readthedocs.io/en/latest/messaging/cloudevents.html).
