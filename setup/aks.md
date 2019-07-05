@@ -158,7 +158,7 @@ Get the assigned IP address:
 az network public-ip show --resource-group $RESOURCE_GROUP_NODE --name mico-dashboard-ip --query ipAddress --output tsv
 ```
 
-The dashboard of `mico-admin` is accessible via [http://52.174.51.116/dashboard](http://52.174.51.116).
+The dashboard of `mico-admin` is accessible via [http://40.118.1.61/dashboard](http://40.118.1.61).
 
 *Side note:* It was not possible to expose the deployment `mico-admin` via the command `kubectl expose deployment mico-admin --external-ip=...` because it created a complete new IP address instead of just using the specified external IP address.
 
@@ -177,4 +177,4 @@ Get the assigned IP address:
 az network public-ip show --resource-group $RESOURCE_GROUP_NODE --name mico-openfaas-portal-ip --query ipAddress --output tsv
 ```
 
-The OpenFaaS portal is accessible via [http://13.69.78.55:8080/ui](http://13.69.78.55:8080).
+The OpenFaaS portal is accessible via [http://40.115.25.83:8080/ui](http://40.115.25.83:8080).
