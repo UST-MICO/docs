@@ -31,6 +31,10 @@ Kubernetes Setup
 
 Create a Kubernetes cluster with *Azure Kubernetes Service (AKS)* like described in :doc:`setup/Azure Kubernetes Service <./aks>`.
 
+Note that there might be multiple Kubernetes configuration files (spethso, root, jenkins).
+Ensure that the Kubernetes configuration file for Jenkins is created correctly in :bash:`/var/lib/jenkins/config`.
+This path is used in the Jenkinsfile as a parameter for the kubectl commands: :bash:`--kubeconfig /var/lib/jenkins/config`.
+
 Jenkins Setup
 -------------
 * Deploy a Jenkins VM through the Azure Marketplace
@@ -54,7 +58,7 @@ Jenkins Setup
         * Use "Git" and add the repository URL to `<https://github.com/UST-MICO/mico>`_
         * Set the script path to :bash:`Jenkinsfile`
         * Set leightweight checkout to only checkout the Jenkinsfile and not the complete repository
-        
+
 Pipeline using the Jenkinsfile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The Jenkinsfile is in the root folder of the repository and contains the pipeline stages which are executed.
