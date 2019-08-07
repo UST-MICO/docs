@@ -1,24 +1,9 @@
 # Testing
 
 Depending on which component of MICO you want to test, there are different ways to do that.
-
-* [Testing](#testing)
-  * [Local testing without cluster](#local-testing-without-cluster)
-  * [Local testing of the MICO backend with access to the cluster](#local-testing-of-the-mico-backend-with-access-to-the-cluster)
-    * [Testing mico-core](#testing-mico-core)
-    * [Neo4j](#neo4j)
-  * [Local testing of the MICO dashboard with access to the cluster](#local-testing-of-the-mico-dashboard-with-access-to-the-cluster)
-  * [Testing in cluster with own namespace](#testing-in-cluster-with-own-namespace)
-    * [Preparation](#preparation)
-    * [Usage](#usage)
-    * [Update Kubernetes deployment in cluster](#update-kubernetes-deployment-in-cluster)
-    * [Check current configuration](#check-current-configuration)
-    * [Clean up](#clean-up)
-  * [Testing in cluster with Telepresence](#testing-in-cluster-with-telepresence)
-    * [Installation](#installation)
-    * [Usage with local `mico-core`](#usage-with-local-mico-core)
-    * [Usage with local `mico-admin`](#usage-with-local-mico-admin)
-    * [Usage with IntelliJ](#usage-with-intellij)
+Usually the local testing of the MICO backend or the MICO dashboard with access to the Kubernetes cluster are the prefered ways:
+- [Local testing of the MICO backend with access to the cluster](#local-testing-of-the-mico-backend-with-access-to-the-cluster)
+- [Local testing of the MICO dashboard with access to the cluster](#local-testing-of-the-mico-dashboard-with-access-to-the-cluster)
 
 ## Local testing without cluster
 
@@ -36,7 +21,7 @@ docker-compose up neo4j redis
 
 ## Local testing of the MICO backend with access to the cluster
 
-With this approach you are able to debug `mico-core` locally. Furthermore you are able to connect the Neo4j browser to a local instance (simple way to view what's going on in the database).
+With this approach you are able to test and debug `mico-core` locally. Furthermore you are able to connect the Neo4j browser to a local instance (simple way to view what's going on in the database).
 It is required to have `kubectl` installed on your system. If you don't have `kubectl` installed yet, you should do that now. For more information see [Setup](../setup/index).
 
 Start Neo4j and Redis locally. The easiest way is to use `docker-compose`:
@@ -46,31 +31,36 @@ docker-compose up neo4j redis
 
 To start `mico-core` locally there are basically 3 ways:
 
-* Start with your IDE, to be able to debug `mico-core` (recommended)
+- Use your IDE (e.g. IntelliJ IDEA), to be able to debug `mico-core` (**recommended**)
 
-* Build and start with maven:
+- Use maven to build and start `mico-core`:
   ```bash
+  # Build mico-core with maven without executing tests
   mvn -B -f mico-core/pom.xml clean package -Dmaven.test.skip=true
+  
+  # Start mico-core with the profile `dev`
   java -jar -Dspring.profiles.active=dev mico-core/target/mico-core-1.0-SNAPSHOT.jar
   ```
 
-* `docker-compose` is currently not an option because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
+- Use `docker-compose` to start `mico-core` within a Docker container. **This approach is currently not an option** because `kubectl` and a proper Kubernetes configuration is missing in the Docker image.
 
-Per default the Spring profile `dev` set in `application.properties` configures `mico-core` to use the Kubernetes namespace `mico-testing` as the target for the `Builds` and the finally running *MicoServices*. This namespace must include the Kubernetes `Secret` and the `ServiceAccount` for the authentication to DockerHub. To create the namespace `mico-testing` with this resources included you can use the script [`/install/kubernetes/test-setup-only-build-environment.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup-only-build-environment.sh).
+Per default `mico-core` uses the Spring profile `dev` (set as active in `application.properties`).
+The `dev` profiles configures `mico-core` to use the Kubernetes namespace `mico-testing` as the target for the `Builds` and the namespace for the resulting *MicoServices*. This namespace must include the Kubernetes `Secret` and the `ServiceAccount` for the authentication to DockerHub. To create the namespace `mico-testing` alongside the required resources, you can use the script [`/install/kubernetes/test-setup-only-build-environment.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup-only-build-environment.sh).
 
-Last but not least you should provide a way to connect to Prometheus. This is required if you want to retrieve the status of a deployed MicoApplication and its MicoServices. The easiest way is connect to the running Prometheus instance inside your cluster by making a port-forwarding:
+Last but not least you should provide a way to connect to Prometheus. This is required if you want to retrieve the status of a deployed MicoApplication and its MicoServices. The easiest way is connect to the running Prometheus instance inside your cluster by establishing a port-forwarding:
+
 ```bash
 kubectl port-forward svc/prometheus -n monitoring 9090:9090
 ```
 
 ### Testing mico-core
 
-To test the locally running `mico-core` you can either use `mico-admin` (start it also locally) or make requests with *curl* or *Postman*. For Postman there are some collections and environments provided. See the [postman directory](./postman/index) for more information.
+To make requests to the locally running `mico-core` you can either use `mico-admin` (start it also locally) or make requests with *curl* or *Postman*. Some Postman collections are already provided. See the [Postman section](./postman/index) for more information.
 
 ### Neo4j
 
 You can connect to the remote interface of Neo4j via [http://localhost:7474/browser](http://localhost:7474/browser/).
-In the browser you are able to use the Cypher Shell and execute cypher statements.
+In the Neo4j browser you are able to use the Cypher Shell and execute cypher statements.
 
 Get all:
 ```sql
@@ -86,16 +76,23 @@ DETACH DELETE n;
 
 ## Local testing of the MICO dashboard with access to the cluster
 
-`mico-admin` needs access to `mico-core`. You can either start `mico-core` locally or access `mico-core` in the Kubernetes cluster by using a port forwarding:
-```bash
-kubectl port-forward svc/mico-core -n mico-system 8080:8080
-```
+`mico-admin` needs access to `mico-core`. You have two options:
 
-Be aware that you make requests to `mico-core` inside of the cluster in the namespace `mico-system`.
-If you want to test with an own instance of `mico-core`, consider to create an own namespace like described in the following section [Testing in cluster with own namespace](#testing-in-cluster-with-own-namespace).
-Even then you are able to use a local instance of `mico-admin` and access `mico-core` inside of the cluster. If you have choosen e.g. the namespace name `mico-testing` you are able to access `mico-core` by using the port forwarding `kubectl port-forward svc/mico-core -n mico-testing 8080:8080`.
+- Start `mico-core` locally (see [section above](#local-testing-of-the-mico-backend-with-access-to-the-cluster)) 
+
+- Access `mico-core` in the Kubernetes cluster by using a port forwarding:
+  ```bash
+  kubectl port-forward svc/mico-core -n mico-system 8080:8080
+  ```
+  Be aware that you make requests to `mico-core` inside of the cluster in the namespace `mico-system`.
+  If you want to test with an own instance of `mico-core`, consider to create an own namespace like described in the following section [Testing in cluster with own namespace](#testing-in-cluster-with-own-namespace).
+  Even then you are able to use a local instance of `mico-admin` and access `mico-core` inside of the cluster. If you have choosen e.g. the namespace name `mico-testing-1337` you are able to access `mico-core` by using the port forwarding `kubectl port-forward svc/mico-core -n mico-testing-1337 8080:8080`.
+
+See the [README](https://github.com/UST-MICO/mico/tree/master/mico-admin#readme) of `mico-admin` for information how to start it locally.
 
 ## Testing in cluster with own namespace
+
+**_Note: This approach is not practical anymore because of the required resources. Use a different approach._**
 
 To be able to test in an exclusive environment, you can deploy MICO in a separate namespace inside the cluster.
 For this purpose the script [`/install/kubernetes/test-setup-all-in-own-namespace.sh`](https://github.com/UST-MICO/mico/blob/master/install/kubernetes/test-setup-all-in-own-namespace.sh) in the [MICO repository](https://github.com/UST-MICO/mico) can be used.
@@ -127,12 +124,16 @@ echo $(kubectl get svc mico-admin -n ${NAMESPACE} -o 'jsonpath={.status.loadBala
 You can use the IP to access the dashboard in your browser.
 
 `mico-core` can't be accessed from the outside. You can either use `kubectl proxy` or `kubectl port-forward` to get access into the cluster:
-* `kubectl proxy --port=8080`
+
+- `kubectl proxy --port=8080`
+
   Example:
   ```bash
   curl localhost:8080/api/v1/namespaces/${NAMESPACE}/services/mico-core/proxy/applications
   ```
-* `kubectl port-forward svc/mico-core -n ${NAMESPACE} 8080:8080`
+
+- `kubectl port-forward svc/mico-core -n ${NAMESPACE} 8080:8080`
+  
   Example:
   ```bash
   curl localhost:8080/applications
@@ -163,16 +164,6 @@ kubectl set image deployment/mico-core mico-core=ustmico/mico-core:42-fix-api -n
 # If there was another image set, the pods of the deployment will automatically be restarted with the new image
 # If the image was already set, you must restart the pod manually
 kubectl -n $NAMESPACE delete pod $(kubectl get pods -n $NAMESPACE --selector=run=mico-core --output=jsonpath={.items..metadata.name})
-```
-
-### Check current configuration
-
-`mico-core` offers some additional endpoints that are part of the Spring Boot Actuator plugin.
-
-To get the current configurations have a look at `localhost:8080/actuator/configprops`.
-To format it and save it into a file use e.g.
-```bash
-curl localhost:8080/actuator/configprops | python3 -m json.tool > configprops.json
 ```
 
 ### Clean up
@@ -225,3 +216,20 @@ telepresence --namespace mico-system --swap-deployment mico-admin --docker-run \
 ### Usage with IntelliJ
 
 See [Debugging a Java Rate Limiter Service using Telepresence and IntelliJ IDEA](https://www.telepresence.io/tutorials/intellij).
+
+## Misc
+
+### Check current configuration
+
+`mico-core` offers some additional endpoints that are part of the Spring Boot Actuator plugin.
+
+To get the current configurations have a look at `localhost:8080/actuator/configprops`.
+To format it and save it into a file use e.g.
+```bash
+curl localhost:8080/actuator/configprops | python3 -m json.tool > configprops.json
+```
+
+Or as an alternative with `jq`:
+```bash
+curl localhost:8080/actuator/configprops | jq . > configprops.json
+```
