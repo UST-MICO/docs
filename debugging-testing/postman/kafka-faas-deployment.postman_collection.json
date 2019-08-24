@@ -1,0 +1,1515 @@
+{
+	"info": {
+		"_postman_id": "0a36b5f1-f5ab-4d9e-bf60-94ecef12aaa4",
+		"name": "kafka-faas-deployment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "kafka-faas-connector",
+			"item": [
+				{
+					"name": "importMicoServiceFromGitHub - kfConnector",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"url\": \"{{gitHubCloneUrl-kfConnector}}\",\n\t\"version\": \"{{kfConnectorVersion}}\"\n}"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/import/github",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								"import",
+								"github"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateService - kfConnector -> kafka-Enabled",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shortName\": \"{{kfConnectorName}}\",\n    \"version\": \"{{kfConnectorVersion}}\",\n    \"name\": \"UST-MICO/kafka-faas-connector\",\n    \"description\": \"\",\n    \"kafkaEnabled\": true,\n    \"contact\": null,\n    \"owner\": null,\n    \"gitCloneUrl\": \"https://github.com/UST-MICO/kafka-faas-connector.git\",\n    \"dockerfilePath\": \"Dockerfile\",\n    \"dockerImageUri\": null,\n    \"serviceCrawlingOrigin\": null\n}\n"
+						},
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{kfConnectorName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{kfConnectorVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addKafkaFaasConnectorInstanceToApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e257e26-7d59-4c3a-acff-aa4f80bf2a48",
+								"exec": [
+									"pm.test(\"Instance ID is given\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(pm.response.text()).to.include(\"instanceId\");",
+									"    pm.environment.set(\"kfInstanceId\", jsonData.instanceId);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:kafkaFaasConnectorVersion",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"kafka-faas-connector",
+								":kafkaFaasConnectorVersion"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{shortName}}",
+									"description": "micoApplicationShortName"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{version}}",
+									"description": "micoApplicationVersion"
+								},
+								{
+									"key": "kafkaFaasConnectorVersion",
+									"value": "{{kfConnectorVersion}}",
+									"description": "kafkaFaasConnectorVersion"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "deleteKafkaFaasConnectorInstanceFromApplication",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:instanceId",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"kafka-faas-connector",
+								":instanceId"
+							],
+							"variable": [
+								{
+									"key": "micoApplicationShortName",
+									"value": "{{shortName}}",
+									"type": "text",
+									"enabled": true,
+									"description": "micoApplicationShortName"
+								},
+								{
+									"key": "micoApplicationVersion",
+									"value": "{{version}}",
+									"type": "text",
+									"enabled": true,
+									"description": "micoApplicationVersion"
+								},
+								{
+									"key": "instanceId",
+									"value": "{{kfInstanceId}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										":instanceId"
+									],
+									"variable": [
+										{
+											"key": "instanceId"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										":instanceId"
+									],
+									"variable": [
+										{
+											"key": "instanceId"
+										}
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										":instanceId"
+									],
+									"variable": [
+										{
+											"key": "instanceId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										":instanceId"
+									],
+									"variable": [
+										{
+											"key": "instanceId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "delete all kfConnectors",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/services/:shortName",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName"
+							],
+							"variable": [
+								{
+									"description": "shortName",
+									"key": "shortName",
+									"value": "{{kfConnectorName}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "//{{host}}http:///services/<string>",
+									"path": [
+										"",
+										"{{host}}http:",
+										"",
+										"",
+										"services",
+										"<string>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "//{{host}}http:///services/<string>",
+									"path": [
+										"",
+										"{{host}}http:",
+										"",
+										"",
+										"services",
+										"<string>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "No Content",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "//{{host}}http:///services/<string>",
+									"path": [
+										"",
+										"{{host}}http:",
+										"",
+										"",
+										"services",
+										"<string>"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "//{{host}}http:///services/<string>",
+									"path": [
+										"",
+										"{{host}}http:",
+										"",
+										"",
+										"services",
+										"<string>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "getServiceYamlByShortNameAndVersion - kafkaFaasConnector",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/hal+json"
+							}
+						],
+						"url": {
+							"raw": "http://{{host}}/services/:shortName/:version/yaml",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"services",
+								":shortName",
+								":version",
+								"yaml"
+							],
+							"variable": [
+								{
+									"key": "shortName",
+									"value": "{{kfConnectorName}}"
+								},
+								{
+									"key": "version",
+									"value": "{{kfConnectorVersion}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d070ff13-a439-4b5b-9a45-848bf531858d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "940e4cb5-7930-4d4a-aa1f-dd01ffa4d7ac",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "1. createApplication",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"shortName\": \"{{shortName}}\",\r\n  \"name\": \"{{name}}\",\r\n  \"version\": \"{{version}}\",\r\n  \"description\": \"Real World application with a frontend and a backend\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.1 importMicoServiceFromGitHub - m1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\": \"{{githubCloneUrl-m1}}\",\n\t\"version\": \"{{serviceVersion-m1}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/import/github",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"import",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2.2 importMicoServiceFromGitHub - m2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"url\": \"{{githubCloneUrl-m2}}\",\n\t\"version\": \"{{serviceVersion-m2}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/import/github",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						"import",
+						"github"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.1 updateService - m1 -> kafka-Enabled",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shortName\": \"{{serviceShortName-m1}}\",\n    \"version\": \"{{serviceVersion-m1}}\",\n    \"name\": \"UST-MICO/test_message_generator\",\n    \"description\": \"A message producer, that generates messages randomly for testing purposes\",\n    \"kafkaEnabled\": true,\n    \"contact\": null,\n    \"owner\": null,\n    \"gitCloneUrl\": \"https://github.com/UST-MICO/test_message_generator.git\",\n    \"dockerfilePath\": \"Dockerfile\",\n    \"dockerImageUri\": null,\n    \"serviceCrawlingOrigin\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{serviceShortName-m1}}"
+						},
+						{
+							"key": "version",
+							"value": "{{serviceVersion-m1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3.2 updateService - m2 -> kafka-Enabled",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"shortName\": \"{{serviceShortName-m2}}\",\n    \"version\": \"{{serviceVersion-m2}}\",\n    \"name\": \"UST-MICO/msg-validator\",\n    \"description\": \"Provides an example component which reads messages from a Kafka topic and provides them via HTTP for user inspection\",\n    \"kafkaEnabled\": true,\n    \"contact\": null,\n    \"owner\": null,\n    \"gitCloneUrl\": \"https://github.com/UST-MICO/msg-validator.git\",\n    \"dockerfilePath\": \"Dockerfile\",\n    \"dockerImageUri\": null,\n    \"serviceCrawlingOrigin\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{serviceShortName-m2}}"
+						},
+						{
+							"key": "version",
+							"value": "{{serviceVersion-m2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.1 addServiceToApplication - m1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/services/:serviceShortName/:serviceVersion",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"services",
+						":serviceShortName",
+						":serviceVersion"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m1}}"
+						},
+						{
+							"key": "serviceVersion",
+							"value": "{{serviceVersion-m1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4.2 addServiceToApplication - m2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/services/:serviceShortName/:serviceVersion",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"services",
+						":serviceShortName",
+						":serviceVersion"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{version}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m2}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "serviceVersion",
+							"value": "{{serviceVersion-m2}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.1 getServiceDeploymentInformation - m1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploymentInformation",
+						":serviceShortName"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.2 getServiceDeploymentInformation - m2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploymentInformation",
+						":serviceShortName"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.3 updateServiceDeploymentInformation - m1",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"role\": \"INPUT\",\n            \"name\": \"input-m1\"\n        },\n        {\n            \"role\": \"OUTPUT\",\n            \"name\": \"m1-m2\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploymentInformation",
+						":serviceShortName"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5.4 updateServiceDeploymentInformation - m2",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"name\": \"m1-m2\",\n            \"role\": \"INPUT\"\n        },\n        {\n            \"name\": \"output-m2\",\n            \"role\": \"OUTPUT\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploymentInformation",
+						":serviceShortName"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						},
+						{
+							"key": "serviceShortName",
+							"value": "{{serviceShortName-m2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.1 deploy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/deploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"deploy"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "version",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.2 getJobStatusByApplicationShortNameAndVersion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/jobs/:shortName/:version/status",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"jobs",
+						":shortName",
+						":version",
+						"status"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{version}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6.3 getApplicationDeploymentStatus",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/deploymentStatus",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":micoApplicationShortName",
+						":micoApplicationVersion",
+						"deploymentStatus"
+					],
+					"variable": [
+						{
+							"key": "micoApplicationShortName",
+							"value": "{{shortName}}"
+						},
+						{
+							"key": "micoApplicationVersion",
+							"value": "{{version}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.3 getStatusOfApplication",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/status",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"status"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{version}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllApplications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/applications",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getServiceList",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/services",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getApplicationByShortNameAndVersion",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{version}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "undeploy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{host}}/applications/:shortName/:version/undeploy",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"applications",
+						":shortName",
+						":version",
+						"undeploy"
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{shortName}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{version}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteJob",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://{{host}}/jobs/cbd7ee82-cdd0-42d9-82d1-132b2db412a0",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"jobs",
+						"cbd7ee82-cdd0-42d9-82d1-132b2db412a0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
