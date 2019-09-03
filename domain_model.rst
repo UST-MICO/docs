@@ -6,8 +6,6 @@ MicoApplication
 ===============
 Represents an application represented as a set of instances of `MicoService`_
 
-.. image:: res/MicoApplication.png
-
 *Required fields*
 
     * shortName
@@ -40,8 +38,6 @@ MicoApplicationJobStatus
 ========================
 Represents the job status for a `MicoApplication`_. Contains a list of jobs.
 
-.. image:: res/MicoApplicationJobStatus.png
-
 *Fields*
 
     * applicationShortName
@@ -60,8 +56,6 @@ MicoEnvironmentVariable
 =======================
 An environment variable represented as a simple key-value pair. Necessary since Neo4j does not allow to persist properties of composite types.
 
-.. image:: res/MicoEnvironmentVariable.png
-
 *Fields*
 
     * name
@@ -72,9 +66,7 @@ An environment variable represented as a simple key-value pair. Necessary since 
 
 MicoServiceBackgroundJob
 ========================
-Background job for a `MicoService`_.
-
-.. image:: res/MicoServiceBackgroundJob.png
+Background job for a `MicoService`_. Instances of this class are persisted in the Redis database.
 
 *Fields*
 
@@ -100,8 +92,6 @@ KubernetesDeploymentInfo
 ========================
 Information about the Kubernetes resources that are created through an actual deployment of a `MicoService`_.
 
-.. image:: res/KubernetesDeploymentInfo.png
-
 *Optional fields*
 
     * namespace
@@ -117,8 +107,6 @@ MicoLabel
 =========
 Represents a simple key-value pair label. Necessary since Neo4j does not allow to persist Map implementations.
 
-.. image:: res/MicoLabel.png
-
 *Fields*
 
     * key
@@ -130,8 +118,6 @@ Represents a simple key-value pair label. Necessary since Neo4j does not allow t
 MicoMessage
 ===========
 A simple message associated with a `Type`_. Note that this class is only used for business logic purposes and instances are not persisted.
-
-.. image:: res/MicoMessage.png
 
 *Required fields*
 
@@ -156,8 +142,6 @@ Type
 ----
 Enumeration for all types of a `MicoMessage`_.
 
-.. image:: res/MicoMessage.Type.png
-
 * INFO
 * WARNING
 * ERROR
@@ -166,8 +150,6 @@ Enumeration for all types of a `MicoMessage`_.
 MicoService
 ===========
 Represents a service in the context of MICO.
-
-.. image:: res/MicoService.png
 
 *Required fields*
 
@@ -188,29 +170,20 @@ Represents a service in the context of MICO.
 
 *Optional fields*
 
+    * kafkaEnabled
+        Indicates whether this service wants to communicate with Kafka. If so this service is handled differently (e.g. it's not mandatory to have interfaces).
+
     * serviceInterfaces
         The list of interfaces this service provides. Is read only. Use special API for updating.
 
     * dependencies
         The list of services that this service requires in order to run normally. Is read only. Use special API for updating.
 
-    * predecessor
-        Same MicoService with previous version.
-
-    * dependencies
-        List of services this service requires in order to run normally.
-
     * contact
         Human readable contact information for support purposes.
 
     * owner
         Human readable information for the service owner who is responsible for this service.
-
-    * gitCloneUrl
-        The URL that could be used for a git clone, to clone the current master branch.
-
-    * gitReleaseInfoUrl
-        The URL to the get the information about a specific git release.
 
     * dockerfilePath
         The relative (to vcsRoot) path to the Dockerfile.
@@ -222,8 +195,6 @@ MicoServiceDependency
 =====================
 Represents a dependency of a `MicoService`_.
 
-.. image:: res/MicoServiceDependency.png
-
 *Required fields*
 
     * service
@@ -232,48 +203,46 @@ Represents a dependency of a `MicoService`_.
     * dependedService
         This is the `MicoService`_ depended by this service.
 
-    * minVersion
-        The minimum version of the depended service that is supported.
-
-    * maxVersion
-        The maximum version of the depended service that is supported.
-
 MicoServiceDeploymentInfo
 =========================
 Represents the information necessary for deploying a single service.
 
-.. image:: res/MicoServiceDeploymentInfo.png
-
 *Required fields*
-
-    * application
-        The `MicoApplication`_ that uses a `MicoService`_ this deployment refers to.
 
     * service
         The `MicoService`_ this deployment refers to.
+
+    * instanceId
+        The instanceId of this deployment. It is used to be able to have multiple independent deployments of the same MICO service. Especially for KafkaFaasConnectors this is a must have.
+
 
 *Optional fields*
 
     * replicas
         Number of desired instances. Default is 1.
 
-    * minReadySecondsBeforeMarkedAvailable
-         Minimum number of seconds for which this service should be ready without any of its containers crashing, for it to be considered available. Defaults to 0 (considered available as soon as it is ready).
-
     * labels
         Those labels are key-value pairs that are attached to the deployment of this service. Intended to be used to specify identifying attributes that are meaningful and relevant to users, but do not directly imply semantics to the core system. Labels can be used to organize and to select subsets of objects. Labels can be attached to objects at creation time and subsequently added and modified at any time. Each key must be unique for a given object.
+
+    * enviromentVariables
+        Enviroment variables as key-value pairs that are attached to the deployment of this `MicoService`_. These enviroment values can be used by the deployed Micoservice during runtime. This could be useful to pass information to the MicoService that is not known during design time or is likely to change,
+
+    * interfaceConnections
+        Interface connections includes all required information to be able to connect a `MicoService`_ with `MicoServiceInterface`_ of other MicoServices. The backend uses the information to set enviroment variables so that e.g. the frontend knows how to connect to the backend
+
+    * topics
+        The list of topics that are used in the deployment of this MicoService
 
     * imagePullPolicy
         Indicates whether and when to pull the image. Default is Always.
 
-    * restartPolicy
-        Restart policy for all containers. Default is Always.
+    * kubernetesDeploymentInfo
+        Information about the actual Kubernetes resource created by a deploy. Contains details about the used Kubernetes and Services.
+
 
 MicoServiceInterface
 ====================
  Represents a interface, e.g., REST API, of a `MicoService`_.
-
- .. image:: res/MicoServiceInterface.png
 
 *Required fields*
 
@@ -285,23 +254,15 @@ MicoServiceInterface
 
 *Optional fields*
 
-    * publicDns
-        The public DNS.
-
     * description
         Human readable description of this service interface, e.g., the functionality provided.
 
     * protocol
         The protocol of this interface (e.g. HTTP).
 
-    * transportProtocol
-        The transport protocol (e.g. TCP).
-
 MicoServicePort
 ===============
 Represents a basic port with a port number and port type (protocol).
-
-.. image:: res/MicoServicePort.png
 
 *Required fields*
 
@@ -318,34 +279,15 @@ MicoPortType
 ============
 Enumeration for all port types, e.g., TCP, supported by MICO.
 
-.. image:: res/MicoPortType.png
-
 * TCP
     Transmission Control Protocol.
 
 * UDP
     User Datagram Protocol.
 
-MicoServiceInterfaceConnection
-==============================
-An interface connection contains the the information needed to connect a `MicoService`_ to an `MicoServiceInterface`_ of another `MicoService`_.
-
-.. image:: res/MicoServiceInterfaceConnection.png
-
-* environmentVariableName
-    Name of the environment variable that is used to set the fully qualified name of an interface.
-
-* micoServiceInterfaceName
-    Name of the `MicoServiceInterface`_ of another `MicoService`_.
-
-* micoServiceShortName
-    Name of the `MicoService`_.
-
 MicoServiceCrawlingOrigin
 =========================
 Enumeration for the various places a service may originate from.
-
-.. image:: res/MicoServiceCrawlingOrigin.png
 
 * GITHUB
     Indicates that a service originates from some GitHub respository.
@@ -359,8 +301,6 @@ Enumeration for the various places a service may originate from.
 MicoVersion
 ===========
 Wrapper for a version that adds the functionality for a version prefix, so that versions like, e.g., 'v1.2.3' are possible.
-
-.. image:: res/MicoVersion.png
 
 * prefix
     String prefix of this version, e.g., 'v'.
@@ -379,11 +319,9 @@ Wrapper for a version that adds the functionality for a version prefix, so that 
 * forIntegersWithPrefix(String prefix, int major, int minor, int patch)
     Creates a new instance of MicoVersion for the specified version numbers with the specified prefix string.
 
-MicoServiceInterfaceConnection
+MicoInterfaceConnection
 ==============================
 An interface connection contains the the information needed to connect a `MicoService`_ to an `MicoServiceInterface`_ of another `MicoService`_. Instances of this class are persisted as nodes in the Neo4j database.
-
-.. image:: res/MicoServiceInterfaceConnection.png
 
 **Required fields**
 
@@ -395,3 +333,38 @@ An interface connection contains the the information needed to connect a `MicoSe
 
     * micoServiceShortName
         Name of the `MicoService`_.
+
+
+MicoTopic
+=========
+A Topic represented a kafka-topic. Instances of this class are persisted as nodes in the neo4j database.
+
+**Required Fields**
+
+    * name
+        Name of the topic
+
+MicoTopicRole
+=============
+Represents a role of a `MicoTopic`_. An instance of this class is persisted as a relationship between a MicoServiceDeploymentInfo and a MicoTopic node in the neo4j database.
+
+**Required Fields**
+
+    * serviceDeploymentInfos
+        This is the MicoServiceDeploymentInfo that includes the MicoTopicRole
+
+    * topic
+        This is the MicoTopic included by the MicoTopicRole#serviceDeploymentInfos
+
+    * role
+        This is the role of the MicoTopicRole
+
+Role
+----
+Enumeration for all topic roles
+
+* INPUT
+* OUTPUT
+* DEAD_LETTER
+* INVALID_MESSAGE
+* TEST_MESSAGE_OUTPUT
