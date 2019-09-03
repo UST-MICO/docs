@@ -24,6 +24,9 @@ Represents an application represented as a set of instances of `MicoService`_
 
 *Optional fields*
 
+    * services
+        The list of included MicoServices
+
     * serviceDeploymentInfos
         The list of service deployment information this application uses for the deployment of the required services. Null values are skipped.
 
@@ -50,7 +53,7 @@ Represents the job status for a `MicoApplication`_. Contains a list of jobs.
     * status
         The aggregated status of jobs for the `MicoApplication`_.
 
-    * jobs 
+    * jobs
         The list of jobs for the `MicoApplication`_.
 
 MicoEnvironmentVariable
@@ -84,7 +87,7 @@ Background job for a `MicoService`_.
     * serviceVersion
         The version of the corresponding `MicoService`_.
 
-    * type 
+    * type
         The type of this job.
 
     * status
@@ -208,7 +211,7 @@ Represents a service in the context of MICO.
 
     * gitReleaseInfoUrl
         The URL to the get the information about a specific git release.
-   
+
     * dockerfilePath
         The relative (to vcsRoot) path to the Dockerfile.
 
@@ -222,7 +225,7 @@ Represents a dependency of a `MicoService`_.
 .. image:: res/MicoServiceDependency.png
 
 *Required fields*
-    
+
     * service
         This is the `MicoService`_ that requires (depends on) the depended service.
 
@@ -232,7 +235,7 @@ Represents a dependency of a `MicoService`_.
     * minVersion
         The minimum version of the depended service that is supported.
 
-    * maxVersion 
+    * maxVersion
         The maximum version of the depended service that is supported.
 
 MicoServiceDeploymentInfo
@@ -366,8 +369,8 @@ Wrapper for a version that adds the functionality for a version prefix, so that 
     The actual semantic version.
 
 * valueOf(String version)
-    Creates a new instance of MicoVersion as a result of parsing the specified version string. 
-    Prefixes are possible as everything before the first digit in the given version string is treated as a prefix to the actual semantic version. 
+    Creates a new instance of MicoVersion as a result of parsing the specified version string.
+    Prefixes are possible as everything before the first digit in the given version string is treated as a prefix to the actual semantic version.
     Note that the prefix can only consist of letters.
 
 * forIntegers(int major, int minor, int patch)
