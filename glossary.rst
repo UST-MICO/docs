@@ -34,3 +34,15 @@ Glossary
         A service interface is an API (REST over http, gRPC, etc.) the service provides for other services to use over the network.
         One MICO service can have multiple service interfaces, but at least one.
         A MICO service interface is representet through a Kubernetes Service.
+
+    Kafka
+        Kafka is a MOM(Message oriented Middleware) that uses topics instead of traditional message queues.
+
+    Topic
+        Messages that are send over Kafka are organized in kafka topics. A service has multiple topics (input, output, dead letter, etc) from where it can consume messages or push new messages.
+
+    OpenFaaS-function
+        A OpenFaaS-function is used for manipulating messages based on different messaging patterns using the FaaS(Function as a Service) approach.
+
+    KafkaFaaSConnector
+        The Kafka FaaS Connector is used by MICO as a generic message processor component to route messages from Kafka in the CloudEvents format to an OpenFaaS function.
