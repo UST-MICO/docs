@@ -19,12 +19,19 @@
 							},
 							{
 								"key": "Content-Type",
-								"value": "application/json"
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"url\": \"{{gitHubCloneUrl-kfConnector}}\",\n\t\"version\": \"{{kfConnectorVersion}}\"\n}"
+							"raw": "{\n\t\"url\": \"{{gitHubCloneUrl-kfConnector}}\",\n\t\"version\": \"{{kfConnectorVersion}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "http://{{host}}/services/import/github",
@@ -110,7 +117,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:kafkaFaasConnectorVersion?version={{kfConnectorVersion}}",
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector?version={{kfConnectorVersion}}",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -119,8 +126,7 @@
 								"applications",
 								":micoApplicationShortName",
 								":micoApplicationVersion",
-								"kafka-faas-connector",
-								":kafkaFaasConnectorVersion"
+								"kafka-faas-connector"
 							],
 							"query": [
 								{
@@ -132,17 +138,16 @@
 								{
 									"key": "micoApplicationShortName",
 									"value": "{{shortName}}",
+									"type": "text",
+									"enabled": true,
 									"description": "micoApplicationShortName"
 								},
 								{
 									"key": "micoApplicationVersion",
 									"value": "{{version}}",
+									"type": "text",
+									"enabled": true,
 									"description": "micoApplicationVersion"
-								},
-								{
-									"key": "",
-									"value": "",
-									"description": "kafkaFaasConnectorVersion"
 								}
 							]
 						}
@@ -293,220 +298,6 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "updateKafkaFaasConnectorInstanceOfApplication",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1e257e26-7d59-4c3a-acff-aa4f80bf2a48",
-								"exec": [
-									"pm.test(\"Instance ID is given\", function () {",
-									"    var jsonData = pm.response.json();",
-									"    pm.expect(pm.response.text()).to.include(\"instanceId\");",
-									"    pm.environment.set(\"kfConnector-instanceId\", jsonData.instanceId);",
-									"});",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:instanceId",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":micoApplicationShortName",
-								":micoApplicationVersion",
-								"kafka-faas-connector",
-								":instanceId"
-							],
-							"variable": [
-								{
-									"description": "micoApplicationShortName",
-									"key": "micoApplicationShortName",
-									"value": "{{shortName}}"
-								},
-								{
-									"description": "micoApplicationVersion",
-									"key": "micoApplicationVersion",
-									"value": "{{version}}"
-								},
-								{
-									"key": "instanceId",
-									"value": "{{kfConnector-instanceId}}"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										"<string>",
-										"<string>"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Created",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										"<string>",
-										"<string>"
-									]
-								}
-							},
-							"status": "Created",
-							"code": 201,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										"<string>",
-										"<string>"
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										"<string>",
-										"<string>"
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Not Found",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										"<string>",
-										"<string>"
-									]
-								}
-							},
-							"status": "Not Found",
-							"code": 404,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -536,7 +327,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"instanceId\": \"{{kfInstanceId}}\",\n    \"inputTopicName\": \"input-topic\",\n    \"outputTopicName\": \"output-topic\",\n    \"openFaaSFunctionName\": \"function-name\"\n}",
+							"raw": "{\n\t\"instanceId\": \"{{kfInstanceId}}\",\n    \"inputTopicName\": \"output-m1\",\n    \"outputTopicName\": \"input-m2\",\n    \"openFaaSFunctionName\": \"faas-message-transformer\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1326,7 +1117,7 @@
 								},
 								{
 									"key": "instanceId",
-									"value": "{{kfConnector-instanceId}}"
+									"value": "{{kfInstanceId}}"
 								}
 							]
 						}
@@ -1462,192 +1253,6 @@
 							},
 							"status": "OK",
 							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						}
-					]
-				},
-				{
-					"name": "deleteKafkaFaasConnectorInstanceFromApplicationByVersion",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:kfConnectorVersion",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"applications",
-								":micoApplicationShortName",
-								":micoApplicationVersion",
-								"kafka-faas-connector",
-								":kfConnectorVersion"
-							],
-							"variable": [
-								{
-									"description": "micoApplicationShortName",
-									"enabled": true,
-									"key": "micoApplicationShortName",
-									"type": "text",
-									"value": "{{shortName}}"
-								},
-								{
-									"description": "micoApplicationVersion",
-									"enabled": true,
-									"key": "micoApplicationVersion",
-									"type": "text",
-									"value": "{{version}}"
-								},
-								{
-									"key": "kfConnectorVersion",
-									"value": "{{kfConnectorVersion}}"
-								}
-							]
-						}
-					},
-					"response": [
-						{
-							"name": "OK",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										":instanceId"
-									],
-									"variable": [
-										{
-											"key": "instanceId"
-										}
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "No Content",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										":instanceId"
-									],
-									"variable": [
-										{
-											"key": "instanceId"
-										}
-									]
-								}
-							},
-							"status": "No Content",
-							"code": 204,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Unauthorized",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										":instanceId"
-									],
-									"variable": [
-										{
-											"key": "instanceId"
-										}
-									]
-								}
-							},
-							"status": "Unauthorized",
-							"code": 401,
-							"_postman_previewlanguage": "text",
-							"header": [
-								{
-									"key": "Content-Type",
-									"value": "text/plain"
-								}
-							],
-							"cookie": [],
-							"body": ""
-						},
-						{
-							"name": "Forbidden",
-							"originalRequest": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/:instanceId",
-									"path": [
-										"{{host}}",
-										"",
-										"applications",
-										"<string>",
-										"<string>",
-										"kafka-faas-connector",
-										":instanceId"
-									],
-									"variable": [
-										{
-											"key": "instanceId"
-										}
-									]
-								}
-							},
-							"status": "Forbidden",
-							"code": 403,
 							"_postman_previewlanguage": "text",
 							"header": [
 								{
@@ -1988,6 +1593,220 @@
 					]
 				},
 				{
+					"name": "updateKafkaFaasConnectorInstanceOfApplication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e257e26-7d59-4c3a-acff-aa4f80bf2a48",
+								"exec": [
+									"pm.test(\"Instance ID is given\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(pm.response.text()).to.include(\"instanceId\");",
+									"    pm.environment.set(\"kfConnector-instanceId\", jsonData.instanceId);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/applications/:micoApplicationShortName/:micoApplicationVersion/kafka-faas-connector/:instanceId",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"applications",
+								":micoApplicationShortName",
+								":micoApplicationVersion",
+								"kafka-faas-connector",
+								":instanceId"
+							],
+							"variable": [
+								{
+									"description": "micoApplicationShortName",
+									"key": "micoApplicationShortName",
+									"value": "{{shortName}}"
+								},
+								{
+									"description": "micoApplicationVersion",
+									"key": "micoApplicationVersion",
+									"value": "{{version}}"
+								},
+								{
+									"key": "instanceId",
+									"value": "{{kfConnector-instanceId}}"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "/{{host}}//applications/<string>/<string>/kafka-faas-connector/<string>/<string>",
+									"path": [
+										"{{host}}",
+										"",
+										"applications",
+										"<string>",
+										"<string>",
+										"kafka-faas-connector",
+										"<string>",
+										"<string>"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
 					"name": "getKafkaFaasConnectorDeploymentInformationInstance",
 					"request": {
 						"auth": {
@@ -2021,7 +1840,7 @@
 								{
 									"description": "instanceId",
 									"key": "instanceId",
-									"value": "{{kfConnector-instanceId}}"
+									"value": "{{kfInstanceId}}"
 								}
 							]
 						}
@@ -2873,6 +2692,55 @@
 			"response": []
 		},
 		{
+			"name": "3.3 createServiceInterface - m2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serviceInterfaceName\": \"frontend\",\r\n    \"ports\": [\r\n        {\r\n            \"port\": 8090,\r\n            \"type\": \"TCP\",\r\n            \"targetPort\": 8090\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version/interfaces/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version",
+						"interfaces",
+						""
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{serviceShortName-m2}}",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "version",
+							"value": "{{serviceVersion-m2}}",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "4.1 addServiceToApplication - m1",
 			"event": [
 				{
@@ -3144,7 +3012,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"role\": \"INPUT\",\n            \"name\": \"input-m1\"\n        },\n        {\n            \"role\": \"OUTPUT\",\n            \"name\": \"m1-m2\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}",
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"role\": \"INPUT\",\n            \"name\": \"honeypot\"\n        },\n        {\n            \"role\": \"OUTPUT\",\n            \"name\": \"output-m1\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -3193,12 +3061,19 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"name\": \"m1-m2\",\n            \"role\": \"INPUT\"\n        },\n        {\n            \"name\": \"output-m2\",\n            \"role\": \"OUTPUT\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}"
+					"raw": "{\n    \"replicas\": 1,\n    \"labels\": [],\n    \"topics\": [\n        {\n            \"role\": \"INPUT\",\n            \"name\": \"input-m2\"\n        },\n        {\n            \"role\": \"OUTPUT\",\n            \"name\": \"honeypot\"\n        },\n        {\n            \"role\": \"DEAD_LETTER\",\n            \"name\": \"DeadLetter\"\n        },\n        {\n            \"role\": \"INVALID_MESSAGE\",\n            \"name\": \"InvalidMessage\"\n        },\n        {\n            \"role\": \"TEST_MESSAGE_OUTPUT\",\n            \"name\": \"TestMessagesOutput\"\n        }\n    ],\n    \"environmentVariables\": [\n        {\n            \"name\": \"KAFKA_BOOTSTRAP_SERVERS\",\n            \"value\": \"bootstrap.kafka:9092\"\n        },\n        {\n            \"name\": \"KAFKA_GROUP_ID\",\n            \"value\": \"mico\"\n        },\n        {\n            \"name\": \"OPENFAAS_GATEWAY\",\n            \"value\": \"http://gateway.openfaas:8080\"\n        }\n    ],\n    \"interfaceConnections\": [],\n    \"imagePullPolicy\": \"Always\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://{{host}}/applications/:shortName/:version/deploymentInformation/:serviceShortName",
@@ -3352,7 +3227,50 @@
 			"response": []
 		},
 		{
-			"name": "7.3 getStatusOfApplication",
+			"name": "7.1 getInterfacePublicIpByName - m2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/hal+json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}/services/:shortName/:version/interfaces/:interfaceName/publicIP/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"services",
+						":shortName",
+						":version",
+						"interfaces",
+						":interfaceName",
+						"publicIP",
+						""
+					],
+					"variable": [
+						{
+							"key": "shortName",
+							"value": "{{serviceShortName-m2}}"
+						},
+						{
+							"key": "version",
+							"value": "{{serviceVersion-m2}}"
+						},
+						{
+							"key": "interfaceName",
+							"value": "{{serviceInterfaceName-m2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7.2 getStatusOfApplication",
 			"request": {
 				"method": "GET",
 				"header": [
