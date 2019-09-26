@@ -1,7 +1,7 @@
-Sphinx
-recommonmark
-sphinxcontrib-httpdomain
-sphinxcontrib-openapi
-sphinx_markdown_tables
-sphinx_rtd_theme
+Sphinx==1.7.9
+recommonmark==0.6.0
+sphinxcontrib-httpdomain==1.7.0
+sphinxcontrib-openapi==0.5.0
+sphinx_markdown_tables==0.0.9
+sphinx_rtd_theme==0.4.3
 requests

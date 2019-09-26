@@ -6,3 +6,4 @@ _static
 .vscode
 venv
 default.nix
+Pipfile.lock
