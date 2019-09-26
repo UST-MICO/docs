@@ -1,7 +1,7 @@
 How To manage an application
 ============================
 
-First :doc:`add some services <01-add-a-service>` and an :doc:`application <03-add-an-application>` to your mico instance.
+First :doc:`add some services <01-add-a-service>` and an :doc:`application <03-add-an-application>` to your MICO instance.
 
 .. note::
 

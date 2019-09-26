@@ -36,7 +36,7 @@ Glossary
         A MICO service interface is representet through a Kubernetes Service.
 
     Kafka
-        Kafka is a MOM(Message oriented Middleware) that uses topics instead of traditional message queues.
+        `Kafka<https://kafka.apache.org>`_ is a MOM(Message oriented Middleware) that uses topics instead of traditional message queues.
 
     Topic
         Messages that are send over Kafka are organized in kafka topics. A service has multiple topics (input, output, dead letter, etc) from where it can consume messages or push new messages.

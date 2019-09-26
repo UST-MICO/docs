@@ -1,7 +1,7 @@
 How To add an application
 =========================
 
-First :doc:`add some services <01-add-a-service>` to your mico instance.
+First :doc:`add some services <01-add-a-service>` to your MICO instance.
 
 To add a new application click on the :guilabel:`new Application` button in the dashboard or the application overview.
 
@@ -39,7 +39,7 @@ You will be redirected to the application detail page, if the application was ad
 
 On the application detail page, you can choose the version of the application in the top right corner.
 
-Right below the application name on the left, you can deploy the application with the :guilabel:`deploy` button, 
+Right below the application name on the left, you can deploy the application with the :guilabel:`deploy` button,
 undeploy a the application with the :guilabel:`undeploy` button,
 create a new version of this application with the :guilabel:`create next Version` button or
 delete this specific application version with the :guilabel:`delete version` button.
