@@ -88,6 +88,11 @@ Creating messaging based networks
    The Application :samp:`New Application` includes both services.
 
 
+.. warning::
+
+   The services have to be marked as Kafka enabled **BEFORE** being imported into the application to get all default settings for Kafka enabled services!
+
+
 The starting configuration should look like this:
 
 .. figure:: images/new-messaging-app.*
